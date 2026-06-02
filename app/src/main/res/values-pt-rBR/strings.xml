@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Application -->
+    <string name="app_name">Pomodoro Timer</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_timer_active_name">Pomodoro Timer – Temporizador ativo</string>
+    <string name="notification_channel_timer_active_description">Mostra o tempo até a próxima pausa para os olhos</string>
+    <string name="notification_channel_rest_alert_name">Pomodoro Timer – Hora de uma pausa!</string>
+    <string name="notification_channel_rest_alert_description">Lembrete de bem-estar ocular 20-20-20</string>
+    <string name="notification_timer_active_title">Pomodoro Timer – Bem-estar ocular ativo</string>
+    <string name="notification_next_break_in_format">Próxima pausa em %1$02d:%2$02d</string>
+    <string name="notification_action_rest_now">Descanse agora</string>
+    <string name="notification_rest_alert_title">👁️ É hora de uma pausa para os olhos!</string>
+    <string name="notification_rest_alert_text_format">%1$d minutos se passaram. Siga a regra 20-20-20.</string>
+    <string name="notification_rest_alert_big_text_format">%1$d minutos na frente da tela.\n\nOlhe para algo a 6 metros de distância por 20 segundos.</string>
+
+    <!-- Snackbars -->
+    <string name="snackbar_rest_completed">Pausa concluída! 👁️</string>
+
+    <!-- Rest Messages -->
+    <string name="rest_message_look_far_breathe">Olhe para algo a 6 metros de distância e respire fundo</string>
+    <string name="rest_message_blink_slowly">Pisque lentamente 10 vezes para hidratar os olhos</string>
+    <string name="rest_message_follow_bubbles">Siga as bolhas com os olhos, sem mover a cabeça</string>
+    <string name="rest_message_relax_neck_shoulders">Relaxe os músculos do pescoço e dos ombros</string>
+    <string name="rest_message_close_eyes">Feche suavemente os olhos por alguns segundos</string>
+    <string name="rest_message_focus_far_window">Concentre-se em algo distante pela janela</string>
+
+    <!-- Rest Screen -->
+    <string name="rest_screen_title">quebra de olho</string>
+    <string name="rest_screen_subtitle">Regra 20·20·20</string>
+    <string name="rest_screen_skip_button">pular intervalo</string>
+
+    <!-- Main Screen -->
+    <string name="main_exit_fullscreen_content_description">Sair da tela inteira</string>
+    <string name="main_header_tagline">bem-estar ocular 20·20·20</string>
+    <string name="main_fullscreen_content_description">Tela cheia</string>
+    <string name="main_lava_preview_instruction">Siga as bolhas com os olhos para alongar os músculos oculares</string>
+    <string name="main_customize_label">Personalizar:</string>
+    <string name="main_change_mode_content_description">Alterar modo</string>
+    <string name="main_mode_label_format">Modo %1$s</string>
+    <string name="focus_mode_lava">lava</string>
+    <string name="focus_mode_infinity">Infinito</string>
+    <string name="focus_mode_circular">Circular</string>
+    <string name="main_change_color_content_description">Mudar cor</string>
+    <string name="main_color_label_format">Cor %1$s</string>
+    <string name="color_amber">Âmbar</string>
+    <string name="color_terra">terra</string>
+    <string name="color_dusk">Crepúsculo</string>
+    <string name="color_forest">Floresta</string>
+    <string name="color_candlelight">Luz de velas</string>
+    <string name="color_sepia">Sépia</string>
+    <string name="color_emerald">Esmeralda</string>
+    <string name="main_timer_until_break">até o intervalo</string>
+    <string name="main_timer_minutes_label">minutos</string>
+    <string name="main_timer_pause_button">Pausa</string>
+    <string name="main_timer_start_button">Começar</string>
+    <string name="main_stats_breaks_today">quebra hoje</string>
+    <string name="main_stats_pause_seconds">pausar segundos</string>
+    <string name="main_stats_healthy_done">✓</string>
+    <string name="main_stats_healthy_pending">...</string>
+    <string name="main_stats_healthy_session">sessão saudável</string>
+    <string name="main_palette_title">Paleta</string>
+    <string name="main_focus_style_title">Estilo de ponto de foco</string>
+    <string name="focus_mode_lava_description">Fluido e orgânico</string>
+    <string name="focus_mode_concentric_circles">Círculos concêntricos</string>
+    <string name="focus_mode_circles_description">Exercício circular</string>
+    <string name="main_interval_title">Intervalo de pausa</string>
+    <string name="main_interval_description">Escolha quando deseja que o lembremos de fazer uma pausa</string>
+    <string name="main_interval_minutes_short_format">%1$d min</string>
+    <string name="main_interval_who_recommendation">Recomendação da OMS: 20 min</string>
+    <string name="main_interval_tick_5">5</string>
+    <string name="main_interval_tick_15">15</string>
+    <string name="main_interval_tick_20">20</string>
+    <string name="main_interval_tick_30">30</string>
+    <string name="main_interval_tick_45">45</string>
+    <string name="main_interval_tick_60">60</string>
+
+    <!-- Eye Wellness -->
+    <string name="eye_wellness_title">Bem-estar ocular</string>
+    <string name="eye_wellness_card_description">Aprenda como a regra 20·20·20 ajuda a descansar os olhos.</string>
+    <string name="eye_wellness_view_info_content_description">Ver informações</string>
+    <string name="dialog_understood_button">Entendi</string>
+    <string name="eye_wellness_dialog_subtitle">Bem-estar ocular 20·20·20</string>
+    <string name="eye_wellness_dialog_intro">O uso prolongado da tela pode aumentar o cansaço visual digital, olhos secos, desconforto devido ao foco próximo contínuo e interrupção do sono quando os dispositivos são usados à noite.</string>
+    <string name="eye_wellness_rule_title">Regra 20·20·20</string>
+    <string name="eye_wellness_rule_description">A cada 20 minutos, olhe para um objeto a cerca de 6 metros de distância por 20 segundos.</string>
+    <string name="eye_wellness_less_digital_strain_title">Menos cansaço visual digital</string>
+    <string name="eye_wellness_less_digital_strain_description">Pausas guiadas ajudam seus olhos a parar de focar continuamente de perto. O estudo sobre a regra 20·20·20 encontrou sintomas reduzidos de cansaço visual digital e olho seco.</string>
+    <string name="eye_wellness_blinking_title">Mais piscadela e lubrificação</string>
+    <string name="eye_wellness_blinking_description">Quando usamos telas, tendemos a piscar menos ou piscar de forma incompleta. As pausas ajudam a restaurar um ritmo mais natural de piscar e descansar os olhos.</string>
+    <string name="eye_wellness_prolonged_use_risk_title">Risco de uso prolongado</string>
+    <string name="eye_wellness_prolonged_use_risk_description">Olhar para telas por longos períodos pode causar fadiga ocular, visão turva temporária, sensações de queimação, olhos secos, dores de cabeça e dificuldade em manter o foco.</string>
+    <string name="eye_wellness_blue_light_sleep_title">Luz azul e descanso noturno</string>
+    <string name="eye_wellness_blue_light_sleep_description">A luz azul das telas, especialmente à noite, pode interferir no ritmo circadiano e na produção de melatonina, afetando a qualidade do sono.</string>
+    <string name="eye_wellness_attention_title">Atenção e desempenho mental</string>
+    <string name="eye_wellness_attention_description">A luz azul pode aumentar o estado de alerta e o tempo de reação durante o dia, mas à noite pode ser contraproducente, pois ativa o corpo quando deveria estar se preparando para descansar.</string>
+    <string name="eye_wellness_duration_matters_title">A duração também importa</string>
+    <string name="eye_wellness_duration_matters_description">O impacto da luz não depende apenas da cor: intensidade, tempo de exposição e tempo também são importantes. É por isso que é importante fazer pausas e reduzir a exposição intensa antes de dormir.</string>
+    <string name="eye_wellness_healthy_tips_title">Dicas saudáveis</string>
+    <string name="eye_wellness_healthy_tips_body">• Ative lembretes a cada 20 minutos.\n• Olhe para longe por 20 segundos.\n• Pisque conscientemente durante o intervalo.\n• Reduza a luminosidade se o quarto estiver escuro.\n• Evite telas intensas antes de dormir.\n• Consulte um especialista se o desconforto persistir.</string>
+    <string name="eye_wellness_references_title">Referências acadêmicas</string>
+    <string name="eye_wellness_references_body">Talens-Estarelles, C., Cerviño, A., García-Lázaro, S., Fogelton, A., Sheppard, A., &amp; Wolffsohn, J. S. (2023). The effects of breaks on digital eye strain, dry eye and binocular vision: Testing the 20-20-20 rule. Contact Lens &amp; Anterior Eye, 46(2), 101744. https://doi.org/10.1016/j.clae.2022.101744\n\nHaghani, M., Abbasi, S., Abdoli, L., Shams, S. F., Baha’addini Baigy Zarandi, B. F., Shokrpour, N., Jahromizadeh, A., Mortazavi, S. A., &amp; Mortazavi, S. M. J. (2024). Blue Light and Digital Screens Revisited: A New Look at Blue Light from the Vision Quality, Circadian Rhythm and Cognitive Functions Perspective. Journal of Biomedical Physics and Engineering, 14(3), 213–228. https://doi.org/10.31661/jbpe.v0i0.2106-1355</string>
+    <string name="eye_wellness_medical_disclaimer">Estas informações são educativas e não substituem uma avaliação médica. Se você sentir dor, visão turva persistente, secura intensa ou desconforto frequente, consulte um oftalmologista.</string>
+
+    <!-- Pomodoro Timer Pro -->
+    <string name="pomodoro_pro_icon_content_description">Ícone Pomodoro Timer Pro</string>
+    <string name="pomodoro_pro_title">Atualizar para Pomodoro Timer Pro</string>
+    <string name="pro_badge">PRO</string>
+    <string name="pomodoro_pro_description">Aproveite o Pomodoro Timer sem anúncios, personalize sua experiência com temas de cores exclusivos e monitore seu progresso com estatísticas detalhadas.</string>
+    <string name="pomodoro_pro_play_store_content_description">Vá para Play Store</string>
+</resources>

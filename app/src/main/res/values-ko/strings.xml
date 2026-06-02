@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Application -->
+    <string name="app_name">Pomodoro Timer</string>
+
+    <!-- Notifications -->
+    <string name="notification_channel_timer_active_name">Pomodoro Timer – 활성 타이머</string>
+    <string name="notification_channel_timer_active_description">다음 번 눈이 쉴 때까지의 시간을 표시합니다.</string>
+    <string name="notification_channel_rest_alert_name">Pomodoro Timer – 휴식 시간입니다!</string>
+    <string name="notification_channel_rest_alert_description">20-20-20 눈 건강 알림</string>
+    <string name="notification_timer_active_title">Pomodoro Timer – 활동적인 눈 건강</string>
+    <string name="notification_next_break_in_format">%1$02d:%2$02d의 다음 중단</string>
+    <string name="notification_action_rest_now">이제 쉬세요</string>
+    <string name="notification_rest_alert_title">👁️ 잠시 쉬어갈 시간입니다!</string>
+    <string name="notification_rest_alert_text_format">%1$d분이 지났습니다. 20-20-20 규칙을 따르세요.</string>
+    <string name="notification_rest_alert_big_text_format">화면 앞 %1$d분.\n\n6미터 떨어진 곳에 있는 물체를 20초 동안 보세요.</string>
+
+    <!-- Snackbars -->
+    <string name="snackbar_rest_completed">휴식 완료! 👁️</string>
+
+    <!-- Rest Messages -->
+    <string name="rest_message_look_far_breathe">6미터 떨어진 곳을 바라보며 심호흡을 해보세요</string>
+    <string name="rest_message_blink_slowly">눈을 천천히 10번 깜박이면 눈이 촉촉해집니다.</string>
+    <string name="rest_message_follow_bubbles">머리를 움직이지 않고 눈으로 거품을 따라가세요</string>
+    <string name="rest_message_relax_neck_shoulders">목과 어깨 근육을 풀어주세요</string>
+    <string name="rest_message_close_eyes">몇 초간 눈을 살짝 감아보세요</string>
+    <string name="rest_message_focus_far_window">창문 너머로 멀리 있는 것에 초점을 맞추세요</string>
+
+    <!-- Rest Screen -->
+    <string name="rest_screen_title">눈 휴식</string>
+    <string name="rest_screen_subtitle">20·20·20 규칙</string>
+    <string name="rest_screen_skip_button">휴식 건너뛰기</string>
+
+    <!-- Main Screen -->
+    <string name="main_exit_fullscreen_content_description">전체 화면 종료</string>
+    <string name="main_header_tagline">눈 건강 20·20·20</string>
+    <string name="main_fullscreen_content_description">전체 화면</string>
+    <string name="main_lava_preview_instruction">눈으로 거품을 따라가며 눈 근육을 스트레칭하세요</string>
+    <string name="main_customize_label">사용자 정의:</string>
+    <string name="main_change_mode_content_description">모드 변경</string>
+    <string name="main_mode_label_format">모드 %1$s</string>
+    <string name="focus_mode_lava">용암</string>
+    <string name="focus_mode_infinity">인피니티</string>
+    <string name="focus_mode_circular">원형</string>
+    <string name="main_change_color_content_description">색상 변경</string>
+    <string name="main_color_label_format">색상 %1$s</string>
+    <string name="color_amber">호박색</string>
+    <string name="color_terra">테라</string>
+    <string name="color_dusk">황혼</string>
+    <string name="color_forest">숲</string>
+    <string name="color_candlelight">촛불</string>
+    <string name="color_sepia">세피아</string>
+    <string name="color_emerald">에메랄드</string>
+    <string name="main_timer_until_break">휴식 시간까지</string>
+    <string name="main_timer_minutes_label">분</string>
+    <string name="main_timer_pause_button">일시중지</string>
+    <string name="main_timer_start_button">시작</string>
+    <string name="main_stats_breaks_today">오늘은 쉬어</string>
+    <string name="main_stats_pause_seconds">초 일시중지</string>
+    <string name="main_stats_healthy_done">✓</string>
+    <string name="main_stats_healthy_pending">...</string>
+    <string name="main_stats_healthy_session">건강한 세션</string>
+    <string name="main_palette_title">팔레트</string>
+    <string name="main_focus_style_title">초점 스타일</string>
+    <string name="focus_mode_lava_description">유동적이고 유기적인</string>
+    <string name="focus_mode_concentric_circles">동심원</string>
+    <string name="focus_mode_circles_description">순환운동</string>
+    <string name="main_interval_title">휴식 간격</string>
+    <string name="main_interval_description">휴식 시간 알림을 언제 받을지 선택하세요.</string>
+    <string name="main_interval_minutes_short_format">%1$d분</string>
+    <string name="main_interval_who_recommendation">WHO 권장 사항: 20분</string>
+    <string name="main_interval_tick_5">5</string>
+    <string name="main_interval_tick_15">15</string>
+    <string name="main_interval_tick_20">20</string>
+    <string name="main_interval_tick_30">30</string>
+    <string name="main_interval_tick_45">45</string>
+    <string name="main_interval_tick_60">60</string>
+
+    <!-- Eye Wellness -->
+    <string name="eye_wellness_title">눈 건강</string>
+    <string name="eye_wellness_card_description">20·20·20 규칙이 눈을 쉬게 하는 데 어떻게 도움이 되는지 알아보세요.</string>
+    <string name="eye_wellness_view_info_content_description">정보 보기</string>
+    <string name="dialog_understood_button">알았어요</string>
+    <string name="eye_wellness_dialog_subtitle">눈 건강 20·20·20</string>
+    <string name="eye_wellness_dialog_intro">화면을 장시간 사용하면 디지털 눈의 피로, 안구 건조, 지속적인 근거리 초점으로 인한 불편함, 밤에 장치를 사용할 때 수면 장애가 증가할 수 있습니다.</string>
+    <string name="eye_wellness_rule_title">20·20·20 규칙</string>
+    <string name="eye_wellness_rule_description">20분마다 약 20피트(약 6미터) 떨어진 물체를 20초 동안 바라보십시오.</string>
+    <string name="eye_wellness_less_digital_strain_title">디지털 눈의 피로 감소</string>
+    <string name="eye_wellness_less_digital_strain_description">안내된 휴식 시간은 가까운 거리에서 눈이 지속적으로 초점을 맞추는 것을 멈추는 데 도움이 됩니다. 20·20·20 규칙에 대한 연구에서는 디지털 눈의 피로와 안구 건조 증상이 감소하는 것으로 나타났습니다.</string>
+    <string name="eye_wellness_blinking_title">더 많은 깜박임과 윤활</string>
+    <string name="eye_wellness_blinking_description">화면을 사용할 때 우리는 눈을 덜 깜박이거나 불완전하게 깜박이는 경향이 있습니다. 휴식은 눈 깜박임과 눈 휴식의 자연스러운 리듬을 회복하는 데 도움이 됩니다.</string>
+    <string name="eye_wellness_prolonged_use_risk_title">장기간 사용으로 인한 위험</string>
+    <string name="eye_wellness_prolonged_use_risk_description">오랫동안 화면을 보면 눈의 피로, 일시적인 시야 흐림, 작열감, 안구 건조, 두통 및 집중력 유지 어려움이 발생할 수 있습니다.</string>
+    <string name="eye_wellness_blue_light_sleep_title">블루라이트와 야간 휴식</string>
+    <string name="eye_wellness_blue_light_sleep_description">특히 밤에 화면에서 나오는 블루라이트는 일주기 리듬과 멜라토닌 생성을 방해하여 수면의 질에 영향을 미칠 수 있습니다.</string>
+    <string name="eye_wellness_attention_title">주의력과 정신적 수행</string>
+    <string name="eye_wellness_attention_description">블루라이트는 낮 동안 주의력과 반응 시간을 증가시킬 수 있지만, 밤에는 휴식을 준비해야 하는 신체를 활성화시켜 역효과를 낳을 수 있습니다.</string>
+    <string name="eye_wellness_duration_matters_title">기간도 중요해요</string>
+    <string name="eye_wellness_duration_matters_description">빛의 영향은 색상에만 의존하는 것이 아니라 강도, 노출 시간 및 타이밍도 중요합니다. 그렇기 때문에 잠들기 전에 휴식을 취하고 강렬한 노출을 줄이는 것이 중요합니다.</string>
+    <string name="eye_wellness_healthy_tips_title">건강한 팁</string>
+    <string name="eye_wellness_healthy_tips_body">• 20분마다 알림을 켭니다.\n• 20초 동안 먼 곳을 봅니다.\n• 휴식 시간 동안 의식적으로 눈을 깜박입니다.\n• 방이 어두우면 밝기를 낮춥니다.\n• 잠자리에 들기 전에 강렬한 화면을 피합니다.\n• 불편함이 지속되면 전문가의 진찰을 받으세요.</string>
+    <string name="eye_wellness_references_title">학술 참고자료</string>
+    <string name="eye_wellness_references_body">Talens-Estarelles, C., Cerviño, A., García-Lázaro, S., Fogelton, A., Sheppard, A., &amp; Wolffsohn, J. S. (2023). The effects of breaks on digital eye strain, dry eye and binocular vision: Testing the 20-20-20 rule. Contact Lens &amp; Anterior Eye, 46(2), 101744. https://doi.org/10.1016/j.clae.2022.101744\n\nHaghani, M., Abbasi, S., Abdoli, L., Shams, S. F., Baha’addini Baigy Zarandi, B. F., Shokrpour, N., Jahromizadeh, A., Mortazavi, S. A., &amp; Mortazavi, S. M. J. (2024). Blue Light and Digital Screens Revisited: A New Look at Blue Light from the Vision Quality, Circadian Rhythm and Cognitive Functions Perspective. Journal of Biomedical Physics and Engineering, 14(3), 213–228. https://doi.org/10.31661/jbpe.v0i0.2106-1355</string>
+    <string name="eye_wellness_medical_disclaimer">이 정보는 교육적이며 의학적 평가를 대체하지 않습니다. 통증이 있거나, 지속적으로 시야가 흐려지거나, 심한 건조함이 있거나, 자주 불편함이 있는 경우 안과 전문의와 상담하세요.</string>
+
+    <!-- Pomodoro Timer Pro -->
+    <string name="pomodoro_pro_icon_content_description">Pomodoro Timer Pro 아이콘</string>
+    <string name="pomodoro_pro_title">Pomodoro Timer Pro로 업그레이드</string>
+    <string name="pro_badge">PRO</string>
+    <string name="pomodoro_pro_description">광고 없이 Pomodoro Timer를 즐기고, 독점적인 색상 테마로 경험을 개인화하고, 자세한 통계로 진행 상황을 모니터링하세요.</string>
+    <string name="pomodoro_pro_play_store_content_description">Play Store로 이동</string>
+</resources>
