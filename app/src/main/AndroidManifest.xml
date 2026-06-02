@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <!-- ════════════════════════════════════════════════════════════════════
          REQUISITOS DE HARDWARE
@@ -73,13 +74,13 @@
 
         <!-- ── Foreground Service del temporizador ──────────────────────── -->
         <service
-            android:name=".service.EyeRestService"
+            android:name=".service.PomodoroTimerService"
             android:exported="false"
             android:foregroundServiceType="specialUse">
 
             <property
                 android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
-                android:value="eye_rest_timer_wellness_20_20_20" />
+                android:value="pomodoro_timer_focus_productivity" />
 
         </service>
 

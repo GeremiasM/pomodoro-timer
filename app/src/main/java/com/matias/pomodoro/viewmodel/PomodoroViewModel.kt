@@ -2,76 +2,61 @@ package com.matias.pomodoro.viewmodel
 
 import android.app.Application
 import android.content.Intent
+import android.os.Build
 import androidx.annotation.StringRes
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.matias.pomodoro.R
+import com.matias.pomodoro.data.PomodoroDateUtils
+import com.matias.pomodoro.data.PomodoroSession
+import com.matias.pomodoro.data.preferences.PomodoroPreferences
+import com.matias.pomodoro.data.preferences.PomodoroSettings
+import com.matias.pomodoro.di.PomodoroContainer
 import com.matias.pomodoro.graphics.ColorScheme
 import com.matias.pomodoro.graphics.LavaMode
-import com.matias.pomodoro.service.EyeRestService
-import com.matias.pomodoro.timer.TimerSessionStore
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
-
-// ─────────────────────────────────────────────────────────────────────────────
-// ESTADO DE LA UI
-// ─────────────────────────────────────────────────────────────────────────────
+import com.matias.pomodoro.service.PomodoroTimerService
+import com.matias.pomodoro.timer.PomodoroTimerState
+import com.matias.pomodoro.timer.TimerStatus
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 /**
- * Estado inmutable de la pantalla principal.
- * Sigue el patrón UDF (Unidirectional Data Flow) de MVVM.
+ * Temporary UI-facing state kept only so the existing Compose screens compile until the UI rewrite.
+ * The business timer state is exposed separately as [timerState].
  */
 data class PomodoroUiState(
-    /** ¿Está el temporizador 20-20-20 activo? */
     val isTimerRunning: Boolean = false,
-
-    /** Intervalo configurado en minutos (default 20 según regla 20-20-20) */
-    val intervalMinutes: Int = 20,
-
-    /** Segundos restantes hasta la próxima notificación */
-    val secondsUntilNextBreak: Int = 0,
-
-    /** Modo actual de la animación de lámpara de lava */
+    val intervalMinutes: Int = 25,
+    val secondsUntilNextBreak: Int = 25 * 60,
     val lavaMode: LavaMode = LavaMode.LAVA,
-
-    /** Paleta de colores activa */
     val colorScheme: ColorScheme = ColorScheme.MIDNIGHT_EMERALD,
-
-    /** ¿Está mostrándose la pantalla de descanso activo? */
     val isRestScreenVisible: Boolean = false,
-
-    /** Cuenta regresiva del descanso activo (20 segundos según regla 20-20-20) */
     val restCountdownSeconds: Int = REST_DURATION_SECONDS,
-
-    /** Número de descansos completados en la sesión actual */
     val completedBreaks: Int = 0,
-
-    /** Mensaje motivacional durante el descanso */
     @StringRes val restMessageResId: Int = DEFAULT_REST_MESSAGE_RES_ID,
-
-    /** ¿Está la animación en pantalla completa? */
     val isFullscreen: Boolean = false
 ) {
-    /** Progreso del temporizador principal [0.0, 1.0] */
     val timerProgress: Float
         get() {
             val total = intervalMinutes * 60
-            return if (total == 0) 0f
-            else 1f - (secondsUntilNextBreak.toFloat() / total)
+            return if (total == 0) 0f else 1f - (secondsUntilNextBreak.toFloat() / total)
         }
 
-    /** Texto formateado del tiempo restante (mm:ss) */
     val formattedTimeLeft: String
         get() {
-            val m = secondsUntilNextBreak / 60
-            val s = secondsUntilNextBreak % 60
-            return "%02d:%02d".format(m, s)
+            val minutes = secondsUntilNextBreak / 60
+            val seconds = secondsUntilNextBreak % 60
+            return "%02d:%02d".format(minutes, seconds)
         }
 }
-
-// ─────────────────────────────────────────────────────────────────────────────
-// EVENTOS DE LA UI → ViewModel
-// ─────────────────────────────────────────────────────────────────────────────
 
 sealed interface PomodoroIntent {
     data object StartTimer : PomodoroIntent
@@ -84,284 +69,139 @@ sealed interface PomodoroIntent {
     data object ToggleFullscreen : PomodoroIntent
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// EFECTOS DE LADO (eventos únicos hacia la UI)
-// ─────────────────────────────────────────────────────────────────────────────
-
 sealed interface PomodoroEffect {
     data object ShowNotificationPermissionRequest : PomodoroEffect
     data object RestCompleted : PomodoroEffect
     data class ShowSnackbar(val message: String) : PomodoroEffect
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// CONSTANTES
-// ─────────────────────────────────────────────────────────────────────────────
-
 private const val REST_DURATION_SECONDS = 20
 private val DEFAULT_REST_MESSAGE_RES_ID = R.string.rest_message_look_far_breathe
 
-private val REST_MESSAGE_RES_IDS = listOf(
-    R.string.rest_message_look_far_breathe,
-    R.string.rest_message_blink_slowly,
-    R.string.rest_message_follow_bubbles,
-    R.string.rest_message_relax_neck_shoulders,
-    R.string.rest_message_close_eyes,
-    R.string.rest_message_focus_far_window
+private data class UiPlaceholderState(
+    val lavaMode: LavaMode = LavaMode.LAVA,
+    val colorScheme: ColorScheme = ColorScheme.MIDNIGHT_EMERALD,
+    val isFullscreen: Boolean = false,
+    val isRestScreenVisible: Boolean = false,
+    @StringRes val restMessageResId: Int = DEFAULT_REST_MESSAGE_RES_ID
 )
 
-// ─────────────────────────────────────────────────────────────────────────────
-// VIEWMODEL
-// ─────────────────────────────────────────────────────────────────────────────
-
 class PomodoroViewModel(application: Application) : AndroidViewModel(application) {
+    private val preferences = PomodoroContainer.preferences
+    private val repository = PomodoroContainer.repository
+    private val uiPlaceholderState = MutableStateFlow(UiPlaceholderState())
 
-    private val timerSessionStore = TimerSessionStore(application)
+    val timerState: StateFlow<PomodoroTimerState> = PomodoroTimerService.state
 
-    private val _state = MutableStateFlow(PomodoroUiState())
-    val state: StateFlow<PomodoroUiState> = _state.asStateFlow()
+    val settings: StateFlow<PomodoroSettings> = preferences.settings.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000L),
+        initialValue = PomodoroSettings()
+    )
+
+    val todayStats: StateFlow<PomodoroSession?> = repository
+        .getTodayStats(PomodoroDateUtils.todayDate())
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000L),
+            initialValue = null
+        )
+
+    val dailyGoalProgress: StateFlow<Float> = combine(todayStats, settings) { stats, settings ->
+        val completed = stats?.completedPomodoros ?: 0
+        (completed.toFloat() / settings.dailyGoalPomodoros.toFloat()).coerceIn(0f, 1f)
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000L),
+        initialValue = 0f
+    )
+
+    val state: StateFlow<PomodoroUiState> = combine(
+        timerState,
+        settings,
+        todayStats,
+        uiPlaceholderState
+    ) { timer, settings, stats, placeholder ->
+        PomodoroUiState(
+            isTimerRunning = timer.status == TimerStatus.RUNNING,
+            intervalMinutes = settings.workDurationMinutes,
+            secondsUntilNextBreak = timer.remainingSeconds.takeIf { it > 0 } ?: settings.workDurationSeconds,
+            lavaMode = placeholder.lavaMode,
+            colorScheme = placeholder.colorScheme,
+            isRestScreenVisible = placeholder.isRestScreenVisible,
+            restCountdownSeconds = REST_DURATION_SECONDS,
+            completedBreaks = stats?.completedPomodoros ?: timer.completedPomodoros,
+            restMessageResId = placeholder.restMessageResId,
+            isFullscreen = placeholder.isFullscreen
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000L),
+        initialValue = PomodoroUiState()
+    )
 
     private val _effects = MutableSharedFlow<PomodoroEffect>(extraBufferCapacity = 8)
     val effects: SharedFlow<PomodoroEffect> = _effects.asSharedFlow()
 
-    private var timerJob: Job? = null
-    private var restJob: Job? = null
+    fun startTimer() {
+        sendServiceCommand(PomodoroTimerService.ACTION_START)
+    }
 
-    init {
-        restoreTimerState()
+    fun pauseTimer() {
+        sendServiceCommand(PomodoroTimerService.ACTION_PAUSE)
+    }
+
+    fun skipPhase() {
+        sendServiceCommand(PomodoroTimerService.ACTION_SKIP)
+    }
+
+    fun resetPhase() {
+        sendServiceCommand(PomodoroTimerService.ACTION_RESET)
+    }
+
+    fun resetAll() {
+        uiPlaceholderState.update { it.copy(isFullscreen = false, isRestScreenVisible = false) }
+        sendServiceCommand(PomodoroTimerService.ACTION_RESET_ALL)
+    }
+
+    fun updateSettings(block: suspend PomodoroPreferences.() -> Unit) {
+        viewModelScope.launch {
+            preferences.block()
+        }
     }
 
     fun handleIntent(intent: PomodoroIntent) {
         when (intent) {
-            is PomodoroIntent.StartTimer        -> startTimer()
-            is PomodoroIntent.StopTimer         -> stopTimer()
-            is PomodoroIntent.SetInterval       -> setInterval(intent.minutes)
-            is PomodoroIntent.SetLavaMode       -> updateState { copy(lavaMode = intent.mode) }
-            is PomodoroIntent.SetColorScheme    -> updateState { copy(colorScheme = intent.scheme) }
-            is PomodoroIntent.DismissRestScreen -> dismissRestScreen()
-            is PomodoroIntent.TriggerRestNow    -> triggerRest()
-            is PomodoroIntent.ToggleFullscreen  -> updateState { copy(isFullscreen = !isFullscreen) }
-        }
-    }
-
-    private fun startTimer() {
-        if (_state.value.isTimerRunning) return
-
-        val intervalMinutes = _state.value.intervalMinutes
-        val nextBreakAtMillis = timerSessionStore.startTimer(intervalMinutes)
-        val totalSeconds = timerSessionStore.remainingSeconds(nextBreakAtMillis)
-
-        updateState {
-            copy(
-                isTimerRunning          = true,
-                intervalMinutes         = intervalMinutes,
-                secondsUntilNextBreak   = totalSeconds
-            )
-        }
-
-        startEyeRestService()
-        startTimerLoop()
-    }
-
-    private fun stopTimer() {
-        timerJob?.cancel()
-        timerJob = null
-        restJob?.cancel()
-        restJob = null
-        timerSessionStore.stopTimer(preserveIntervalMinutes = _state.value.intervalMinutes)
-        stopEyeRestService()
-
-        updateState {
-            copy(
-                isTimerRunning        = false,
-                isRestScreenVisible   = false,
-                isFullscreen          = false, // Quitar pantalla completa al parar
-                secondsUntilNextBreak = intervalMinutes * 60
-            )
-        }
-    }
-
-    private fun setInterval(minutes: Int) {
-        val wasRunning = _state.value.isTimerRunning
-        if (wasRunning) stopTimer()
-
-        updateState {
-            copy(
-                intervalMinutes       = minutes,
-                secondsUntilNextBreak = minutes * 60
-            )
-        }
-
-        if (wasRunning) startTimer()
-    }
-
-    fun triggerRest() {
-        val messageResId = REST_MESSAGE_RES_IDS.random()
-        updateState {
-            copy(
-                isRestScreenVisible   = true,
-                restCountdownSeconds  = REST_DURATION_SECONDS,
-                restMessageResId      = messageResId,
-                lavaMode              = LavaMode.FOCUS_POINT_CIRCLE
-            )
-        }
-
-        restJob?.cancel()
-        restJob = viewModelScope.launch {
-            var countdown = REST_DURATION_SECONDS
-
-            while (countdown > 0 && isActive) {
-                delay(1_000L)
-                countdown--
-                updateState { copy(restCountdownSeconds = countdown) }
+            PomodoroIntent.StartTimer -> startTimer()
+            PomodoroIntent.StopTimer -> pauseTimer()
+            is PomodoroIntent.SetInterval -> updateSettings {
+                updateWorkDurationMinutes(intent.minutes)
             }
-
-            if (isActive) {
-                completeRest()
+            is PomodoroIntent.SetLavaMode -> uiPlaceholderState.update {
+                it.copy(lavaMode = intent.mode)
+            }
+            is PomodoroIntent.SetColorScheme -> uiPlaceholderState.update {
+                it.copy(colorScheme = intent.scheme)
+            }
+            PomodoroIntent.DismissRestScreen -> uiPlaceholderState.update {
+                it.copy(isRestScreenVisible = false)
+            }
+            PomodoroIntent.TriggerRestNow -> skipPhase()
+            PomodoroIntent.ToggleFullscreen -> uiPlaceholderState.update {
+                it.copy(isFullscreen = !it.isFullscreen)
             }
         }
     }
 
-    private fun completeRest() {
-        val wasRunning = _state.value.isTimerRunning
-        updateState {
-            copy(
-                isRestScreenVisible   = false,
-                completedBreaks       = completedBreaks + 1,
-                lavaMode              = LavaMode.LAVA,
-                secondsUntilNextBreak = intervalMinutes * 60
-            )
+    private fun sendServiceCommand(action: String) {
+        val application = getApplication<Application>()
+        val intent = PomodoroTimerService.commandIntent(application, action).apply {
+            addFlags(Intent.FLAG_RECEIVER_FOREGROUND)
         }
-
-        viewModelScope.launch {
-            _effects.emit(PomodoroEffect.RestCompleted)
-        }
-
-        if (wasRunning) {
-            restartTimerCycleFromNow()
-        }
-    }
-
-    private fun dismissRestScreen() {
-        restJob?.cancel()
-        completeRest()
-    }
-
-    private fun startEyeRestService() {
-        val intent = Intent(getApplication(), EyeRestService::class.java).apply {
-            action = EyeRestService.ACTION_START
-            putExtra(EyeRestService.EXTRA_INTERVAL_MINUTES, _state.value.intervalMinutes)
-        }
-        getApplication<Application>().startForegroundService(intent)
-    }
-
-    private fun stopEyeRestService() {
-        val intent = Intent(getApplication(), EyeRestService::class.java).apply {
-            action = EyeRestService.ACTION_STOP
-        }
-        getApplication<Application>().startService(intent)
-    }
-
-    private fun restoreTimerState() {
-        val session = timerSessionStore.readSession()
-        if (!session.isRunning) {
-            updateState {
-                copy(
-                    intervalMinutes = session.intervalMinutes,
-                    secondsUntilNextBreak = session.intervalMinutes * 60
-                )
-            }
-            return
-        }
-
-        val remaining = timerSessionStore.remainingSeconds(session.nextBreakAtMillis)
-        if (remaining > 0) {
-            updateState {
-                copy(
-                    isTimerRunning = true,
-                    intervalMinutes = session.intervalMinutes,
-                    secondsUntilNextBreak = remaining
-                )
-            }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            application.startForegroundService(intent)
         } else {
-            val nextBreakAtMillis = timerSessionStore.scheduleNextCycle(session.intervalMinutes)
-            val restartedRemaining = timerSessionStore.remainingSeconds(nextBreakAtMillis)
-            updateState {
-                copy(
-                    isTimerRunning = true,
-                    intervalMinutes = session.intervalMinutes,
-                    secondsUntilNextBreak = restartedRemaining
-                )
-            }
+            application.startService(intent)
         }
-
-        ensureEyeRestServiceRunning()
-        startTimerLoop()
-    }
-
-    private fun startTimerLoop() {
-        timerJob?.cancel()
-        timerJob = viewModelScope.launch {
-            while (isActive && _state.value.isTimerRunning) {
-                val session = timerSessionStore.readSession()
-                if (!session.isRunning) {
-                    updateState {
-                        copy(
-                            isTimerRunning = false,
-                            isRestScreenVisible = false,
-                            isFullscreen = false,
-                            secondsUntilNextBreak = intervalMinutes * 60
-                        )
-                    }
-                    break
-                }
-
-                val remaining = timerSessionStore.remainingSeconds(session.nextBreakAtMillis)
-                updateState {
-                    copy(
-                        intervalMinutes = session.intervalMinutes,
-                        secondsUntilNextBreak = remaining
-                    )
-                }
-
-                if (remaining <= 0) {
-                    triggerRest()
-                    break
-                }
-
-                delay(1_000L)
-            }
-        }
-    }
-
-    private fun restartTimerCycleFromNow() {
-        val intervalMinutes = _state.value.intervalMinutes
-        val nextBreakAtMillis = timerSessionStore.scheduleNextCycle(intervalMinutes)
-        val remaining = timerSessionStore.remainingSeconds(nextBreakAtMillis)
-
-        updateState {
-            copy(
-                isTimerRunning = true,
-                secondsUntilNextBreak = remaining
-            )
-        }
-
-        startEyeRestService()
-        startTimerLoop()
-    }
-
-    private fun ensureEyeRestServiceRunning() {
-        val intent = Intent(getApplication(), EyeRestService::class.java)
-        getApplication<Application>().startForegroundService(intent)
-    }
-
-    private fun updateState(block: PomodoroUiState.() -> PomodoroUiState) {
-        _state.update { it.block() }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        timerJob?.cancel()
-        restJob?.cancel()
     }
 }
