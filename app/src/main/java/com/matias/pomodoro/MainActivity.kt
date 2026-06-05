@@ -1,7 +1,6 @@
 package com.matias.pomodoro
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -10,214 +9,181 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.compose.animation.core.EaseInOutCubic
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.content.ContextCompat
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.lifecycleScope
-import com.matias.pomodoro.ads.InterstitialAdManager
-import com.matias.pomodoro.ui.screens.MainScreen
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.matias.pomodoro.ui.screens.PomodoroScreen
+import com.matias.pomodoro.ui.screens.PomodoroStatsScreen
+import com.matias.pomodoro.ui.theme.LocalPomodoroColors
 import com.matias.pomodoro.ui.theme.PomodoroTheme
-import com.matias.pomodoro.viewmodel.PomodoroEffect
-import com.matias.pomodoro.viewmodel.PomodoroIntent
 import com.matias.pomodoro.viewmodel.PomodoroViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
-// ─────────────────────────────────────────────────────────────────────────────
-// ACTIVITY PRINCIPAL
-// ─────────────────────────────────────────────────────────────────────────────
-
-/**
- * Activity única de Pomodoro (Single-Activity Architecture).
- */
 class MainActivity : ComponentActivity() {
-
-    companion object {
-        /** Action para abrir directamente la pantalla de descanso activo */
-        const val ACTION_OPEN_REST_SCREEN = "com.matias.pomodoro.app.OPEN_REST_SCREEN"
-    }
-
     private val viewModel: PomodoroViewModel by viewModels()
-    private lateinit var adManager: InterstitialAdManager
-    private var restSkippedByUser = false
-    private var firstContentFrameRendered = false
 
-    // ── Launcher para solicitar permiso de notificaciones ─────────────────────
-    private val notifPermissionLauncher = registerForActivityResult(
+    private val notificationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { granted ->
-        if (granted) {
-            showAdAfterDelay(3_000L)
-            viewModel.handleIntent(PomodoroIntent.StartTimer)
-        }
+        if (granted) viewModel.startTimer()
     }
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // LIFECYCLE
-    // ─────────────────────────────────────────────────────────────────────────
-
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        // Crear el manager; la carga se difiere hasta que la UI pinte el primer frame.
-        adManager = InterstitialAdManager(this)
-
-        // Registro del callback para manejar overlays con botón atrás
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val uiState = viewModel.state.value
-                if (uiState.isFullscreen) {
-                    viewModel.handleIntent(PomodoroIntent.ToggleFullscreen)
-                    return
-                }
-
-                if (uiState.isRestScreenVisible) {
-                    viewModel.handleIntent(PomodoroIntent.DismissRestScreen)
-                    return
-                }
-
-                // Salida normal sin mostrar anuncio al presionar atrás.
                 isEnabled = false
                 onBackPressedDispatcher.onBackPressed()
                 isEnabled = true
             }
         })
 
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        enableImmersiveMode()
-
-        handleIncomingIntent(intent)
-
         setContent {
-            val uiState by viewModel.state.collectAsStateWithLifecycle()
-            PomodoroTheme(visualScheme = uiState.colorScheme) {
-                val snackbarHostState = remember { SnackbarHostState() }
+            val timerState by viewModel.timerState.collectAsStateWithLifecycle()
+            val settings by viewModel.settings.collectAsStateWithLifecycle()
+            val todayStats by viewModel.todayStats.collectAsStateWithLifecycle()
+            val weekStats by viewModel.weekStats.collectAsStateWithLifecycle()
+            val monthStats by viewModel.monthStats.collectAsStateWithLifecycle()
+            val dailyGoalProgress by viewModel.dailyGoalProgress.collectAsStateWithLifecycle()
+            val navController = rememberNavController()
 
-                LaunchedEffect(Unit) {
-                    withFrameNanos { }
-                    delay(500L)
-                    firstContentFrameRendered = true
-                    adManager.loadAd()
+            PomodoroTheme(
+                phase = timerState.phase,
+                selectedTheme = settings.selectedTheme
+            ) {
+                val colors = LocalPomodoroColors.current
+                val systemUiController = rememberSystemUiController()
+                SideEffect {
+                    systemUiController.setSystemBarsColor(
+                        color = colors.background,
+                        darkIcons = false
+                    )
                 }
 
-                LaunchedEffect(Unit) {
-                    viewModel.effects.collect { effect ->
-                        when (effect) {
-                            is PomodoroEffect.ShowNotificationPermissionRequest ->
-                                requestNotificationPermission()
-
-                            is PomodoroEffect.RestCompleted -> {
-                                launch {
-                                    snackbarHostState.showSnackbar(getString(R.string.snackbar_rest_completed))
-                                }
-                                if (restSkippedByUser) {
-                                    restSkippedByUser = false
-                                } else {
-                                    showAdAfterDelay(2_000L)
-                                }
-                            }
-
-                            is PomodoroEffect.ShowSnackbar ->
-                                snackbarHostState.showSnackbar(effect.message)
-                        }
-                    }
-                }
-
-                MainScreen(
-                    uiState  = uiState,
-                    onIntent = { intent ->
-                        if (intent is PomodoroIntent.DismissRestScreen && uiState.isRestScreenVisible) {
-                            restSkippedByUser = true
-                            showAdAfterDelay(0L)
-                        }
-
-                        if (intent is PomodoroIntent.StartTimer && !hasNotificationPermission()) {
-                            requestNotificationPermission()
-                        } else {
-                            if (intent is PomodoroIntent.StartTimer) {
-                                showAdAfterDelay(3_000L)
-                            }
-                            viewModel.handleIntent(intent)
-                        }
-                    },
-                    modifier = Modifier.fillMaxSize()
+                PomodoroNavHost(
+                    navController = navController,
+                    timerState = timerState,
+                    settings = settings,
+                    todayStats = todayStats,
+                    weekStats = weekStats,
+                    monthStats = monthStats,
+                    dailyGoalProgress = dailyGoalProgress,
+                    onStart = { startTimerWithPermissionCheck() },
+                    onPause = viewModel::pauseTimer,
+                    onSkip = viewModel::skipPhase,
+                    onReset = viewModel::resetPhase,
+                    onUpdateSettings = viewModel::updateSettings
                 )
-
-                SnackbarHost(hostState = snackbarHostState)
             }
         }
     }
 
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        if (hasFocus) enableImmersiveMode()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (::adManager.isInitialized && firstContentFrameRendered) {
-            adManager.loadAd()
+    private fun startTimerWithPermissionCheck() {
+        if (hasNotificationPermission()) {
+            viewModel.startTimer()
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
     }
-
-    override fun onNewIntent(intent: Intent) {
-        super.onNewIntent(intent)
-        handleIncomingIntent(intent)
-    }
-
-    // ─────────────────────────────────────────────────────────────────────────
-    // MANEJO DE INTENTS EXTERNOS
-    // ─────────────────────────────────────────────────────────────────────────
-
-    private fun handleIncomingIntent(intent: Intent?) {
-        if (intent?.action == ACTION_OPEN_REST_SCREEN) {
-            viewModel.handleIntent(PomodoroIntent.TriggerRestNow)
-        }
-    }
-
-    private fun showAdAfterDelay(delayMillis: Long) {
-        lifecycleScope.launch {
-            delay(delayMillis)
-            adManager.showAd {
-                adManager.loadAd()
-            }
-        }
-    }
-
-    // ─────────────────────────────────────────────────────────────────────────
-    // PERMISOS
-    // ─────────────────────────────────────────────────────────────────────────
 
     private fun hasNotificationPermission(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
             ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.POST_NOTIFICATIONS
             ) == PackageManager.PERMISSION_GRANTED
-        } else {
-            true
-        }
     }
+}
 
-    private fun requestNotificationPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (!hasNotificationPermission()) {
-                notifPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-            }
+@Composable
+private fun PomodoroNavHost(
+    navController: NavHostController,
+    timerState: com.matias.pomodoro.timer.PomodoroTimerState,
+    settings: com.matias.pomodoro.data.preferences.PomodoroSettings,
+    todayStats: com.matias.pomodoro.data.PomodoroSession?,
+    weekStats: List<com.matias.pomodoro.data.PomodoroSession>,
+    monthStats: List<com.matias.pomodoro.data.PomodoroSession>,
+    dailyGoalProgress: Float,
+    onStart: () -> Unit,
+    onPause: () -> Unit,
+    onSkip: () -> Unit,
+    onReset: () -> Unit,
+    onUpdateSettings: (suspend com.matias.pomodoro.data.preferences.PomodoroPreferences.() -> Unit) -> Unit
+) {
+    NavHost(
+        navController = navController,
+        startDestination = ROUTE_MAIN,
+        modifier = Modifier,
+        enterTransition = {
+            slideInHorizontally(
+                animationSpec = tween(350, easing = EaseInOutCubic),
+                initialOffsetX = { it }
+            )
+        },
+        exitTransition = {
+            slideOutHorizontally(
+                animationSpec = tween(350, easing = EaseInOutCubic),
+                targetOffsetX = { -it }
+            )
+        },
+        popEnterTransition = {
+            slideInHorizontally(
+                animationSpec = tween(350, easing = EaseInOutCubic),
+                initialOffsetX = { -it }
+            )
+        },
+        popExitTransition = {
+            slideOutHorizontally(
+                animationSpec = tween(350, easing = EaseInOutCubic),
+                targetOffsetX = { it }
+            )
         }
-    }
-
-    private fun enableImmersiveMode() {
-        WindowInsetsControllerCompat(window, window.decorView).apply {
-            systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-            hide(WindowInsetsCompat.Type.systemBars())
+    ) {
+        composable(ROUTE_MAIN) {
+            PomodoroScreen(
+                timerState = timerState,
+                settings = settings,
+                todayStats = todayStats,
+                dailyGoalProgress = dailyGoalProgress,
+                onStart = onStart,
+                onPause = onPause,
+                onSkip = onSkip,
+                onReset = onReset,
+                onOpenStats = { navController.navigate(ROUTE_STATS) { launchSingleTop = true } },
+                onUpdateSettings = onUpdateSettings,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+        composable(ROUTE_STATS) {
+            PomodoroStatsScreen(
+                settings = settings,
+                todayStats = todayStats,
+                weekStats = weekStats,
+                monthStats = monthStats,
+                dailyGoalProgress = dailyGoalProgress,
+                onBack = { navController.navigateUp() },
+                modifier = Modifier.fillMaxSize()
+            )
         }
     }
 }
+
+private const val ROUTE_MAIN = "main"
+private const val ROUTE_STATS = "stats"

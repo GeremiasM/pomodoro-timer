@@ -107,6 +107,30 @@ class PomodoroViewModel(application: Application) : AndroidViewModel(application
             initialValue = null
         )
 
+    val weekStats: StateFlow<List<PomodoroSession>> = repository
+        .getWeekStats(PomodoroDateUtils.currentWeek())
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000L),
+            initialValue = emptyList()
+        )
+
+    val monthStats: StateFlow<List<PomodoroSession>> = repository
+        .getMonthStats(PomodoroDateUtils.currentMonth())
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000L),
+            initialValue = emptyList()
+        )
+
+    val last12MonthsStats: StateFlow<List<PomodoroSession>> = repository
+        .getLast12MonthsStats(PomodoroDateUtils.monthStartForLast12Months())
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000L),
+            initialValue = emptyList()
+        )
+
     val dailyGoalProgress: StateFlow<Float> = combine(todayStats, settings) { stats, settings ->
         val completed = stats?.completedPomodoros ?: 0
         (completed.toFloat() / settings.dailyGoalPomodoros.toFloat()).coerceIn(0f, 1f)
