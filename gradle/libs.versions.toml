@@ -31,8 +31,8 @@ turbine             = "1.2.0"
 workManager         = "2.11.2"
 
 # Ads
-playServicesAds     = "23.0.0"
-ump                 = "2.2.0"
+playServicesAds     = "24.9.0"
+ump                 = "4.0.0"
 
 # Firebase
 firebaseBom         = "33.0.0"

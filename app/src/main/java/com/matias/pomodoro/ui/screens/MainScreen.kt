@@ -3,6 +3,7 @@ package com.matias.pomodoro.ui.screens
 import android.content.Context
 import android.media.AudioAttributes
 import android.media.SoundPool
+import android.util.Log
 import android.view.accessibility.AccessibilityManager
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
@@ -133,6 +134,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
@@ -143,9 +147,11 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.LoadAdError
 import com.matias.pomodoro.analytics.AnalyticsManager
 import com.matias.pomodoro.R
 import com.matias.pomodoro.data.PomodoroSession
@@ -295,6 +301,7 @@ fun PomodoroScreen(
             SettingsScreen(
                 settings = settings,
                 featureDailyGoalEnabled = featureDailyGoalEnabled,
+                onBack = { showSettings = false },
                 onUpdateSettings = onUpdateSettings,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -821,6 +828,7 @@ private fun AmbientBackground(
 private fun SettingsScreen(
     settings: PomodoroSettings,
     featureDailyGoalEnabled: Boolean,
+    onBack: () -> Unit,
     onUpdateSettings: (String, String, suspend PomodoroPreferences.() -> Unit) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -831,12 +839,24 @@ private fun SettingsScreen(
         modifier = modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(22.dp)
     ) {
-        Text(
-            text = stringResource(R.string.settings_title),
-            color = colors.onBackground,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.SemiBold
-        )
+        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            IconButton(onClick = onBack, modifier = Modifier.size(48.dp)) {
+                Icon(
+                    Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = stringResource(R.string.stats_back_cd),
+                    tint = colors.muted
+                )
+            }
+            Text(
+                text = stringResource(R.string.settings_title),
+                color = colors.onBackground,
+                fontSize = 28.sp,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.weight(1f),
+                textAlign = TextAlign.Center
+            )
+            Spacer(Modifier.width(48.dp))
+        }
 
         SettingsSection(title = stringResource(R.string.settings_section_timer)) {
             DebouncedDurationSlider(
@@ -1368,16 +1388,52 @@ private fun EmptyStatsState() {
 
 @Composable
 private fun BannerAd(modifier: Modifier = Modifier) {
-    AndroidView(
-        modifier = modifier.height(AdSize.BANNER.height.dp),
-        factory = { context ->
+    BoxWithConstraints(modifier = modifier) {
+        val context = LocalContext.current
+        val lifecycleOwner = LocalLifecycleOwner.current
+        val adWidth = maxWidth.value.roundToInt().coerceAtLeast(1)
+        val adSize = remember(context, adWidth) {
+            AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(context, adWidth)
+        }
+        val adView = remember(context, adWidth) {
             AdView(context).apply {
-                setAdSize(AdSize.BANNER)
                 adUnitId = BANNER_AD_UNIT_ID
-                loadAd(AdRequest.Builder().build())
+                setAdSize(adSize)
+                adListener = object : AdListener() {
+                    override fun onAdLoaded() {
+                        Log.d(ADS_LOG_TAG, "Banner loaded: ${responseInfo?.responseId}")
+                    }
+
+                    override fun onAdFailedToLoad(error: LoadAdError) {
+                        Log.e(ADS_LOG_TAG, "Banner failed to load:\n$error")
+                    }
+                }
             }
         }
-    )
+
+        LaunchedEffect(adView) {
+            adView.loadAd(AdRequest.Builder().build())
+        }
+        DisposableEffect(lifecycleOwner, adView) {
+            val observer = LifecycleEventObserver { _, event ->
+                when (event) {
+                    Lifecycle.Event.ON_RESUME -> adView.resume()
+                    Lifecycle.Event.ON_PAUSE -> adView.pause()
+                    else -> Unit
+                }
+            }
+            lifecycleOwner.lifecycle.addObserver(observer)
+            onDispose {
+                lifecycleOwner.lifecycle.removeObserver(observer)
+                adView.destroy()
+            }
+        }
+
+        AndroidView(
+            modifier = Modifier.fillMaxWidth().height(adSize.height.dp),
+            factory = { adView }
+        )
+    }
 }
 
 @Composable
@@ -1452,6 +1508,7 @@ private class IndexedLabelFormatter(private val labels: List<String>) : ValueFor
 }
 
 private const val BANNER_AD_UNIT_ID = "ca-app-pub-4712794855635991/4313841604"
+private const val ADS_LOG_TAG = "Pomodoro/Ads"
 
 private fun BarChart.styleBaseChart(color: Color) {
     description.isEnabled = false

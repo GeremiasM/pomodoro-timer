@@ -1,7 +1,10 @@
 package com.matias.pomodoro
 
 import android.app.Application
+import android.os.Handler
+import android.os.Looper
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
 import com.matias.pomodoro.ads.AdInterstitialManager
 import com.matias.pomodoro.analytics.AnalyticsManager
 import com.matias.pomodoro.config.RemoteConfigManager
@@ -19,6 +22,8 @@ class PomodoroApplication : Application() {
     private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     lateinit var adInterstitialManager: AdInterstitialManager
         private set
+    private val mobileAdsInitializationCallbacks = mutableListOf<() -> Unit>()
+    private var mobileAdsInitializationStarted = false
     private var mobileAdsInitialized = false
 
     override fun onCreate() {
@@ -38,10 +43,34 @@ class PomodoroApplication : Application() {
         }
     }
 
-    fun initializeMobileAds() {
-        if (mobileAdsInitialized) return
-        mobileAdsInitialized = true
-        MobileAds.initialize(this) {}
-        adInterstitialManager.preload()
+    fun initializeMobileAds(onInitialized: () -> Unit = {}) {
+        if (mobileAdsInitialized) {
+            onInitialized()
+            return
+        }
+
+        mobileAdsInitializationCallbacks += onInitialized
+        if (mobileAdsInitializationStarted) return
+        mobileAdsInitializationStarted = true
+
+        if (BuildConfig.DEBUG) {
+            val requestConfiguration = RequestConfiguration.Builder()
+                .setTestDeviceIds(listOf(DEBUG_TEST_DEVICE_ID))
+                .build()
+            MobileAds.setRequestConfiguration(requestConfiguration)
+        }
+
+        MobileAds.initialize(this) {
+            Handler(Looper.getMainLooper()).post {
+                mobileAdsInitialized = true
+                val callbacks = mobileAdsInitializationCallbacks.toList()
+                mobileAdsInitializationCallbacks.clear()
+                callbacks.forEach { it() }
+            }
+        }
+    }
+
+    private companion object {
+        const val DEBUG_TEST_DEVICE_ID = "992B532AFED7E70954E089CA6D78F721"
     }
 }

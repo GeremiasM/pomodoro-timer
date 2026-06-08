@@ -145,11 +145,13 @@ class MainActivity : ComponentActivity() {
     private fun requestConsentAndRemoteConfig() {
         val app = application as PomodoroApplication
         ConsentManager(this).requestConsent { consentObtained ->
-            if (consentObtained) {
-                app.initializeMobileAds()
-            }
-            RemoteConfigManager.fetchAndActivate {
-                val interstitialEnabled = consentObtained && RemoteConfigManager.adInterstitialEnabled
+            var adsSdkInitialized = false
+            var remoteConfigFetched = false
+
+            fun updateRemoteUiState() {
+                if (!remoteConfigFetched) return
+                val canShowAds = consentObtained && adsSdkInitialized
+                val interstitialEnabled = canShowAds && RemoteConfigManager.adInterstitialEnabled
                 app.adInterstitialManager.configure(
                     interstitialEnabled = interstitialEnabled,
                     interstitialFrequency = RemoteConfigManager.adInterstitialFrequency
@@ -157,13 +159,24 @@ class MainActivity : ComponentActivity() {
                 remoteUiState = RemoteUiState(
                     featureStatsEnabled = RemoteConfigManager.featureStatsEnabled,
                     featureDailyGoalEnabled = RemoteConfigManager.featureDailyGoalEnabled,
-                    adBannerEnabled = consentObtained && RemoteConfigManager.adBannerEnabled,
+                    adBannerEnabled = canShowAds && RemoteConfigManager.adBannerEnabled,
                     adInterstitialEnabled = interstitialEnabled,
                     adInterstitialFrequency = RemoteConfigManager.adInterstitialFrequency,
                     motdText = RemoteConfigManager.motdText,
                     motdEnabled = RemoteConfigManager.motdEnabled,
                     forceUpdateRequired = BuildConfig.VERSION_CODE < RemoteConfigManager.minSupportedVersionCode
                 )
+            }
+
+            if (consentObtained) {
+                app.initializeMobileAds {
+                    adsSdkInitialized = true
+                    updateRemoteUiState()
+                }
+            }
+            RemoteConfigManager.fetchAndActivate {
+                remoteConfigFetched = true
+                updateRemoteUiState()
             }
         }
     }
@@ -184,8 +197,8 @@ class MainActivity : ComponentActivity() {
 data class RemoteUiState(
     val featureStatsEnabled: Boolean = true,
     val featureDailyGoalEnabled: Boolean = true,
-    val adBannerEnabled: Boolean = true,
-    val adInterstitialEnabled: Boolean = true,
+    val adBannerEnabled: Boolean = false,
+    val adInterstitialEnabled: Boolean = false,
     val adInterstitialFrequency: Int = 2,
     val motdText: String = "",
     val motdEnabled: Boolean = false,
