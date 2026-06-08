@@ -3,112 +3,6 @@
     <!-- Application -->
     <string name="app_name">Pomodoro Timer</string>
 
-    <!-- Notifications -->
-    <string name="notification_channel_timer_active_name">Pomodoro Timer – Активный таймер</string>
-    <string name="notification_channel_timer_active_description">Показывает время до следующего разрыва глаз</string>
-    <string name="notification_channel_rest_alert_name">Pomodoro Timer – Время перерыва!</string>
-    <string name="notification_channel_rest_alert_description">20-20-20 Напоминание о здоровье глаз</string>
-    <string name="notification_timer_active_title">Pomodoro Timer – Активное здоровье глаз</string>
-    <string name="notification_next_break_in_format">Следующий прорыв в %1$02d:%2$02d</string>
-    <string name="notification_action_rest_now">Отдыхай сейчас</string>
-    <string name="notification_rest_alert_title">👁️ Время передохнуть!</string>
-    <string name="notification_rest_alert_text_format">Прошло %1$d минут. Следуйте правилу 20-20-20.</string>
-    <string name="notification_rest_alert_big_text_format">%1$d минут перед экраном.\n\nСмотрите на что-то на расстоянии 6 метров в течение 20 секунд.</string>
-
-    <!-- Snackbars -->
-    <string name="snackbar_rest_completed">Перерыв завершен! 👁️</string>
-
-    <!-- Rest Messages -->
-    <string name="rest_message_look_far_breathe">Посмотрите на что-то на расстоянии 6 метров и сделайте глубокий вдох.</string>
-    <string name="rest_message_blink_slowly">Медленно моргните 10 раз, чтобы увлажнить глаза.</string>
-    <string name="rest_message_follow_bubbles">Следите за пузырьками глазами, не двигая головой.</string>
-    <string name="rest_message_relax_neck_shoulders">Расслабьте мышцы шеи и плеч</string>
-    <string name="rest_message_close_eyes">Аккуратно закройте глаза на несколько секунд</string>
-    <string name="rest_message_focus_far_window">Сосредоточьтесь на чем-то далеком через окно</string>
-
-    <!-- Rest Screen -->
-    <string name="rest_screen_title">разрыв глаз</string>
-    <string name="rest_screen_subtitle">Правило 20·20·20</string>
-    <string name="rest_screen_skip_button">пропустить перерыв</string>
-
-    <!-- Main Screen -->
-    <string name="main_exit_fullscreen_content_description">Выйти из полноэкранного режима</string>
-    <string name="main_header_tagline">здоровье глаз 20·20·20</string>
-    <string name="main_fullscreen_content_description">Полный экран</string>
-    <string name="main_lava_preview_instruction">Следите глазами за пузырьками, чтобы растянуть глазные мышцы.</string>
-    <string name="main_customize_label">Настроить:</string>
-    <string name="main_change_mode_content_description">Изменить режим</string>
-    <string name="main_mode_label_format">Режим %1$s</string>
-    <string name="focus_mode_lava">Лава</string>
-    <string name="focus_mode_infinity">бесконечность</string>
-    <string name="focus_mode_circular">Круговой</string>
-    <string name="main_change_color_content_description">Изменить цвет</string>
-    <string name="main_color_label_format">Цвет %1$s</string>
-    <string name="color_amber">Янтарь</string>
-    <string name="color_terra">Терра</string>
-    <string name="color_dusk">Сумерки</string>
-    <string name="color_forest">Лес</string>
-    <string name="color_candlelight">при свечах</string>
-    <string name="color_sepia">сепия</string>
-    <string name="color_emerald">Изумрудный</string>
-    <string name="main_timer_until_break">до перерыва</string>
-    <string name="main_timer_minutes_label">минуты</string>
-    <string name="main_timer_pause_button">Пауза</string>
-    <string name="main_timer_start_button">Старт</string>
-    <string name="main_stats_breaks_today">перерыв сегодня</string>
-    <string name="main_stats_pause_seconds">пауза секунд</string>
-    <string name="main_stats_healthy_done">✓</string>
-    <string name="main_stats_healthy_pending">...</string>
-    <string name="main_stats_healthy_session">здоровая сессия</string>
-    <string name="main_palette_title">Палитра</string>
-    <string name="main_focus_style_title">Стиль точки фокусировки</string>
-    <string name="focus_mode_lava_description">Жидкий и органический</string>
-    <string name="focus_mode_concentric_circles">Концентрические круги</string>
-    <string name="focus_mode_circles_description">Круговое упражнение</string>
-    <string name="main_interval_title">Интервал перерыва</string>
-    <string name="main_interval_description">Выберите, когда вы хотите, чтобы мы напоминали вам о перерыве</string>
-    <string name="main_interval_minutes_short_format">%1$d мин.</string>
-    <string name="main_interval_who_recommendation">Рекомендации ВОЗ: 20 мин.</string>
-    <string name="main_interval_tick_5">5</string>
-    <string name="main_interval_tick_15">15</string>
-    <string name="main_interval_tick_20">20</string>
-    <string name="main_interval_tick_30">30</string>
-    <string name="main_interval_tick_45">45</string>
-    <string name="main_interval_tick_60">60</string>
-
-    <!-- Eye Wellness -->
-    <string name="eye_wellness_title">Здоровье глаз</string>
-    <string name="eye_wellness_card_description">Узнайте, как правило 20·20·20 помогает вашим глазам отдохнуть.</string>
-    <string name="eye_wellness_view_info_content_description">Посмотреть информацию</string>
-    <string name="dialog_understood_button">понял</string>
-    <string name="eye_wellness_dialog_subtitle">Здоровье глаз 20·20·20</string>
-    <string name="eye_wellness_dialog_intro">Длительное использование экрана может привести к увеличению напряжения глаз при работе с цифровыми устройствами, сухости глаз, дискомфорту от постоянной фокусировки вблизи и нарушению сна при использовании устройств в ночное время.</string>
-    <string name="eye_wellness_rule_title">Правило 20·20·20</string>
-    <string name="eye_wellness_rule_description">Каждые 20 минут смотрите на объект на расстоянии около 20 футов (около 6 метров) в течение 20 секунд.</string>
-    <string name="eye_wellness_less_digital_strain_title">Меньше цифрового напряжения глаз</string>
-    <string name="eye_wellness_less_digital_strain_description">Управляемые паузы помогают вашим глазам перестать постоянно фокусироваться на близком расстоянии. Исследование правила 20·20·20 выявило уменьшение симптомов цифрового напряжения глаз и сухости глаз.</string>
-    <string name="eye_wellness_blinking_title">Больше моргания и смазки</string>
-    <string name="eye_wellness_blinking_description">Когда мы пользуемся экранами, мы склонны моргать меньше или моргать не полностью. Перерывы помогают восстановить более естественный ритм моргания и отдыха глаз.</string>
-    <string name="eye_wellness_prolonged_use_risk_title">Риск от длительного использования</string>
-    <string name="eye_wellness_prolonged_use_risk_description">Просмотр экранов в течение длительного времени может вызвать усталость глаз, временное затуманивание зрения, ощущение жжения, сухость глаз, головные боли и трудности с сохранением концентрации внимания.</string>
-    <string name="eye_wellness_blue_light_sleep_title">Синий свет и ночной отдых</string>
-    <string name="eye_wellness_blue_light_sleep_description">Синий свет от экранов, особенно ночью, может влиять на циркадный ритм и выработку мелатонина, влияя на качество сна.</string>
-    <string name="eye_wellness_attention_title">Внимание и умственная работоспособность</string>
-    <string name="eye_wellness_attention_description">Синий свет может повысить бдительность и время реакции в течение дня, но ночью он может быть контрпродуктивным, активируя организм, когда ему следует готовиться к отдыху.</string>
-    <string name="eye_wellness_duration_matters_title">Продолжительность тоже имеет значение</string>
-    <string name="eye_wellness_duration_matters_description">Воздействие света зависит не только от цвета: интенсивность, время экспозиции и время также имеют значение. Вот почему важно делать перерывы и снижать интенсивность воздействия перед сном.</string>
-    <string name="eye_wellness_healthy_tips_title">Здоровые советы</string>
-    <string name="eye_wellness_healthy_tips_body">• Включайте напоминания каждые 20 минут.\n• Смотрите далеко в течение 20 секунд.\n• Сознательно моргайте во время перерыва.\n• Уменьшите яркость, если в комнате темно.\n• Избегайте ярких экранов перед сном.\n• Если дискомфорт не исчезнет, обратитесь к специалисту.</string>
-    <string name="eye_wellness_references_title">Академические ссылки</string>
-    <string name="eye_wellness_references_body">Talens-Estarelles, C., Cerviño, A., García-Lázaro, S., Fogelton, A., Sheppard, A., &amp; Wolffsohn, J. S. (2023). The effects of breaks on digital eye strain, dry eye and binocular vision: Testing the 20-20-20 rule. Contact Lens &amp; Anterior Eye, 46(2), 101744. https://doi.org/10.1016/j.clae.2022.101744\n\nHaghani, M., Abbasi, S., Abdoli, L., Shams, S. F., Baha’addini Baigy Zarandi, B. F., Shokrpour, N., Jahromizadeh, A., Mortazavi, S. A., &amp; Mortazavi, S. M. J. (2024). Blue Light and Digital Screens Revisited: A New Look at Blue Light from the Vision Quality, Circadian Rhythm and Cognitive Functions Perspective. Journal of Biomedical Physics and Engineering, 14(3), 213–228. https://doi.org/10.31661/jbpe.v0i0.2106-1355</string>
-    <string name="eye_wellness_medical_disclaimer">Эта информация носит образовательный характер и не заменяет медицинское обследование. Если у вас есть боль, постоянное помутнение зрения, сильная сухость или частый дискомфорт, обратитесь к офтальмологу.</string>
-
-    <!-- Pomodoro Timer Pro -->
-    <string name="pomodoro_pro_icon_content_description">Значок Pomodoro Timer Pro</string>
-    <string name="pomodoro_pro_title">Обновление до Pomodoro Timer Pro</string>
-    <string name="pro_badge">PRO</string>
-    <string name="pomodoro_pro_description">Наслаждайтесь Pomodoro Timer без рекламы, персонализируйте свой опыт с помощью эксклюзивных цветовых тем и отслеживайте свой прогресс с помощью подробной статистики.</string>
-    <string name="pomodoro_pro_play_store_content_description">Перейти на Play Store</string>
     <!-- Pomodoro Timer UI -->
     <!-- Phase names -->
     <string name="pomodoro_phase_work">Фокус</string>
@@ -130,11 +24,6 @@
     <string name="pomodoro_cd_settings">Открыть настройки</string>
     <string name="pomodoro_cd_stats">Посмотреть статистику</string>
     <string name="pomodoro_cd_timer_circle">Таймер: осталось %1$s</string>
-    <!-- Phase transition messages -->
-    <string name="pomodoro_msg_work_complete">Отличная работа! Время для перерыва.</string>
-    <string name="pomodoro_msg_short_break_complete">Перерыв окончен. Готовы сфокусироваться?</string>
-    <string name="pomodoro_msg_long_break_complete">Восстановились! Вернемся к работе.</string>
-    <string name="pomodoro_msg_cycle_complete">Цикл завершен! 🎉</string>
     <!-- Settings screen -->
     <string name="settings_title">Настройки</string>
     <string name="settings_section_timer">Таймер</string>
@@ -209,8 +98,6 @@
     <string name="notif_action_pause">Пауза</string>
     <string name="notif_action_resume">Продолжить</string>
     <string name="notif_action_skip">Пропустить</string>
-    <!-- AdMob consent -->
-    <string name="ads_loading">Загрузка...</string>
     <!-- Remote Config UI -->
     <string name="force_update_title">Требуется обновление</string>
     <string name="force_update_message">Для продолжения нужна более новая версия Pomodoro Timer.</string>

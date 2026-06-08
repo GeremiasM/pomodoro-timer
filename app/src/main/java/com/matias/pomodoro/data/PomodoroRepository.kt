@@ -13,13 +13,6 @@ class PomodoroRepository(
 
     fun getMonthStats(month: String): Flow<List<PomodoroSession>> = dao.getMonthStats(month)
 
-    fun getLast12MonthsStats(startMonth: String): Flow<List<PomodoroSession>> =
-        dao.getLast12MonthsStats(startMonth)
-
-    suspend fun upsertSession(session: PomodoroSession) = withContext(Dispatchers.IO) {
-        dao.upsertSession(session)
-    }
-
     suspend fun deleteOlderThan(date: String) = withContext(Dispatchers.IO) {
         dao.deleteOlderThan(date)
     }

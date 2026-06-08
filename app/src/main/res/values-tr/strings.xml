@@ -3,112 +3,6 @@
     <!-- Application -->
     <string name="app_name">Pomodoro Timer</string>
 
-    <!-- Notifications -->
-    <string name="notification_channel_timer_active_name">Pomodoro Timer – Active Timer</string>
-    <string name="notification_channel_timer_active_description">Shows the time until your next eye break</string>
-    <string name="notification_channel_rest_alert_name">Pomodoro Timer – Time for a Break!</string>
-    <string name="notification_channel_rest_alert_description">20-20-20 eye wellness reminder</string>
-    <string name="notification_timer_active_title">Pomodoro Timer – Active Eye Wellness</string>
-    <string name="notification_next_break_in_format">Next break in %1$02d:%2$02d</string>
-    <string name="notification_action_rest_now">Rest now</string>
-    <string name="notification_rest_alert_title">👁️ Time for an eye break!</string>
-    <string name="notification_rest_alert_text_format">%1$d minutes have passed. Follow the 20-20-20 rule.</string>
-    <string name="notification_rest_alert_big_text_format">%1$d minutes in front of the screen.\n\nLook at something 6 meters away for 20 seconds.</string>
-
-    <!-- Snackbars -->
-    <string name="snackbar_rest_completed">Break completed! 👁️</string>
-
-    <!-- Rest Messages -->
-    <string name="rest_message_look_far_breathe">Look at something 6 meters away and take a deep breath</string>
-    <string name="rest_message_blink_slowly">Blink slowly 10 times to hydrate your eyes</string>
-    <string name="rest_message_follow_bubbles">Follow the bubbles with your eyes, without moving your head</string>
-    <string name="rest_message_relax_neck_shoulders">Relax the muscles in your neck and shoulders</string>
-    <string name="rest_message_close_eyes">Gently close your eyes for a few seconds</string>
-    <string name="rest_message_focus_far_window">Focus on something far away through the window</string>
-
-    <!-- Rest Screen -->
-    <string name="rest_screen_title">eye break</string>
-    <string name="rest_screen_subtitle">20·20·20 rule</string>
-    <string name="rest_screen_skip_button">skip break</string>
-
-    <!-- Main Screen -->
-    <string name="main_exit_fullscreen_content_description">Exit full screen</string>
-    <string name="main_header_tagline">eye wellness 20·20·20</string>
-    <string name="main_fullscreen_content_description">Full screen</string>
-    <string name="main_lava_preview_instruction">Follow the bubbles with your eyes to stretch your eye muscles</string>
-    <string name="main_customize_label">Customize:</string>
-    <string name="main_change_mode_content_description">Change mode</string>
-    <string name="main_mode_label_format">Mode %1$s</string>
-    <string name="focus_mode_lava">Lava</string>
-    <string name="focus_mode_infinity">Infinity</string>
-    <string name="focus_mode_circular">Circular</string>
-    <string name="main_change_color_content_description">Change color</string>
-    <string name="main_color_label_format">Color %1$s</string>
-    <string name="color_amber">Amber</string>
-    <string name="color_terra">Terra</string>
-    <string name="color_dusk">Dusk</string>
-    <string name="color_forest">Forest</string>
-    <string name="color_candlelight">Candlelight</string>
-    <string name="color_sepia">Sepia</string>
-    <string name="color_emerald">Emerald</string>
-    <string name="main_timer_until_break">until break</string>
-    <string name="main_timer_minutes_label">minutes</string>
-    <string name="main_timer_pause_button">Pause</string>
-    <string name="main_timer_start_button">Start</string>
-    <string name="main_stats_breaks_today">breaks today</string>
-    <string name="main_stats_pause_seconds">pause seconds</string>
-    <string name="main_stats_healthy_done">✓</string>
-    <string name="main_stats_healthy_pending">...</string>
-    <string name="main_stats_healthy_session">healthy session</string>
-    <string name="main_palette_title">Palette</string>
-    <string name="main_focus_style_title">Focus Point Style</string>
-    <string name="focus_mode_lava_description">Fluid and organic</string>
-    <string name="focus_mode_concentric_circles">Concentric circles</string>
-    <string name="focus_mode_circles_description">Circular exercise</string>
-    <string name="main_interval_title">Break interval</string>
-    <string name="main_interval_description">Choose when you want us to remind you to take a break</string>
-    <string name="main_interval_minutes_short_format">%1$d min</string>
-    <string name="main_interval_who_recommendation">WHO recommendation: 20 min</string>
-    <string name="main_interval_tick_5">5</string>
-    <string name="main_interval_tick_15">15</string>
-    <string name="main_interval_tick_20">20</string>
-    <string name="main_interval_tick_30">30</string>
-    <string name="main_interval_tick_45">45</string>
-    <string name="main_interval_tick_60">60</string>
-
-    <!-- Eye Wellness -->
-    <string name="eye_wellness_title">Eye wellness</string>
-    <string name="eye_wellness_card_description">Learn how the 20·20·20 rule helps your eyes rest.</string>
-    <string name="eye_wellness_view_info_content_description">View information</string>
-    <string name="dialog_understood_button">Got it</string>
-    <string name="eye_wellness_dialog_subtitle">Eye wellness 20·20·20</string>
-    <string name="eye_wellness_dialog_intro">Prolonged screen use can increase digital eye strain, dry eyes, discomfort from continuous near focus, and sleep disruption when devices are used at night.</string>
-    <string name="eye_wellness_rule_title">20·20·20 rule</string>
-    <string name="eye_wellness_rule_description">Every 20 minutes, look at an object about 20 feet away (around 6 meters) for 20 seconds.</string>
-    <string name="eye_wellness_less_digital_strain_title">Less digital eye strain</string>
-    <string name="eye_wellness_less_digital_strain_description">Guided breaks help your eyes stop focusing continuously at close range. The study on the 20·20·20 rule found reduced symptoms of digital eye strain and dry eye.</string>
-    <string name="eye_wellness_blinking_title">More blinking and lubrication</string>
-    <string name="eye_wellness_blinking_description">When we use screens, we tend to blink less or blink incompletely. Breaks help restore a more natural rhythm of blinking and eye rest.</string>
-    <string name="eye_wellness_prolonged_use_risk_title">Risk from prolonged use</string>
-    <string name="eye_wellness_prolonged_use_risk_description">Looking at screens for long periods can cause eye fatigue, temporary blurred vision, burning sensations, dry eyes, headaches, and difficulty maintaining focus.</string>
-    <string name="eye_wellness_blue_light_sleep_title">Blue light and nighttime rest</string>
-    <string name="eye_wellness_blue_light_sleep_description">Blue light from screens, especially at night, can interfere with circadian rhythm and melatonin production, affecting sleep quality.</string>
-    <string name="eye_wellness_attention_title">Attention and mental performance</string>
-    <string name="eye_wellness_attention_description">Blue light can increase alertness and reaction time during the day, but at night it can be counterproductive by activating the body when it should be preparing to rest.</string>
-    <string name="eye_wellness_duration_matters_title">Duration matters too</string>
-    <string name="eye_wellness_duration_matters_description">The impact of light does not depend only on color: intensity, exposure time, and timing also matter. That is why taking breaks and reducing intense exposure before sleep is important.</string>
-    <string name="eye_wellness_healthy_tips_title">Healthy tips</string>
-    <string name="eye_wellness_healthy_tips_body">• Turn on reminders every 20 minutes.\n• Look far away for 20 seconds.\n• Blink consciously during the break.\n• Lower brightness if the room is dark.\n• Avoid intense screens before bed.\n• See a specialist if discomfort persists.</string>
-    <string name="eye_wellness_references_title">Academic references</string>
-    <string name="eye_wellness_references_body">Talens-Estarelles, C., Cerviño, A., García-Lázaro, S., Fogelton, A., Sheppard, A., &amp; Wolffsohn, J. S. (2023). The effects of breaks on digital eye strain, dry eye and binocular vision: Testing the 20-20-20 rule. Contact Lens &amp; Anterior Eye, 46(2), 101744. https://doi.org/10.1016/j.clae.2022.101744\n\nHaghani, M., Abbasi, S., Abdoli, L., Shams, S. F., Baha’addini Baigy Zarandi, B. F., Shokrpour, N., Jahromizadeh, A., Mortazavi, S. A., &amp; Mortazavi, S. M. J. (2024). Blue Light and Digital Screens Revisited: A New Look at Blue Light from the Vision Quality, Circadian Rhythm and Cognitive Functions Perspective. Journal of Biomedical Physics and Engineering, 14(3), 213–228. https://doi.org/10.31661/jbpe.v0i0.2106-1355</string>
-    <string name="eye_wellness_medical_disclaimer">This information is educational and does not replace a medical evaluation. If you have pain, persistent blurred vision, severe dryness, or frequent discomfort, consult an eye care professional.</string>
-
-    <!-- Pomodoro Timer Pro -->
-    <string name="pomodoro_pro_icon_content_description">Pomodoro Timer Pro icon</string>
-    <string name="pomodoro_pro_title">Upgrade to Pomodoro Timer Pro</string>
-    <string name="pro_badge">PRO</string>
-    <string name="pomodoro_pro_description">Enjoy Pomodoro Timer without ads, personalize your experience with exclusive color themes, and monitor your progress with detailed stats.</string>
-    <string name="pomodoro_pro_play_store_content_description">Go to Play Store</string>
     <!-- Pomodoro Timer UI -->
     <!-- Phase names -->
     <string name="pomodoro_phase_work">Odaklanma</string>
@@ -130,11 +24,6 @@
     <string name="pomodoro_cd_settings">Ayarları aç</string>
     <string name="pomodoro_cd_stats">İstatistikleri görüntüle</string>
     <string name="pomodoro_cd_timer_circle">Zamanlayıcı: %1$s kaldı</string>
-    <!-- Phase transition messages -->
-    <string name="pomodoro_msg_work_complete">Harika iş! Mola zamanı.</string>
-    <string name="pomodoro_msg_short_break_complete">Mola bitti. Odaklanmaya hazır mısın?</string>
-    <string name="pomodoro_msg_long_break_complete">Tazelendin! Hadi devam edelim.</string>
-    <string name="pomodoro_msg_cycle_complete">Tam döngü tamamlandı! 🎉</string>
     <!-- Settings screen -->
     <string name="settings_title">Ayarlar</string>
     <string name="settings_section_timer">Zamanlayıcı</string>
@@ -209,8 +98,6 @@
     <string name="notif_action_pause">Duraklat</string>
     <string name="notif_action_resume">Sürdür</string>
     <string name="notif_action_skip">Atla</string>
-    <!-- AdMob consent -->
-    <string name="ads_loading">Yükleniyor...</string>
     <!-- Remote Config UI -->
     <string name="force_update_title">Güncelleme gerekli</string>
     <string name="force_update_message">Devam etmek için Pomodoro Timer’ın daha yeni bir sürümü gerekir.</string>

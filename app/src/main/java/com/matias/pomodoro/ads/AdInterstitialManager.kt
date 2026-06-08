@@ -39,7 +39,7 @@ class AdInterstitialManager(private val context: Context) {
         }
     }
 
-    fun preload() {
+    private fun preload() {
         if (!enabled || isLoading || interstitialAd != null) return
         isLoading = true
         InterstitialAd.load(

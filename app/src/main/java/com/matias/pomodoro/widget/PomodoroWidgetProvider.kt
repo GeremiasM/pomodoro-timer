@@ -13,6 +13,7 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.os.Bundle
 import android.widget.RemoteViews
+import androidx.core.graphics.createBitmap
 import com.matias.pomodoro.R
 import com.matias.pomodoro.service.PomodoroTimerService
 import com.matias.pomodoro.timer.PomodoroPhase
@@ -105,7 +106,7 @@ class PomodoroWidgetProvider : AppWidgetProvider() {
             val primary = primaryColor(selectedTheme, timerState.phase)
             setImageViewBitmap(R.id.widget_background, roundedBackground(primary))
             setTextViewText(R.id.widget_phase_icon, phaseLabel(context, timerState.phase))
-            setTextViewText(R.id.widget_time, formatTime(context, timerState.remainingSeconds))
+            setTextViewText(R.id.widget_time, formatTime(timerState.remainingSeconds))
             setImageViewResource(
                 R.id.widget_play_pause,
                 if (timerState.status == TimerStatus.RUNNING) R.drawable.ic_widget_pause else R.drawable.ic_widget_play
@@ -135,7 +136,7 @@ class PomodoroWidgetProvider : AppWidgetProvider() {
             PomodoroPhase.LongBreak -> context.getString(R.string.widget_label_break)
         }
 
-        private fun formatTime(context: Context, totalSeconds: Int): String {
+        private fun formatTime(totalSeconds: Int): String {
             val safeSeconds = totalSeconds.coerceAtLeast(0)
             val minutes = safeSeconds / 60
             val seconds = safeSeconds % 60
@@ -143,7 +144,7 @@ class PomodoroWidgetProvider : AppWidgetProvider() {
         }
 
         private fun roundedBackground(primaryColor: Int): Bitmap {
-            val bitmap = Bitmap.createBitmap(720, 180, Bitmap.Config.ARGB_8888)
+            val bitmap = createBitmap(720, 180)
             val canvas = Canvas(bitmap)
             val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
                 color = Color.argb(51, Color.red(primaryColor), Color.green(primaryColor), Color.blue(primaryColor))
@@ -153,7 +154,7 @@ class PomodoroWidgetProvider : AppWidgetProvider() {
         }
 
         private fun primaryColor(selectedTheme: String, phase: PomodoroPhase): Int {
-            val color = when (selectedTheme.lowercase()) {
+            val color = when (selectedTheme) {
                 "sunset" -> when (phase) {
                     PomodoroPhase.Work -> 0xFFE05C3A
                     PomodoroPhase.ShortBreak -> 0xFFE0A03A

@@ -46,7 +46,6 @@ android {
     }
 
     lint {
-        baseline = file("lint-baseline.xml")
         abortOnError = false
         checkReleaseBuilds = false
     }
@@ -61,7 +60,6 @@ android {
 dependencies {
     val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)
-    androidTestImplementation(composeBom)
 
     // Firebase
     implementation(platform(libs.firebase.bom))
@@ -72,20 +70,16 @@ dependencies {
     // Compose
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
-    implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.animation)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.core.splashscreen)
-    implementation(libs.accompanist.systemuicontroller)
     implementation(libs.mpandroidchart)
 
     // Activity & Lifecycle
     implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.fragment.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.fragment)
     implementation(libs.androidx.lifecycle.runtime.compose)
 
     // Room
@@ -104,7 +98,6 @@ dependencies {
 
     // Core KTX + NotificationCompat
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.core)
 
     // Ads
     implementation(libs.play.services.ads)
@@ -112,13 +105,8 @@ dependencies {
 
     // Debug
     debugImplementation(libs.androidx.compose.ui.tooling)
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
 
     // Tests
     testImplementation(libs.junit)
-    testImplementation(libs.kotlinx.coroutines.test)
-    testImplementation(libs.turbine)
     androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
 }

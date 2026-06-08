@@ -61,13 +61,6 @@ class PomodoroTimerService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         when (intent?.action) {
-            ACTION_STOP -> {
-                stopTimerJob()
-                stopForegroundCompat()
-                state.update { it.copy(status = TimerStatus.IDLE) }
-                stopSelf()
-                return START_NOT_STICKY
-            }
             ACTION_PAUSE -> {
                 ensureForeground()
                 pauseCurrentPhase()
@@ -79,10 +72,6 @@ class PomodoroTimerService : Service() {
             ACTION_RESET -> {
                 ensureForeground()
                 resetCurrentPhase()
-            }
-            ACTION_RESET_ALL -> {
-                ensureForeground()
-                resetAllPhases()
             }
             ACTION_START, null -> {
                 ensureForeground()
@@ -179,23 +168,6 @@ class PomodoroTimerService : Service() {
         state.update {
             it.copy(
                 status = TimerStatus.IDLE,
-                totalDurationSeconds = duration,
-                remainingSeconds = duration,
-                progressFraction = 1f
-            )
-        }
-        updateNotificationIfForeground()
-    }
-
-    private fun resetAllPhases() {
-        stopTimerJob()
-        phaseStartedAutomatically = false
-        val duration = currentSettings.workDurationSeconds
-        state.update {
-            it.copy(
-                phase = PomodoroPhase.Work,
-                status = TimerStatus.IDLE,
-                currentSessionNumber = 1,
                 totalDurationSeconds = duration,
                 remainingSeconds = duration,
                 progressFraction = 1f
@@ -366,7 +338,6 @@ class PomodoroTimerService : Service() {
     }
 
     private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
         val notificationManager = getSystemService(NotificationManager::class.java)
         val channel = NotificationChannel(
             CHANNEL_ID,
@@ -530,12 +501,7 @@ class PomodoroTimerService : Service() {
                 getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
             }
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                vibrator.vibrate(VibrationEffect.createWaveform(pattern, -1))
-            } else {
-                @Suppress("DEPRECATION")
-                vibrator.vibrate(pattern, -1)
-            }
+            vibrator.vibrate(VibrationEffect.createWaveform(pattern, -1))
         } catch (exception: Exception) {
             recordTimerException(exception)
         }
@@ -557,16 +523,6 @@ class PomodoroTimerService : Service() {
         timerJob = null
     }
 
-    private fun stopForegroundCompat() {
-        isForeground = false
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            stopForeground(STOP_FOREGROUND_REMOVE)
-        } else {
-            @Suppress("DEPRECATION")
-            stopForeground(true)
-        }
-    }
-
     companion object {
         const val CHANNEL_ID = "pomodoro_timer"
         const val NOTIFICATION_ID = 1001
@@ -575,8 +531,6 @@ class PomodoroTimerService : Service() {
         const val ACTION_PAUSE = "com.matias.pomodoro.timer.PAUSE"
         const val ACTION_SKIP = "com.matias.pomodoro.timer.SKIP"
         const val ACTION_RESET = "com.matias.pomodoro.timer.RESET"
-        const val ACTION_RESET_ALL = "com.matias.pomodoro.timer.RESET_ALL"
-        const val ACTION_STOP = "com.matias.pomodoro.timer.STOP"
 
         val state = MutableStateFlow(PomodoroTimerState())
 

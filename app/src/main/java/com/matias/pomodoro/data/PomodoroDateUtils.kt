@@ -17,8 +17,6 @@ object PomodoroDateUtils {
 
     fun currentMonth(): String = YearMonth.now().format(monthFormatter)
 
-    fun monthStartForLast12Months(): String = YearMonth.now().minusMonths(11).format(monthFormatter)
-
     fun dateDaysAgo(days: Long): String = LocalDate.now().minusDays(days).format(dateFormatter)
 
     fun weekFor(date: LocalDate): String {

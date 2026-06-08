@@ -19,9 +19,6 @@ abstract class PomodoroSessionDao {
     @Query("SELECT * FROM pomodoro_sessions WHERE month = :month ORDER BY date ASC")
     abstract fun getMonthStats(month: String): Flow<List<PomodoroSession>>
 
-    @Query("SELECT * FROM pomodoro_sessions WHERE month >= :startMonth ORDER BY month ASC, date ASC")
-    abstract fun getLast12MonthsStats(startMonth: String): Flow<List<PomodoroSession>>
-
     @Transaction
     open suspend fun upsertSession(session: PomodoroSession) {
         val existing = getSessionByDate(session.date)

@@ -146,8 +146,7 @@ private fun materialScheme(colors: PomodoroColors): ColorScheme = darkColorSchem
 )
 
 private fun paletteFor(selectedTheme: String, phase: PomodoroPhase): PomodoroColors {
-    val normalizedTheme = selectedTheme.lowercase()
-    val base = when (normalizedTheme) {
+    val base = when (selectedTheme) {
         "sunset" -> when (phase) {
             PomodoroPhase.Work -> Triple(Color(0xFF1B0D0D), Color(0xFFE05C3A), Color(0xFFFF9966))
             PomodoroPhase.ShortBreak -> Triple(Color(0xFF1B140D), Color(0xFFE0A03A), Color(0xFFFFD080))

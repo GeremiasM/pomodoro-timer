@@ -4,12 +4,12 @@ import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.OnBackPressedCallback
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.animation.core.EaseInOutCubic
@@ -26,17 +26,21 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.view.WindowCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.matias.pomodoro.data.PomodoroSession
+import com.matias.pomodoro.data.preferences.PomodoroPreferences
+import com.matias.pomodoro.data.preferences.PomodoroSettings
 import com.matias.pomodoro.config.RemoteConfigManager
 import com.matias.pomodoro.consent.ConsentManager
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.matias.pomodoro.timer.PomodoroTimerState
 import com.matias.pomodoro.ui.screens.PomodoroScreen
 import com.matias.pomodoro.ui.screens.PomodoroStatsScreen
 import com.matias.pomodoro.ui.theme.LocalPomodoroColors
@@ -56,15 +60,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                isEnabled = false
-                onBackPressedDispatcher.onBackPressed()
-                isEnabled = true
-            }
-        })
 
         setContent {
             val timerState by viewModel.timerState.collectAsStateWithLifecycle()
@@ -81,11 +76,11 @@ class MainActivity : ComponentActivity() {
                 selectedTheme = settings.selectedTheme
             ) {
                 val colors = LocalPomodoroColors.current
-                val systemUiController = rememberSystemUiController()
                 SideEffect {
-                    systemUiController.setSystemBarsColor(
-                        color = colors.background,
-                        darkIcons = false
+                    val systemBarColor = colors.background.toArgb()
+                    enableEdgeToEdge(
+                        statusBarStyle = SystemBarStyle.dark(systemBarColor),
+                        navigationBarStyle = SystemBarStyle.dark(systemBarColor)
                     )
                 }
 
@@ -129,7 +124,7 @@ class MainActivity : ComponentActivity() {
     private fun startTimerWithPermissionCheck() {
         if (hasNotificationPermission()) {
             viewModel.startTimer()
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        } else {
             notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
     }
@@ -160,8 +155,6 @@ class MainActivity : ComponentActivity() {
                     featureStatsEnabled = RemoteConfigManager.featureStatsEnabled,
                     featureDailyGoalEnabled = RemoteConfigManager.featureDailyGoalEnabled,
                     adBannerEnabled = canShowAds && RemoteConfigManager.adBannerEnabled,
-                    adInterstitialEnabled = interstitialEnabled,
-                    adInterstitialFrequency = RemoteConfigManager.adInterstitialFrequency,
                     motdText = RemoteConfigManager.motdText,
                     motdEnabled = RemoteConfigManager.motdEnabled,
                     forceUpdateRequired = BuildConfig.VERSION_CODE < RemoteConfigManager.minSupportedVersionCode
@@ -182,9 +175,12 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun openPlayStoreListing() {
-        val marketIntent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName"))
+        val marketIntent = Intent(Intent.ACTION_VIEW, "market://details?id=$packageName".toUri())
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageName"))
+        val webIntent = Intent(
+            Intent.ACTION_VIEW,
+            "https://play.google.com/store/apps/details?id=$packageName".toUri()
+        )
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         try {
             startActivity(marketIntent)
@@ -194,12 +190,10 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-data class RemoteUiState(
+private data class RemoteUiState(
     val featureStatsEnabled: Boolean = true,
     val featureDailyGoalEnabled: Boolean = true,
     val adBannerEnabled: Boolean = false,
-    val adInterstitialEnabled: Boolean = false,
-    val adInterstitialFrequency: Int = 2,
     val motdText: String = "",
     val motdEnabled: Boolean = false,
     val forceUpdateRequired: Boolean = false
@@ -222,11 +216,11 @@ private fun ForceUpdateDialog(onUpdate: () -> Unit) {
 @Composable
 private fun PomodoroNavHost(
     navController: NavHostController,
-    timerState: com.matias.pomodoro.timer.PomodoroTimerState,
-    settings: com.matias.pomodoro.data.preferences.PomodoroSettings,
-    todayStats: com.matias.pomodoro.data.PomodoroSession?,
-    weekStats: List<com.matias.pomodoro.data.PomodoroSession>,
-    monthStats: List<com.matias.pomodoro.data.PomodoroSession>,
+    timerState: PomodoroTimerState,
+    settings: PomodoroSettings,
+    todayStats: PomodoroSession?,
+    weekStats: List<PomodoroSession>,
+    monthStats: List<PomodoroSession>,
     dailyGoalProgress: Float,
     dismissedMotdText: String,
     remoteUiState: RemoteUiState,
@@ -235,12 +229,11 @@ private fun PomodoroNavHost(
     onSkip: () -> Unit,
     onReset: () -> Unit,
     onDismissMotd: (String) -> Unit,
-    onUpdateSettings: (String, String, suspend com.matias.pomodoro.data.preferences.PomodoroPreferences.() -> Unit) -> Unit
+    onUpdateSettings: (String, String, suspend PomodoroPreferences.() -> Unit) -> Unit
 ) {
     NavHost(
         navController = navController,
         startDestination = ROUTE_MAIN,
-        modifier = Modifier,
         enterTransition = {
             slideInHorizontally(
                 animationSpec = tween(350, easing = EaseInOutCubic),

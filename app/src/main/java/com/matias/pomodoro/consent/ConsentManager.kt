@@ -25,5 +25,5 @@ class ConsentManager(private val activity: Activity) {
         )
     }
 
-    fun isConsentObtained(): Boolean = consentInformation.canRequestAds()
+    private fun isConsentObtained(): Boolean = consentInformation.canRequestAds()
 }

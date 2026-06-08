@@ -3,7 +3,6 @@ package com.matias.pomodoro.ui.screens
 import android.content.Context
 import android.media.AudioAttributes
 import android.media.SoundPool
-import android.util.Log
 import android.view.accessibility.AccessibilityManager
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
@@ -147,11 +146,9 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.LoadAdError
 import com.matias.pomodoro.analytics.AnalyticsManager
 import com.matias.pomodoro.R
 import com.matias.pomodoro.data.PomodoroSession
@@ -165,6 +162,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeParseException
+import java.util.Locale
 import kotlin.math.cos
 import kotlin.math.roundToInt
 import kotlin.math.sin
@@ -463,9 +461,9 @@ private fun PhaseAnimatedTimer(
         },
         label = "phase_timer_transition",
         modifier = modifier
-    ) {
+    ) { targetPhase ->
         CircularPomodoroTimer(
-            timerState = timerState,
+            timerState = timerState.copy(phase = targetPhase),
             modifier = Modifier.fillMaxWidth()
         )
     }
@@ -1280,7 +1278,11 @@ private fun SummaryGrid(sessions: List<PomodoroSession>) {
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             SummaryCard(stringResource(R.string.stats_total_pomodoros), totalPomodoros.toString(), Modifier.weight(1f))
-            SummaryCard(stringResource(R.string.stats_daily_average), String.format("%.1f", dailyAverage), Modifier.weight(1f))
+            SummaryCard(
+                stringResource(R.string.stats_daily_average),
+                String.format(Locale.getDefault(), "%.1f", dailyAverage),
+                Modifier.weight(1f)
+            )
         }
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             SummaryCard(stringResource(R.string.stats_total_focus_time), formatDuration(totalFocusSeconds), Modifier.weight(1f))
@@ -1399,15 +1401,6 @@ private fun BannerAd(modifier: Modifier = Modifier) {
             AdView(context).apply {
                 adUnitId = BANNER_AD_UNIT_ID
                 setAdSize(adSize)
-                adListener = object : AdListener() {
-                    override fun onAdLoaded() {
-                        Log.d(ADS_LOG_TAG, "Banner loaded: ${responseInfo?.responseId}")
-                    }
-
-                    override fun onAdFailedToLoad(error: LoadAdError) {
-                        Log.e(ADS_LOG_TAG, "Banner failed to load:\n$error")
-                    }
-                }
             }
         }
 
@@ -1508,7 +1501,6 @@ private class IndexedLabelFormatter(private val labels: List<String>) : ValueFor
 }
 
 private const val BANNER_AD_UNIT_ID = "ca-app-pub-4712794855635991/4313841604"
-private const val ADS_LOG_TAG = "Pomodoro/Ads"
 
 private fun BarChart.styleBaseChart(color: Color) {
     description.isEnabled = false

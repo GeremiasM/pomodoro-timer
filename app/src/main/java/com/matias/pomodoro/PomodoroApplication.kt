@@ -29,13 +29,13 @@ class PomodoroApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        PomodoroContainer.database = PomodoroDatabase.getInstance(this)
+        val database = PomodoroDatabase.getInstance(this)
         PomodoroContainer.repository = PomodoroRepository(
-            PomodoroContainer.database.pomodoroSessionDao()
+            database.pomodoroSessionDao()
         )
         PomodoroContainer.preferences = PomodoroPreferences(this)
         AnalyticsManager.init(this)
-        RemoteConfigManager.init(this)
+        RemoteConfigManager.init()
         adInterstitialManager = AdInterstitialManager(this)
 
         applicationScope.launch {

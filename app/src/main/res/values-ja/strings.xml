@@ -3,112 +3,6 @@
     <!-- Application -->
     <string name="app_name">Pomodoro Timer</string>
 
-    <!-- Notifications -->
-    <string name="notification_channel_timer_active_name">Pomodoro Timer – アクティブタイマー</string>
-    <string name="notification_channel_timer_active_description">次に目が覚めるまでの時間を表示します</string>
-    <string name="notification_channel_rest_alert_name">Pomodoro Timer – 休憩の時間です!</string>
-    <string name="notification_channel_rest_alert_description">20-20-20 目の健康リマインダー</string>
-    <string name="notification_timer_active_title">Pomodoro Timer – アクティブ アイ ウェルネス</string>
-    <string name="notification_next_break_in_format">%1$02d の次のブレイク:%2$02d</string>
-    <string name="notification_action_rest_now">今すぐ休んでください</string>
-    <string name="notification_rest_alert_title">👁️ 目の休憩の時間です!</string>
-    <string name="notification_rest_alert_text_format">%1$d 分が経過しました。 20-20-20 ルールに従ってください。</string>
-    <string name="notification_rest_alert_big_text_format">画面の前で %1$d 分です。\n\n6 メートル離れたものを 20 秒間見てください。</string>
-
-    <!-- Snackbars -->
-    <string name="snackbar_rest_completed">休憩完了！ 👁️</string>
-
-    <!-- Rest Messages -->
-    <string name="rest_message_look_far_breathe">6メートル離れたものを見て深呼吸</string>
-    <string name="rest_message_blink_slowly">ゆっくりと10回まばたきして目に潤いを与えます</string>
-    <string name="rest_message_follow_bubbles">頭を動かさずに目で泡を追う</string>
-    <string name="rest_message_relax_neck_shoulders">首や肩の筋肉をほぐします</string>
-    <string name="rest_message_close_eyes">数秒間そっと目を閉じます</string>
-    <string name="rest_message_focus_far_window">窓越しに遠くのものに焦点を合わせる</string>
-
-    <!-- Rest Screen -->
-    <string name="rest_screen_title">アイブレイク</string>
-    <string name="rest_screen_subtitle">20·20·20 ルール</string>
-    <string name="rest_screen_skip_button">休憩をスキップする</string>
-
-    <!-- Main Screen -->
-    <string name="main_exit_fullscreen_content_description">全画面表示を終了する</string>
-    <string name="main_header_tagline">アイウェルネス 20·20·20</string>
-    <string name="main_fullscreen_content_description">全画面表示</string>
-    <string name="main_lava_preview_instruction">泡を目で追って目の筋肉をストレッチします。</string>
-    <string name="main_customize_label">カスタマイズ:</string>
-    <string name="main_change_mode_content_description">モード変更</string>
-    <string name="main_mode_label_format">モード %1$s</string>
-    <string name="focus_mode_lava">溶岩</string>
-    <string name="focus_mode_infinity">無限大</string>
-    <string name="focus_mode_circular">円形</string>
-    <string name="main_change_color_content_description">色を変更する</string>
-    <string name="main_color_label_format">カラー %1$s</string>
-    <string name="color_amber">アンバー</string>
-    <string name="color_terra">テラ</string>
-    <string name="color_dusk">夕暮れ</string>
-    <string name="color_forest">森</string>
-    <string name="color_candlelight">キャンドルライト</string>
-    <string name="color_sepia">セピア</string>
-    <string name="color_emerald">エメラルド</string>
-    <string name="main_timer_until_break">休憩まで</string>
-    <string name="main_timer_minutes_label">分</string>
-    <string name="main_timer_pause_button">一時停止</string>
-    <string name="main_timer_start_button">スタート</string>
-    <string name="main_stats_breaks_today">今日は休みます</string>
-    <string name="main_stats_pause_seconds">数秒間一時停止します</string>
-    <string name="main_stats_healthy_done">✓</string>
-    <string name="main_stats_healthy_pending">...</string>
-    <string name="main_stats_healthy_session">健全なセッション</string>
-    <string name="main_palette_title">パレット</string>
-    <string name="main_focus_style_title">フォーカスポイントのスタイル</string>
-    <string name="focus_mode_lava_description">流動性と有機性</string>
-    <string name="focus_mode_concentric_circles">同心円</string>
-    <string name="focus_mode_circles_description">循環運動</string>
-    <string name="main_interval_title">休憩間隔</string>
-    <string name="main_interval_description">休憩をとるように通知するタイミングを選択してください</string>
-    <string name="main_interval_minutes_short_format">%1$d分</string>
-    <string name="main_interval_who_recommendation">WHO の推奨: 20 分</string>
-    <string name="main_interval_tick_5">5</string>
-    <string name="main_interval_tick_15">15</string>
-    <string name="main_interval_tick_20">20</string>
-    <string name="main_interval_tick_30">30</string>
-    <string name="main_interval_tick_45">45</string>
-    <string name="main_interval_tick_60">60</string>
-
-    <!-- Eye Wellness -->
-    <string name="eye_wellness_title">目の健康</string>
-    <string name="eye_wellness_card_description">20·20·20 ルールがどのように目を休めるのに役立つかを学びましょう。</string>
-    <string name="eye_wellness_view_info_content_description">情報を見る</string>
-    <string name="dialog_understood_button">分かりました</string>
-    <string name="eye_wellness_dialog_subtitle">アイウェルネス 20·20·20</string>
-    <string name="eye_wellness_dialog_intro">画面を長時間使用すると、デジタル眼精疲労、ドライアイ、継続的に近くに焦点を合わせることによる不快感、夜間にデバイスを使用する場合の睡眠障害が増加する可能性があります。</string>
-    <string name="eye_wellness_rule_title">20·20·20 ルール</string>
-    <string name="eye_wellness_rule_description">20 分ごとに、約 20 フィート (約 6 メートル) 離れた物体を 20 秒間見つめます。</string>
-    <string name="eye_wellness_less_digital_strain_title">デジタルによる眼精疲労の軽減</string>
-    <string name="eye_wellness_less_digital_strain_description">ガイド付き休憩により、目が近距離で集中し続けるのを防ぐことができます。 20·20·20 ルールに関する研究では、デジタル眼精疲労とドライアイの症状が軽減されることがわかりました。</string>
-    <string name="eye_wellness_blinking_title">より多くの点滅と潤滑</string>
-    <string name="eye_wellness_blinking_description">画面を使用すると、まばたきの回数が減ったり、まばたきが不完全になる傾向があります。休憩は、より自然なまばたきと目の休息のリズムを取り戻すのに役立ちます。</string>
-    <string name="eye_wellness_prolonged_use_risk_title">長期使用によるリスク</string>
-    <string name="eye_wellness_prolonged_use_risk_description">画面を長時間見ると、目の疲労、一時的な目のかすみ、灼熱感、ドライアイ、頭痛、集中力の維持の困難などを引き起こす可能性があります。</string>
-    <string name="eye_wellness_blue_light_sleep_title">ブルーライトと夜間の休息</string>
-    <string name="eye_wellness_blue_light_sleep_description">画面からのブルーライトは、特に夜間に概日リズムとメラトニン生成を妨げ、睡眠の質に影響を与える可能性があります。</string>
-    <string name="eye_wellness_attention_title">注意力と精神的パフォーマンス</string>
-    <string name="eye_wellness_attention_description">ブルーライトは日中の注意力と反応時間を増加させる可能性がありますが、夜間は休息の準備をしているはずの体を活性化させて逆効果になる可能性があります。</string>
-    <string name="eye_wellness_duration_matters_title">期間も重要</string>
-    <string name="eye_wellness_duration_matters_description">光の影響は色だけに依存するわけではなく、強度、露光時間、タイミングも重要です。そのため、睡眠前に休憩をとり、激しい暴露を減らすことが重要です。</string>
-    <string name="eye_wellness_healthy_tips_title">健康的なヒント</string>
-    <string name="eye_wellness_healthy_tips_body">• 20 分ごとにリマインダーをオンにします。\n• 20 秒間遠くを見ましょう。\n• 休憩中は意識的に瞬きします。\n• 部屋が暗い場合は明るさを下げます。\n• 就寝前に強い画面を避けてください。\n• 不快感が続く場合は専門医の診察を受けてください。</string>
-    <string name="eye_wellness_references_title">学術参考文献</string>
-    <string name="eye_wellness_references_body">Talens-Estarelles, C., Cerviño, A., García-Lázaro, S., Fogelton, A., Sheppard, A., &amp; Wolffsohn, J. S. (2023). The effects of breaks on digital eye strain, dry eye and binocular vision: Testing the 20-20-20 rule. Contact Lens &amp; Anterior Eye, 46(2), 101744. https://doi.org/10.1016/j.clae.2022.101744\n\nHaghani, M., Abbasi, S., Abdoli, L., Shams, S. F., Baha’addini Baigy Zarandi, B. F., Shokrpour, N., Jahromizadeh, A., Mortazavi, S. A., &amp; Mortazavi, S. M. J. (2024). Blue Light and Digital Screens Revisited: A New Look at Blue Light from the Vision Quality, Circadian Rhythm and Cognitive Functions Perspective. Journal of Biomedical Physics and Engineering, 14(3), 213–228. https://doi.org/10.31661/jbpe.v0i0.2106-1355</string>
-    <string name="eye_wellness_medical_disclaimer">この情報は教育的なものであり、医学的評価に代わるものではありません。痛み、持続的なかすみ目、重度の乾燥、または頻繁な不快感がある場合は、眼科医にご相談ください。</string>
-
-    <!-- Pomodoro Timer Pro -->
-    <string name="pomodoro_pro_icon_content_description">Pomodoro Timer Proのアイコン</string>
-    <string name="pomodoro_pro_title">Pomodoro Timer Pro にアップグレード</string>
-    <string name="pro_badge">PRO</string>
-    <string name="pomodoro_pro_description">広告なしで Pomodoro Timer を楽しみ、独自のカラー テーマでエクスペリエンスをカスタマイズし、詳細な統計で進捗状況を監視します。</string>
-    <string name="pomodoro_pro_play_store_content_description">Play Storeに行く</string>
     <!-- Pomodoro Timer UI -->
     <!-- Phase names -->
     <string name="pomodoro_phase_work">集中</string>
@@ -130,11 +24,6 @@
     <string name="pomodoro_cd_settings">設定を開く</string>
     <string name="pomodoro_cd_stats">統計を見る</string>
     <string name="pomodoro_cd_timer_circle">タイマー: 残り%1$s</string>
-    <!-- Phase transition messages -->
-    <string name="pomodoro_msg_work_complete">よくできました！休憩の時間です。</string>
-    <string name="pomodoro_msg_short_break_complete">休憩終了。集中に戻りますか？</string>
-    <string name="pomodoro_msg_long_break_complete">リフレッシュ完了！また始めましょう。</string>
-    <string name="pomodoro_msg_cycle_complete">1サイクル完了！🎉</string>
     <!-- Settings screen -->
     <string name="settings_title">設定</string>
     <string name="settings_section_timer">タイマー</string>
@@ -209,8 +98,6 @@
     <string name="notif_action_pause">一時停止</string>
     <string name="notif_action_resume">再開</string>
     <string name="notif_action_skip">スキップ</string>
-    <!-- AdMob consent -->
-    <string name="ads_loading">読み込み中...</string>
     <!-- Remote Config UI -->
     <string name="force_update_title">更新が必要です</string>
     <string name="force_update_message">続行するにはPomodoro Timerの新しいバージョンが必要です。</string>

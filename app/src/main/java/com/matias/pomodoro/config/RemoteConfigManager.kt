@@ -1,6 +1,5 @@
 package com.matias.pomodoro.config
 
-import android.content.Context
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfig
@@ -9,10 +8,10 @@ import com.matias.pomodoro.BuildConfig
 import com.matias.pomodoro.R
 
 object RemoteConfigManager {
-    private lateinit var remoteConfig: FirebaseRemoteConfig
+    private val remoteConfig: FirebaseRemoteConfig
+        get() = Firebase.remoteConfig
 
-    fun init(context: Context) {
-        remoteConfig = Firebase.remoteConfig
+    fun init() {
         remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
         val interval = if (BuildConfig.DEBUG) 0L else 3_600L
         remoteConfig.setConfigSettingsAsync(
@@ -23,10 +22,6 @@ object RemoteConfigManager {
     }
 
     fun fetchAndActivate(onComplete: () -> Unit) {
-        if (!::remoteConfig.isInitialized) {
-            onComplete()
-            return
-        }
         remoteConfig.fetchAndActivate().addOnCompleteListener { onComplete() }
     }
 

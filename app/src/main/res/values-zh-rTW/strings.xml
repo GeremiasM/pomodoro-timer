@@ -3,112 +3,6 @@
     <!-- Application -->
     <string name="app_name">Pomodoro Timer</string>
 
-    <!-- Notifications -->
-    <string name="notification_channel_timer_active_name">Pomodoro Timer – 活動計時器</string>
-    <string name="notification_channel_timer_active_description">顯示下次眼睛休息前的時間</string>
-    <string name="notification_channel_rest_alert_name">Pomodoro Timer – 休息一下！</string>
-    <string name="notification_channel_rest_alert_description">20-20-20 眼睛健康提醒</string>
-    <string name="notification_timer_active_title">Pomodoro Timer – 主動眼睛健康</string>
-    <string name="notification_next_break_in_format">%1$02d 的下一個中斷：%2$02d</string>
-    <string name="notification_action_rest_now">現在休息</string>
-    <string name="notification_rest_alert_title">👁️ 休息一下眼睛的時間到了！</string>
-    <string name="notification_rest_alert_text_format">%1$d 分鐘過去了。遵循 20-20-20 規則。</string>
-    <string name="notification_rest_alert_big_text_format">在螢幕前 %1$d 分鐘。 \n\n看 6 公尺外的物體 20 秒。</string>
-
-    <!-- Snackbars -->
-    <string name="snackbar_rest_completed">休息完成！👁️</string>
-
-    <!-- Rest Messages -->
-    <string name="rest_message_look_far_breathe">看6公尺外的東西，深呼吸</string>
-    <string name="rest_message_blink_slowly">緩慢眨眼10次，為眼睛補充水分</string>
-    <string name="rest_message_follow_bubbles">用眼睛跟著氣泡，頭部不動</string>
-    <string name="rest_message_relax_neck_shoulders">放鬆頸部和肩部的肌肉</string>
-    <string name="rest_message_close_eyes">輕輕閉上眼睛幾秒鐘</string>
-    <string name="rest_message_focus_far_window">透過窗戶聚焦遠處的事物</string>
-
-    <!-- Rest Screen -->
-    <string name="rest_screen_title">眼裂</string>
-    <string name="rest_screen_subtitle">20·20·20 規則</string>
-    <string name="rest_screen_skip_button">跳過休息時間</string>
-
-    <!-- Main Screen -->
-    <string name="main_exit_fullscreen_content_description">退出全螢幕</string>
-    <string name="main_header_tagline">眼睛健康 20·20·20</string>
-    <string name="main_fullscreen_content_description">全螢幕</string>
-    <string name="main_lava_preview_instruction">用眼睛跟隨氣泡，伸展眼部肌肉</string>
-    <string name="main_customize_label">客製化：</string>
-    <string name="main_change_mode_content_description">改變模式</string>
-    <string name="main_mode_label_format">模式 %1$s</string>
-    <string name="focus_mode_lava">熔岩</string>
-    <string name="focus_mode_infinity">無限</string>
-    <string name="focus_mode_circular">圓形</string>
-    <string name="main_change_color_content_description">改變顏色</string>
-    <string name="main_color_label_format">顏色 %1$s</string>
-    <string name="color_amber">琥珀色</string>
-    <string name="color_terra">泰拉</string>
-    <string name="color_dusk">黃昏</string>
-    <string name="color_forest">森林</string>
-    <string name="color_candlelight">燭光</string>
-    <string name="color_sepia">棕褐色</string>
-    <string name="color_emerald">祖母綠</string>
-    <string name="main_timer_until_break">直到休息</string>
-    <string name="main_timer_minutes_label">分分鐘</string>
-    <string name="main_timer_pause_button">暫停</string>
-    <string name="main_timer_start_button">開始</string>
-    <string name="main_stats_breaks_today">今天休息</string>
-    <string name="main_stats_pause_seconds">暫停秒數</string>
-    <string name="main_stats_healthy_done">✓</string>
-    <string name="main_stats_healthy_pending">...</string>
-    <string name="main_stats_healthy_session">健康會議</string>
-    <string name="main_palette_title">調色盤</string>
-    <string name="main_focus_style_title">對焦點樣式</string>
-    <string name="focus_mode_lava_description">流體和有機物</string>
-    <string name="focus_mode_concentric_circles">同心圓</string>
-    <string name="focus_mode_circles_description">循環運動</string>
-    <string name="main_interval_title">休息時間</string>
-    <string name="main_interval_description">選擇您希望我們提醒您休息的時間</string>
-    <string name="main_interval_minutes_short_format">%1$d 分鐘</string>
-    <string name="main_interval_who_recommendation">WHO recommendation: 20 min</string>
-    <string name="main_interval_tick_5">5</string>
-    <string name="main_interval_tick_15">15</string>
-    <string name="main_interval_tick_20">20</string>
-    <string name="main_interval_tick_30">30</string>
-    <string name="main_interval_tick_45">45</string>
-    <string name="main_interval_tick_60">60</string>
-
-    <!-- Eye Wellness -->
-    <string name="eye_wellness_title">Eye wellness</string>
-    <string name="eye_wellness_card_description">Learn how the 20·20·20 rule helps your eyes rest.</string>
-    <string name="eye_wellness_view_info_content_description">View information</string>
-    <string name="dialog_understood_button">Got it</string>
-    <string name="eye_wellness_dialog_subtitle">Eye wellness 20·20·20</string>
-    <string name="eye_wellness_dialog_intro">Prolonged screen use can increase digital eye strain, dry eyes, discomfort from continuous near focus, and sleep disruption when devices are used at night.</string>
-    <string name="eye_wellness_rule_title">20·20·20 rule</string>
-    <string name="eye_wellness_rule_description">Every 20 minutes, look at an object about 20 feet away (around 6 meters) for 20 seconds.</string>
-    <string name="eye_wellness_less_digital_strain_title">Less digital eye strain</string>
-    <string name="eye_wellness_less_digital_strain_description">Guided breaks help your eyes stop focusing continuously at close range. The study on the 20·20·20 rule found reduced symptoms of digital eye strain and dry eye.</string>
-    <string name="eye_wellness_blinking_title">More blinking and lubrication</string>
-    <string name="eye_wellness_blinking_description">When we use screens, we tend to blink less or blink incompletely. Breaks help restore a more natural rhythm of blinking and eye rest.</string>
-    <string name="eye_wellness_prolonged_use_risk_title">Risk from prolonged use</string>
-    <string name="eye_wellness_prolonged_use_risk_description">Looking at screens for long periods can cause eye fatigue, temporary blurred vision, burning sensations, dry eyes, headaches, and difficulty maintaining focus.</string>
-    <string name="eye_wellness_blue_light_sleep_title">Blue light and nighttime rest</string>
-    <string name="eye_wellness_blue_light_sleep_description">Blue light from screens, especially at night, can interfere with circadian rhythm and melatonin production, affecting sleep quality.</string>
-    <string name="eye_wellness_attention_title">Attention and mental performance</string>
-    <string name="eye_wellness_attention_description">Blue light can increase alertness and reaction time during the day, but at night it can be counterproductive by activating the body when it should be preparing to rest.</string>
-    <string name="eye_wellness_duration_matters_title">Duration matters too</string>
-    <string name="eye_wellness_duration_matters_description">The impact of light does not depend only on color: intensity, exposure time, and timing also matter. That is why taking breaks and reducing intense exposure before sleep is important.</string>
-    <string name="eye_wellness_healthy_tips_title">Healthy tips</string>
-    <string name="eye_wellness_healthy_tips_body">• Turn on reminders every 20 minutes.\n• Look far away for 20 seconds.\n• Blink consciously during the break.\n• Lower brightness if the room is dark.\n• Avoid intense screens before bed.\n• See a specialist if discomfort persists.</string>
-    <string name="eye_wellness_references_title">Academic references</string>
-    <string name="eye_wellness_references_body">Talens-Estarelles, C., Cerviño, A., García-Lázaro, S., Fogelton, A., Sheppard, A., &amp; Wolffsohn, J. S. (2023). The effects of breaks on digital eye strain, dry eye and binocular vision: Testing the 20-20-20 rule. Contact Lens &amp; Anterior Eye, 46(2), 101744. https://doi.org/10.1016/j.clae.2022.101744\n\nHaghani, M., Abbasi, S., Abdoli, L., Shams, S. F., Baha’addini Baigy Zarandi, B. F., Shokrpour, N., Jahromizadeh, A., Mortazavi, S. A., &amp; Mortazavi, S. M. J. (2024). Blue Light and Digital Screens Revisited: A New Look at Blue Light from the Vision Quality, Circadian Rhythm and Cognitive Functions Perspective. Journal of Biomedical Physics and Engineering, 14(3), 213–228. https://doi.org/10.31661/jbpe.v0i0.2106-1355</string>
-    <string name="eye_wellness_medical_disclaimer">This information is educational and does not replace a medical evaluation. If you have pain, persistent blurred vision, severe dryness, or frequent discomfort, consult an eye care professional.</string>
-
-    <!-- Pomodoro Timer Pro -->
-    <string name="pomodoro_pro_icon_content_description">Pomodoro Timer Pro icon</string>
-    <string name="pomodoro_pro_title">Upgrade to Pomodoro Timer Pro</string>
-    <string name="pro_badge">PRO</string>
-    <string name="pomodoro_pro_description">Enjoy Pomodoro Timer without ads, personalize your experience with exclusive color themes, and monitor your progress with detailed stats.</string>
-    <string name="pomodoro_pro_play_store_content_description">Go to Play Store</string>
     <!-- Pomodoro Timer UI -->
     <!-- Phase names -->
     <string name="pomodoro_phase_work">專注</string>
@@ -130,11 +24,6 @@
     <string name="pomodoro_cd_settings">開啟設定</string>
     <string name="pomodoro_cd_stats">查看統計</string>
     <string name="pomodoro_cd_timer_circle">計時器：剩餘 %1$s</string>
-    <!-- Phase transition messages -->
-    <string name="pomodoro_msg_work_complete">做得好！該休息了。</string>
-    <string name="pomodoro_msg_short_break_complete">休息結束。準備專注了嗎？</string>
-    <string name="pomodoro_msg_long_break_complete">恢復精神了！繼續開始吧。</string>
-    <string name="pomodoro_msg_cycle_complete">完整循環完成！🎉</string>
     <!-- Settings screen -->
     <string name="settings_title">設定</string>
     <string name="settings_section_timer">計時器</string>
@@ -209,8 +98,6 @@
     <string name="notif_action_pause">暫停</string>
     <string name="notif_action_resume">繼續</string>
     <string name="notif_action_skip">略過</string>
-    <!-- AdMob consent -->
-    <string name="ads_loading">載入中...</string>
     <!-- Remote Config UI -->
     <string name="force_update_title">需要更新</string>
     <string name="force_update_message">需要較新版本的 Pomodoro Timer 才能繼續。</string>
