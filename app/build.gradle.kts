@@ -66,6 +66,7 @@ dependencies {
     // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
+    implementation(libs.firebase.config)
     implementation(libs.firebase.crashlytics)
 
     // Compose
@@ -107,6 +108,7 @@ dependencies {
 
     // Ads
     implementation(libs.play.services.ads)
+    implementation(libs.user.messaging.platform)
 
     // Debug
     debugImplementation(libs.androidx.compose.ui.tooling)

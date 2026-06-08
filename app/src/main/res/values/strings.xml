@@ -109,98 +109,112 @@
     <string name="pro_badge">PRO</string>
     <string name="pomodoro_pro_description">Enjoy Pomodoro Timer without ads, personalize your experience with exclusive color themes, and monitor your progress with detailed stats.</string>
     <string name="pomodoro_pro_play_store_content_description">Go to Play Store</string>
-
-    <!-- Pomodoro UI -->
-    <string name="route_main">main</string>
-    <string name="route_stats">stats</string>
-    <string name="phase_focus">FOCUS</string>
-    <string name="phase_short_break">SHORT BREAK</string>
-    <string name="phase_long_break">LONG BREAK</string>
-    <string name="phase_focus_title">Focus</string>
-    <string name="phase_short_break_title">Short Break</string>
-    <string name="phase_long_break_title">Long Break</string>
-    <string name="next_phase_format">Next: %1$s</string>
-    <string name="today_pomodoros_format">🍅 %1$d pomodoros today</string>
-    <string name="goal_progress_format">Goal: %1$d/%2$d</string>
-    <string name="timer_accessibility_format">%1$s, %2$s remaining</string>
-    <string name="time_minutes_seconds_format">%1$02d:%2$02d</string>
-    <string name="phase_changed_announcement_format">%1$s started</string>
-    <string name="settings_content_description">Open settings</string>
-    <string name="stats_content_description">Open stats</string>
-    <string name="reset_content_description">Reset current phase</string>
-    <string name="play_content_description">Start timer</string>
-    <string name="pause_content_description">Pause timer</string>
-    <string name="skip_content_description">Skip phase</string>
-    <string name="session_dot_content_description_format">Session %1$d of %2$d</string>
-
-    <!-- Pomodoro Settings -->
+    <!-- Pomodoro Timer UI -->
+    <!-- Phase names -->
+    <string name="pomodoro_phase_work">Focus</string>
+    <string name="pomodoro_phase_short_break">Short Break</string>
+    <string name="pomodoro_phase_long_break">Long Break</string>
+    <!-- Phase labels in notification -->
+    <string name="pomodoro_notif_work">🍅 Focus</string>
+    <string name="pomodoro_notif_short_break">☕ Short Break</string>
+    <string name="pomodoro_notif_long_break">🌙 Long Break</string>
+    <!-- Timer screen -->
+    <string name="pomodoro_session_label">Session %1$d of %2$d</string>
+    <string name="pomodoro_today_count">%1$d pomodoros today</string>
+    <string name="pomodoro_goal_label">Goal: %1$d / %2$d</string>
+    <string name="pomodoro_btn_start">Start</string>
+    <string name="pomodoro_btn_pause">Pause</string>
+    <string name="pomodoro_btn_resume">Resume</string>
+    <string name="pomodoro_btn_skip">Skip</string>
+    <string name="pomodoro_btn_reset">Reset</string>
+    <string name="pomodoro_cd_settings">Open settings</string>
+    <string name="pomodoro_cd_stats">View statistics</string>
+    <string name="pomodoro_cd_timer_circle">Timer: %1$s remaining</string>
+    <!-- Phase transition messages -->
+    <string name="pomodoro_msg_work_complete">Great work! Time for a break.</string>
+    <string name="pomodoro_msg_short_break_complete">Break over. Ready to focus?</string>
+    <string name="pomodoro_msg_long_break_complete">Refreshed! Let’s get back to it.</string>
+    <string name="pomodoro_msg_cycle_complete">Full cycle complete! 🎉</string>
+    <!-- Settings screen -->
     <string name="settings_title">Settings</string>
-    <string name="settings_timer_durations">Timer durations</string>
-    <string name="settings_work_duration">Work duration</string>
+    <string name="settings_section_timer">Timer</string>
+    <string name="settings_work_duration">Focus duration</string>
     <string name="settings_short_break">Short break</string>
     <string name="settings_long_break">Long break</string>
-    <string name="settings_duration_minutes_format">%1$d min</string>
-    <string name="settings_sessions_before_long_break">Sessions before long break</string>
-    <string name="settings_sessions_count_format">%1$d</string>
-    <string name="settings_automation">Automation</string>
+    <string name="settings_sessions_before_long">Sessions before long break</string>
+    <string name="settings_section_automation">Automation</string>
     <string name="settings_auto_start_breaks">Auto-start breaks</string>
     <string name="settings_auto_start_work">Auto-start work sessions</string>
-    <string name="settings_sound_vibration">Sound &amp; vibration</string>
-    <string name="settings_sound_enabled">Sound enabled</string>
-    <string name="settings_vibration_enabled">Vibration enabled</string>
+    <string name="settings_section_sound">Sound &amp; Vibration</string>
+    <string name="settings_sound_enabled">Sound</string>
+    <string name="settings_vibration_enabled">Vibration</string>
     <string name="settings_sound_bell">Bell</string>
     <string name="settings_sound_digital">Digital</string>
     <string name="settings_sound_soft">Soft</string>
-    <string name="settings_preview_sound_content_description_format">Preview %1$s sound</string>
-    <string name="settings_theme">Theme</string>
-    <string name="settings_theme_content_description_format">Select %1$s theme</string>
-    <string name="settings_daily_goal">Daily goal</string>
-    <string name="settings_daily_goal_count_format">%1$d pomodoros</string>
-    <string name="settings_decrease_goal_content_description">Decrease daily goal</string>
-    <string name="settings_increase_goal_content_description">Increase daily goal</string>
-    <string name="theme_emerald">Emerald</string>
-    <string name="theme_sunset">Sunset</string>
-    <string name="theme_ocean">Ocean</string>
-    <string name="theme_forest">Forest</string>
-    <string name="theme_lavender">Lavender</string>
-
-    <!-- Pomodoro Stats -->
-    <string name="stats_title">Stats</string>
-    <string name="stats_back_content_description">Back to timer</string>
-    <string name="stats_period_day">Day</string>
-    <string name="stats_period_week">Week</string>
-    <string name="stats_period_month">Month</string>
+    <string name="settings_sound_preview">Preview</string>
+    <string name="settings_section_theme">Theme</string>
+    <string name="settings_theme_emerald">Emerald</string>
+    <string name="settings_theme_sunset">Sunset</string>
+    <string name="settings_theme_ocean">Ocean</string>
+    <string name="settings_theme_forest">Forest</string>
+    <string name="settings_theme_lavender">Lavender</string>
+    <string name="settings_section_goal">Daily Goal</string>
+    <string name="settings_daily_goal">Daily pomodoro goal</string>
+    <string name="settings_minutes_suffix">%1$d min</string>
+    <!-- Stats screen -->
+    <string name="stats_title">Statistics</string>
+    <string name="stats_tab_day">Day</string>
+    <string name="stats_tab_week">Week</string>
+    <string name="stats_tab_month">Month</string>
     <string name="stats_total_pomodoros">Total Pomodoros</string>
-    <string name="stats_daily_average">Daily average</string>
-    <string name="stats_total_focus_time">Total focus time</string>
-    <string name="stats_best_day">Best day</string>
-    <string name="stats_pomodoros_completed_chart">Pomodoros completed</string>
-    <string name="stats_focus_minutes_chart">Focus minutes</string>
-    <string name="stats_goal_ring_title">Today’s goal</string>
+    <string name="stats_daily_average">Daily Average</string>
+    <string name="stats_total_focus_time">Focus Time</string>
+    <string name="stats_best_day">Best Day</string>
+    <string name="stats_chart_pomodoros_title">Pomodoros completed</string>
+    <string name="stats_chart_focus_title">Focus minutes</string>
+    <string name="stats_chart_pomodoros_label">Pomodoros</string>
+    <string name="stats_chart_focus_label">Minutes</string>
     <string name="stats_empty_message">Complete your first Pomodoro to see your stats 🍅</string>
-    <string name="stats_hours_minutes_format">%1$dh %2$02dm</string>
-    <string name="stats_minutes_format">%1$dm</string>
-    <string name="stats_decimal_format">%1$.1f</string>
-    <string name="stats_count_format">%1$d</string>
-    <string name="stats_best_day_format">%1$s · %2$d</string>
-    <string name="stats_no_best_day">—</string>
-
-    <!-- Pomodoro Notifications -->
-    <string name="notification_timer_title">Pomodoro Timer</string>
-    <string name="notification_phase_time_format">%1$s — %2$s</string>
-    <string name="notification_phase_work">🍅 Work</string>
-    <string name="notification_phase_short_break">☕ Short Break</string>
-    <string name="notification_phase_long_break">☕ Long Break</string>
-    <string name="notification_action_pause">Pause</string>
-    <string name="notification_action_resume">Resume</string>
-    <string name="notification_action_skip">Skip</string>
-
-    <!-- Pomodoro Widget -->
-    <string name="widget_name">Pomodoro Timer</string>
-    <string name="widget_phase_icon_work">🍅</string>
-    <string name="widget_phase_icon_break">☕</string>
-    <string name="widget_today_count_format">Today: %1$d</string>
-    <string name="widget_play_pause_content_description">Start or pause timer</string>
-    <string name="widget_skip_content_description">Skip phase</string>
+    <string name="stats_back_cd">Go back</string>
+    <string name="stats_goal_ring_label">Today’s goal</string>
+    <string name="stats_focus_time_format">%1$dh %2$dm</string>
+    <!-- Day and month labels for charts -->
+    <string name="day_label_mon">Mon</string>
+    <string name="day_label_tue">Tue</string>
+    <string name="day_label_wed">Wed</string>
+    <string name="day_label_thu">Thu</string>
+    <string name="day_label_fri">Fri</string>
+    <string name="day_label_sat">Sat</string>
+    <string name="day_label_sun">Sun</string>
+    <string name="month_label_jan">Jan</string>
+    <string name="month_label_feb">Feb</string>
+    <string name="month_label_mar">Mar</string>
+    <string name="month_label_apr">Apr</string>
+    <string name="month_label_may">May</string>
+    <string name="month_label_jun">Jun</string>
+    <string name="month_label_jul">Jul</string>
+    <string name="month_label_aug">Aug</string>
+    <string name="month_label_sep">Sep</string>
+    <string name="month_label_oct">Oct</string>
+    <string name="month_label_nov">Nov</string>
+    <string name="month_label_dec">Dec</string>
+    <string name="stats_best_day_format">%1$s %2$d (%3$d)</string>
+    <!-- Widget -->
+    <string name="widget_label_focus">Focus</string>
+    <string name="widget_label_break">Break</string>
+    <string name="widget_description">Pomodoro Timer Widget</string>
+    <!-- Notifications -->
+    <string name="notif_channel_name">Pomodoro Timer</string>
+    <string name="notif_channel_description">Active timer controls</string>
+    <string name="notif_action_pause">Pause</string>
+    <string name="notif_action_resume">Resume</string>
+    <string name="notif_action_skip">Skip</string>
+    <!-- AdMob consent -->
+    <string name="ads_loading">Loading...</string>
+    <!-- Remote Config UI -->
+    <string name="force_update_title">Update required</string>
+    <string name="force_update_message">A newer version of Pomodoro Timer is required to continue.</string>
+    <string name="force_update_button">Update</string>
+    <string name="motd_dismiss_cd">Dismiss message</string>
 
 </resources>

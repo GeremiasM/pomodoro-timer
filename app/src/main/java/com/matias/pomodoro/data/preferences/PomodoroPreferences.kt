@@ -41,6 +41,10 @@ class PomodoroPreferences(context: Context) {
         )
     }
 
+    val dismissedMotdText: Flow<String> = dataStore.data.map { prefs ->
+        prefs[Keys.DISMISSED_MOTD_TEXT].orEmpty()
+    }
+
     suspend fun updateWorkDurationMinutes(value: Int) = updateInt(
         Keys.WORK_DURATION_MINUTES,
         value.coerceIn(WORK_DURATION_MINUTES_MIN, WORK_DURATION_MINUTES_MAX)
@@ -84,6 +88,8 @@ class PomodoroPreferences(context: Context) {
         value.coerceIn(DAILY_GOAL_POMODOROS_MIN, DAILY_GOAL_POMODOROS_MAX)
     )
 
+    suspend fun dismissMotd(text: String) = updateString(Keys.DISMISSED_MOTD_TEXT, text)
+
     private suspend fun updateInt(key: Preferences.Key<Int>, value: Int) = withContext(Dispatchers.IO) {
         dataStore.edit { it[key] = value }
     }
@@ -108,6 +114,7 @@ class PomodoroPreferences(context: Context) {
         val NOTIFICATION_SOUND = stringPreferencesKey("notification_sound")
         val SELECTED_THEME = stringPreferencesKey("selected_theme")
         val DAILY_GOAL_POMODOROS = intPreferencesKey("daily_goal_pomodoros")
+        val DISMISSED_MOTD_TEXT = stringPreferencesKey("dismissed_motd_text")
     }
 
     companion object {

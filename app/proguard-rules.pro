@@ -23,3 +23,8 @@
 # Room crea las implementaciones de DB y las instancia por reflexión.
 # Sin esta regla, R8 puede eliminar el constructor por defecto en release.
 -keep class * extends androidx.room.RoomDatabase { <init>(); }
+
+-keep class com.google.android.gms.ads.** { *; }
+-keep class com.google.android.ump.** { *; }
+-keep class com.google.firebase.** { *; }
+-dontwarn com.google.android.gms.**

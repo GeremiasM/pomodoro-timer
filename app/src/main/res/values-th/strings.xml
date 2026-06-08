@@ -109,4 +109,112 @@
     <string name="pro_badge">PRO</string>
     <string name="pomodoro_pro_description">Enjoy Pomodoro Timer without ads, personalize your experience with exclusive color themes, and monitor your progress with detailed stats.</string>
     <string name="pomodoro_pro_play_store_content_description">Go to Play Store</string>
+    <!-- Pomodoro Timer UI -->
+    <!-- Phase names -->
+    <string name="pomodoro_phase_work">โฟกัส</string>
+    <string name="pomodoro_phase_short_break">พักสั้น</string>
+    <string name="pomodoro_phase_long_break">พักยาว</string>
+    <!-- Phase labels in notification -->
+    <string name="pomodoro_notif_work">🍅 โฟกัส</string>
+    <string name="pomodoro_notif_short_break">☕ พักสั้น</string>
+    <string name="pomodoro_notif_long_break">🌙 พักยาว</string>
+    <!-- Timer screen -->
+    <string name="pomodoro_session_label">รอบที่ %1$d จาก %2$d</string>
+    <string name="pomodoro_today_count">วันนี้ %1$d Pomodoro</string>
+    <string name="pomodoro_goal_label">เป้าหมาย: %1$d / %2$d</string>
+    <string name="pomodoro_btn_start">เริ่ม</string>
+    <string name="pomodoro_btn_pause">หยุดชั่วคราว</string>
+    <string name="pomodoro_btn_resume">ทำต่อ</string>
+    <string name="pomodoro_btn_skip">ข้าม</string>
+    <string name="pomodoro_btn_reset">รีเซ็ต</string>
+    <string name="pomodoro_cd_settings">เปิดการตั้งค่า</string>
+    <string name="pomodoro_cd_stats">ดูสถิติ</string>
+    <string name="pomodoro_cd_timer_circle">ตัวจับเวลา: เหลือ %1$s</string>
+    <!-- Phase transition messages -->
+    <string name="pomodoro_msg_work_complete">ทำได้ดีมาก! ถึงเวลาพักแล้ว</string>
+    <string name="pomodoro_msg_short_break_complete">หมดเวลาพักแล้ว พร้อมโฟกัสไหม?</string>
+    <string name="pomodoro_msg_long_break_complete">สดชื่นแล้ว! กลับไปทำต่อกัน</string>
+    <string name="pomodoro_msg_cycle_complete">ครบหนึ่งรอบแล้ว! 🎉</string>
+    <!-- Settings screen -->
+    <string name="settings_title">การตั้งค่า</string>
+    <string name="settings_section_timer">ตัวจับเวลา</string>
+    <string name="settings_work_duration">ระยะเวลาโฟกัส</string>
+    <string name="settings_short_break">พักสั้น</string>
+    <string name="settings_long_break">พักยาว</string>
+    <string name="settings_sessions_before_long">จำนวนรอบก่อนพักยาว</string>
+    <string name="settings_section_automation">อัตโนมัติ</string>
+    <string name="settings_auto_start_breaks">เริ่มพักอัตโนมัติ</string>
+    <string name="settings_auto_start_work">เริ่มรอบทำงานอัตโนมัติ</string>
+    <string name="settings_section_sound">เสียงและการสั่น</string>
+    <string name="settings_sound_enabled">เสียง</string>
+    <string name="settings_vibration_enabled">การสั่น</string>
+    <string name="settings_sound_bell">ระฆัง</string>
+    <string name="settings_sound_digital">ดิจิทัล</string>
+    <string name="settings_sound_soft">นุ่มนวล</string>
+    <string name="settings_sound_preview">ตัวอย่าง</string>
+    <string name="settings_section_theme">ธีม</string>
+    <string name="settings_theme_emerald">มรกต</string>
+    <string name="settings_theme_sunset">พระอาทิตย์ตก</string>
+    <string name="settings_theme_ocean">มหาสมุทร</string>
+    <string name="settings_theme_forest">ป่า</string>
+    <string name="settings_theme_lavender">ลาเวนเดอร์</string>
+    <string name="settings_section_goal">เป้าหมายรายวัน</string>
+    <string name="settings_daily_goal">เป้าหมาย Pomodoro รายวัน</string>
+    <string name="settings_minutes_suffix">%1$d นาที</string>
+    <!-- Stats screen -->
+    <string name="stats_title">สถิติ</string>
+    <string name="stats_tab_day">วัน</string>
+    <string name="stats_tab_week">สัปดาห์</string>
+    <string name="stats_tab_month">เดือน</string>
+    <string name="stats_total_pomodoros">Pomodoro ทั้งหมด</string>
+    <string name="stats_daily_average">ค่าเฉลี่ยต่อวัน</string>
+    <string name="stats_total_focus_time">เวลาโฟกัส</string>
+    <string name="stats_best_day">วันที่ดีที่สุด</string>
+    <string name="stats_chart_pomodoros_title">Pomodoro ที่ทำเสร็จ</string>
+    <string name="stats_chart_focus_title">นาทีโฟกัส</string>
+    <string name="stats_chart_pomodoros_label">Pomodoro</string>
+    <string name="stats_chart_focus_label">นาที</string>
+    <string name="stats_empty_message">ทำ Pomodoro แรกให้เสร็จเพื่อดูสถิติ 🍅</string>
+    <string name="stats_back_cd">ย้อนกลับ</string>
+    <string name="stats_goal_ring_label">เป้าหมายวันนี้</string>
+    <string name="stats_focus_time_format">%1$d ชม. %2$d นาที</string>
+    <!-- Day and month labels for charts -->
+    <string name="day_label_mon">จ.</string>
+    <string name="day_label_tue">อ.</string>
+    <string name="day_label_wed">พ.</string>
+    <string name="day_label_thu">พฤ.</string>
+    <string name="day_label_fri">ศ.</string>
+    <string name="day_label_sat">ส.</string>
+    <string name="day_label_sun">อา.</string>
+    <string name="month_label_jan">ม.ค.</string>
+    <string name="month_label_feb">ก.พ.</string>
+    <string name="month_label_mar">มี.ค.</string>
+    <string name="month_label_apr">เม.ย.</string>
+    <string name="month_label_may">พ.ค.</string>
+    <string name="month_label_jun">มิ.ย.</string>
+    <string name="month_label_jul">ก.ค.</string>
+    <string name="month_label_aug">ส.ค.</string>
+    <string name="month_label_sep">ก.ย.</string>
+    <string name="month_label_oct">ต.ค.</string>
+    <string name="month_label_nov">พ.ย.</string>
+    <string name="month_label_dec">ธ.ค.</string>
+    <string name="stats_best_day_format">%1$s %2$d (%3$d)</string>
+    <!-- Widget -->
+    <string name="widget_label_focus">โฟกัส</string>
+    <string name="widget_label_break">พัก</string>
+    <string name="widget_description">วิดเจ็ต Pomodoro Timer</string>
+    <!-- Notifications -->
+    <string name="notif_channel_name">Pomodoro Timer</string>
+    <string name="notif_channel_description">ปุ่มควบคุมตัวจับเวลาที่ทำงานอยู่</string>
+    <string name="notif_action_pause">หยุดชั่วคราว</string>
+    <string name="notif_action_resume">ทำต่อ</string>
+    <string name="notif_action_skip">ข้าม</string>
+    <!-- AdMob consent -->
+    <string name="ads_loading">กำลังโหลด...</string>
+    <!-- Remote Config UI -->
+    <string name="force_update_title">ต้องอัปเดต</string>
+    <string name="force_update_message">ต้องใช้ Pomodoro Timer เวอร์ชันใหม่กว่าเพื่อดำเนินการต่อ</string>
+    <string name="force_update_button">อัปเดต</string>
+    <string name="motd_dismiss_cd">ปิดข้อความ</string>
+
 </resources>

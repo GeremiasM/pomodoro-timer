@@ -43,7 +43,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@android:color/transparent"
-            android:contentDescription="@string/widget_play_pause_content_description"
+            android:contentDescription="@string/pomodoro_btn_start"
             android:src="@drawable/ic_widget_play" />
     </LinearLayout>
 </FrameLayout>

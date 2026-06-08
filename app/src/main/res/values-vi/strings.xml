@@ -109,4 +109,112 @@
     <string name="pro_badge">PRO</string>
     <string name="pomodoro_pro_description">Enjoy Pomodoro Timer without ads, personalize your experience with exclusive color themes, and monitor your progress with detailed stats.</string>
     <string name="pomodoro_pro_play_store_content_description">Go to Play Store</string>
+    <!-- Pomodoro Timer UI -->
+    <!-- Phase names -->
+    <string name="pomodoro_phase_work">Tập trung</string>
+    <string name="pomodoro_phase_short_break">Nghỉ ngắn</string>
+    <string name="pomodoro_phase_long_break">Nghỉ dài</string>
+    <!-- Phase labels in notification -->
+    <string name="pomodoro_notif_work">🍅 Tập trung</string>
+    <string name="pomodoro_notif_short_break">☕ Nghỉ ngắn</string>
+    <string name="pomodoro_notif_long_break">🌙 Nghỉ dài</string>
+    <!-- Timer screen -->
+    <string name="pomodoro_session_label">Phiên %1$d trên %2$d</string>
+    <string name="pomodoro_today_count">%1$d Pomodoro hôm nay</string>
+    <string name="pomodoro_goal_label">Mục tiêu: %1$d / %2$d</string>
+    <string name="pomodoro_btn_start">Bắt đầu</string>
+    <string name="pomodoro_btn_pause">Tạm dừng</string>
+    <string name="pomodoro_btn_resume">Tiếp tục</string>
+    <string name="pomodoro_btn_skip">Bỏ qua</string>
+    <string name="pomodoro_btn_reset">Đặt lại</string>
+    <string name="pomodoro_cd_settings">Mở cài đặt</string>
+    <string name="pomodoro_cd_stats">Xem thống kê</string>
+    <string name="pomodoro_cd_timer_circle">Bộ hẹn giờ: còn %1$s</string>
+    <!-- Phase transition messages -->
+    <string name="pomodoro_msg_work_complete">Làm tốt lắm! Đến giờ nghỉ rồi.</string>
+    <string name="pomodoro_msg_short_break_complete">Hết giờ nghỉ. Sẵn sàng tập trung chưa?</string>
+    <string name="pomodoro_msg_long_break_complete">Đã hồi phục! Quay lại thôi.</string>
+    <string name="pomodoro_msg_cycle_complete">Hoàn tất cả chu kỳ! 🎉</string>
+    <!-- Settings screen -->
+    <string name="settings_title">Cài đặt</string>
+    <string name="settings_section_timer">Bộ hẹn giờ</string>
+    <string name="settings_work_duration">Thời lượng tập trung</string>
+    <string name="settings_short_break">Nghỉ ngắn</string>
+    <string name="settings_long_break">Nghỉ dài</string>
+    <string name="settings_sessions_before_long">Số phiên trước nghỉ dài</string>
+    <string name="settings_section_automation">Tự động hóa</string>
+    <string name="settings_auto_start_breaks">Tự động bắt đầu nghỉ</string>
+    <string name="settings_auto_start_work">Tự động bắt đầu phiên làm việc</string>
+    <string name="settings_section_sound">Âm thanh &amp; rung</string>
+    <string name="settings_sound_enabled">Âm thanh</string>
+    <string name="settings_vibration_enabled">Rung</string>
+    <string name="settings_sound_bell">Chuông</string>
+    <string name="settings_sound_digital">Kỹ thuật số</string>
+    <string name="settings_sound_soft">Nhẹ</string>
+    <string name="settings_sound_preview">Nghe thử</string>
+    <string name="settings_section_theme">Chủ đề</string>
+    <string name="settings_theme_emerald">Ngọc lục bảo</string>
+    <string name="settings_theme_sunset">Hoàng hôn</string>
+    <string name="settings_theme_ocean">Đại dương</string>
+    <string name="settings_theme_forest">Rừng</string>
+    <string name="settings_theme_lavender">Oải hương</string>
+    <string name="settings_section_goal">Mục tiêu hằng ngày</string>
+    <string name="settings_daily_goal">Mục tiêu Pomodoro hằng ngày</string>
+    <string name="settings_minutes_suffix">%1$d phút</string>
+    <!-- Stats screen -->
+    <string name="stats_title">Thống kê</string>
+    <string name="stats_tab_day">Ngày</string>
+    <string name="stats_tab_week">Tuần</string>
+    <string name="stats_tab_month">Tháng</string>
+    <string name="stats_total_pomodoros">Tổng Pomodoro</string>
+    <string name="stats_daily_average">Trung bình ngày</string>
+    <string name="stats_total_focus_time">Thời gian tập trung</string>
+    <string name="stats_best_day">Ngày tốt nhất</string>
+    <string name="stats_chart_pomodoros_title">Pomodoro đã hoàn thành</string>
+    <string name="stats_chart_focus_title">Phút tập trung</string>
+    <string name="stats_chart_pomodoros_label">Pomodoro</string>
+    <string name="stats_chart_focus_label">Phút</string>
+    <string name="stats_empty_message">Hoàn thành Pomodoro đầu tiên để xem thống kê 🍅</string>
+    <string name="stats_back_cd">Quay lại</string>
+    <string name="stats_goal_ring_label">Mục tiêu hôm nay</string>
+    <string name="stats_focus_time_format">%1$d giờ %2$d phút</string>
+    <!-- Day and month labels for charts -->
+    <string name="day_label_mon">T2</string>
+    <string name="day_label_tue">T3</string>
+    <string name="day_label_wed">T4</string>
+    <string name="day_label_thu">T5</string>
+    <string name="day_label_fri">T6</string>
+    <string name="day_label_sat">T7</string>
+    <string name="day_label_sun">CN</string>
+    <string name="month_label_jan">Th1</string>
+    <string name="month_label_feb">Th2</string>
+    <string name="month_label_mar">Th3</string>
+    <string name="month_label_apr">Th4</string>
+    <string name="month_label_may">Th5</string>
+    <string name="month_label_jun">Th6</string>
+    <string name="month_label_jul">Th7</string>
+    <string name="month_label_aug">Th8</string>
+    <string name="month_label_sep">Th9</string>
+    <string name="month_label_oct">Th10</string>
+    <string name="month_label_nov">Th11</string>
+    <string name="month_label_dec">Th12</string>
+    <string name="stats_best_day_format">%1$s %2$d (%3$d)</string>
+    <!-- Widget -->
+    <string name="widget_label_focus">Tập trung</string>
+    <string name="widget_label_break">Nghỉ</string>
+    <string name="widget_description">Tiện ích Pomodoro Timer</string>
+    <!-- Notifications -->
+    <string name="notif_channel_name">Pomodoro Timer</string>
+    <string name="notif_channel_description">Điều khiển bộ hẹn giờ đang chạy</string>
+    <string name="notif_action_pause">Tạm dừng</string>
+    <string name="notif_action_resume">Tiếp tục</string>
+    <string name="notif_action_skip">Bỏ qua</string>
+    <!-- AdMob consent -->
+    <string name="ads_loading">Đang tải...</string>
+    <!-- Remote Config UI -->
+    <string name="force_update_title">Cần cập nhật</string>
+    <string name="force_update_message">Cần phiên bản Pomodoro Timer mới hơn để tiếp tục.</string>
+    <string name="force_update_button">Cập nhật</string>
+    <string name="motd_dismiss_cd">Đóng thông báo</string>
+
 </resources>

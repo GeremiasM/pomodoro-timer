@@ -6,7 +6,9 @@ import android.os.Build
 import androidx.annotation.StringRes
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.matias.pomodoro.PomodoroApplication
 import com.matias.pomodoro.R
+import com.matias.pomodoro.analytics.AnalyticsManager
 import com.matias.pomodoro.data.PomodoroDateUtils
 import com.matias.pomodoro.data.PomodoroSession
 import com.matias.pomodoro.data.preferences.PomodoroPreferences
@@ -90,6 +92,8 @@ class PomodoroViewModel(application: Application) : AndroidViewModel(application
     private val preferences = PomodoroContainer.preferences
     private val repository = PomodoroContainer.repository
     private val uiPlaceholderState = MutableStateFlow(UiPlaceholderState())
+    private var dailyGoalLoggedKey: String? = null
+    private var previousTimerStatus = PomodoroTimerService.state.value.status
 
     val timerState: StateFlow<PomodoroTimerState> = PomodoroTimerService.state
 
@@ -140,6 +144,12 @@ class PomodoroViewModel(application: Application) : AndroidViewModel(application
         initialValue = 0f
     )
 
+    val dismissedMotdText: StateFlow<String> = preferences.dismissedMotdText.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000L),
+        initialValue = ""
+    )
+
     val state: StateFlow<PomodoroUiState> = combine(
         timerState,
         settings,
@@ -167,6 +177,11 @@ class PomodoroViewModel(application: Application) : AndroidViewModel(application
     private val _effects = MutableSharedFlow<PomodoroEffect>(extraBufferCapacity = 8)
     val effects: SharedFlow<PomodoroEffect> = _effects.asSharedFlow()
 
+    init {
+        observeTimerCompletionsForAds()
+        observeDailyGoalReached()
+    }
+
     fun startTimer() {
         sendServiceCommand(PomodoroTimerService.ACTION_START)
     }
@@ -188,9 +203,24 @@ class PomodoroViewModel(application: Application) : AndroidViewModel(application
         sendServiceCommand(PomodoroTimerService.ACTION_RESET_ALL)
     }
 
-    fun updateSettings(block: suspend PomodoroPreferences.() -> Unit) {
+    fun updateSettings(
+        settingName: String,
+        newValue: String,
+        block: suspend PomodoroPreferences.() -> Unit
+    ) {
         viewModelScope.launch {
+            val previousTheme = settings.value.selectedTheme
             preferences.block()
+            AnalyticsManager.logSettingsChanged(settingName, newValue)
+            if (settingName == SETTING_SELECTED_THEME && previousTheme != newValue) {
+                AnalyticsManager.logThemeChanged(previousTheme, newValue)
+            }
+        }
+    }
+
+    fun dismissMotd(text: String) {
+        viewModelScope.launch {
+            preferences.dismissMotd(text)
         }
     }
 
@@ -198,7 +228,7 @@ class PomodoroViewModel(application: Application) : AndroidViewModel(application
         when (intent) {
             PomodoroIntent.StartTimer -> startTimer()
             PomodoroIntent.StopTimer -> pauseTimer()
-            is PomodoroIntent.SetInterval -> updateSettings {
+            is PomodoroIntent.SetInterval -> updateSettings("work_duration_minutes", intent.minutes.toString()) {
                 updateWorkDurationMinutes(intent.minutes)
             }
             is PomodoroIntent.SetLavaMode -> uiPlaceholderState.update {
@@ -227,5 +257,39 @@ class PomodoroViewModel(application: Application) : AndroidViewModel(application
         } else {
             application.startService(intent)
         }
+    }
+
+    private fun observeTimerCompletionsForAds() {
+        viewModelScope.launch {
+            timerState.collect { state ->
+                if (previousTimerStatus != TimerStatus.COMPLETED && state.status == TimerStatus.COMPLETED) {
+                    (getApplication<Application>() as? PomodoroApplication)
+                        ?.adInterstitialManager
+                        ?.onPhaseCompleted()
+                }
+                previousTimerStatus = state.status
+            }
+        }
+    }
+
+    private fun observeDailyGoalReached() {
+        viewModelScope.launch {
+            combine(todayStats, settings) { stats, settings -> stats to settings }
+                .collect { (stats, settings) ->
+                    val completed = stats?.completedPomodoros ?: return@collect
+                    val key = "${stats.date}:${settings.dailyGoalPomodoros}"
+                    if (completed >= settings.dailyGoalPomodoros && dailyGoalLoggedKey != key) {
+                        dailyGoalLoggedKey = key
+                        AnalyticsManager.logDailyGoalReached(
+                            goalCount = settings.dailyGoalPomodoros,
+                            totalFocusMinutes = stats.totalFocusSeconds / 60
+                        )
+                    }
+                }
+        }
+    }
+
+    private companion object {
+        const val SETTING_SELECTED_THEME = "selected_theme"
     }
 }

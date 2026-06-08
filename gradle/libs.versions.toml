@@ -31,10 +31,11 @@ turbine             = "1.2.0"
 workManager         = "2.11.2"
 
 # Ads
-playServicesAds     = "25.3.0"
+playServicesAds     = "23.0.0"
+ump                 = "2.2.0"
 
 # Firebase
-firebaseBom         = "34.12.0"
+firebaseBom         = "33.0.0"
 googleServices      = "4.4.4"
 crashlyticsPlugin   = "3.0.7"
 
@@ -87,11 +88,13 @@ androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx"
 
 # ── Ads ───────────────────────────────────────────────────────────────────────
 play-services-ads = { group = "com.google.android.gms", name = "play-services-ads", version.ref = "playServicesAds" }
+user-messaging-platform = { group = "com.google.android.ump", name = "user-messaging-platform", version.ref = "ump" }
 
 # ── Firebase ──────────────────────────────────────────────────────────────────
 firebase-bom            = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
-firebase-analytics      = { group = "com.google.firebase", name = "firebase-analytics" }
-firebase-crashlytics    = { group = "com.google.firebase", name = "firebase-crashlytics" }
+firebase-analytics      = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
+firebase-config         = { group = "com.google.firebase", name = "firebase-config-ktx" }
+firebase-crashlytics    = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
 
 # ── Test ──────────────────────────────────────────────────────────────────────
 junit                = { group = "junit",                  name = "junit",          version.ref = "junit"        }

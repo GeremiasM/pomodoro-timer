@@ -109,4 +109,112 @@
     <string name="pro_badge">PRO</string>
     <string name="pomodoro_pro_description">Enjoy Pomodoro Timer without ads, personalize your experience with exclusive color themes, and monitor your progress with detailed stats.</string>
     <string name="pomodoro_pro_play_store_content_description">Go to Play Store</string>
+    <!-- Pomodoro Timer UI -->
+    <!-- Phase names -->
+    <string name="pomodoro_phase_work">Odaklanma</string>
+    <string name="pomodoro_phase_short_break">Kısa mola</string>
+    <string name="pomodoro_phase_long_break">Uzun mola</string>
+    <!-- Phase labels in notification -->
+    <string name="pomodoro_notif_work">🍅 Odaklanma</string>
+    <string name="pomodoro_notif_short_break">☕ Kısa mola</string>
+    <string name="pomodoro_notif_long_break">🌙 Uzun mola</string>
+    <!-- Timer screen -->
+    <string name="pomodoro_session_label">Oturum %1$d / %2$d</string>
+    <string name="pomodoro_today_count">Bugün %1$d Pomodoro</string>
+    <string name="pomodoro_goal_label">Hedef: %1$d / %2$d</string>
+    <string name="pomodoro_btn_start">Başlat</string>
+    <string name="pomodoro_btn_pause">Duraklat</string>
+    <string name="pomodoro_btn_resume">Sürdür</string>
+    <string name="pomodoro_btn_skip">Atla</string>
+    <string name="pomodoro_btn_reset">Sıfırla</string>
+    <string name="pomodoro_cd_settings">Ayarları aç</string>
+    <string name="pomodoro_cd_stats">İstatistikleri görüntüle</string>
+    <string name="pomodoro_cd_timer_circle">Zamanlayıcı: %1$s kaldı</string>
+    <!-- Phase transition messages -->
+    <string name="pomodoro_msg_work_complete">Harika iş! Mola zamanı.</string>
+    <string name="pomodoro_msg_short_break_complete">Mola bitti. Odaklanmaya hazır mısın?</string>
+    <string name="pomodoro_msg_long_break_complete">Tazelendin! Hadi devam edelim.</string>
+    <string name="pomodoro_msg_cycle_complete">Tam döngü tamamlandı! 🎉</string>
+    <!-- Settings screen -->
+    <string name="settings_title">Ayarlar</string>
+    <string name="settings_section_timer">Zamanlayıcı</string>
+    <string name="settings_work_duration">Odaklanma süresi</string>
+    <string name="settings_short_break">Kısa mola</string>
+    <string name="settings_long_break">Uzun mola</string>
+    <string name="settings_sessions_before_long">Uzun moladan önceki oturumlar</string>
+    <string name="settings_section_automation">Otomasyon</string>
+    <string name="settings_auto_start_breaks">Molaları otomatik başlat</string>
+    <string name="settings_auto_start_work">Çalışma oturumlarını otomatik başlat</string>
+    <string name="settings_section_sound">Ses ve titreşim</string>
+    <string name="settings_sound_enabled">Ses</string>
+    <string name="settings_vibration_enabled">Titreşim</string>
+    <string name="settings_sound_bell">Zil</string>
+    <string name="settings_sound_digital">Dijital</string>
+    <string name="settings_sound_soft">Yumuşak</string>
+    <string name="settings_sound_preview">Önizleme</string>
+    <string name="settings_section_theme">Tema</string>
+    <string name="settings_theme_emerald">Zümrüt</string>
+    <string name="settings_theme_sunset">Gün batımı</string>
+    <string name="settings_theme_ocean">Okyanus</string>
+    <string name="settings_theme_forest">Orman</string>
+    <string name="settings_theme_lavender">Lavanta</string>
+    <string name="settings_section_goal">Günlük hedef</string>
+    <string name="settings_daily_goal">Günlük Pomodoro hedefi</string>
+    <string name="settings_minutes_suffix">%1$d dk</string>
+    <!-- Stats screen -->
+    <string name="stats_title">İstatistikler</string>
+    <string name="stats_tab_day">Gün</string>
+    <string name="stats_tab_week">Hafta</string>
+    <string name="stats_tab_month">Ay</string>
+    <string name="stats_total_pomodoros">Toplam Pomodoro</string>
+    <string name="stats_daily_average">Günlük ortalama</string>
+    <string name="stats_total_focus_time">Odaklanma süresi</string>
+    <string name="stats_best_day">En iyi gün</string>
+    <string name="stats_chart_pomodoros_title">Tamamlanan Pomodorolar</string>
+    <string name="stats_chart_focus_title">Odaklanma dakikaları</string>
+    <string name="stats_chart_pomodoros_label">Pomodoro</string>
+    <string name="stats_chart_focus_label">Dakika</string>
+    <string name="stats_empty_message">İstatistiklerini görmek için ilk Pomodoro’nu tamamla 🍅</string>
+    <string name="stats_back_cd">Geri dön</string>
+    <string name="stats_goal_ring_label">Bugünün hedefi</string>
+    <string name="stats_focus_time_format">%1$d sa %2$d dk</string>
+    <!-- Day and month labels for charts -->
+    <string name="day_label_mon">Pzt</string>
+    <string name="day_label_tue">Sal</string>
+    <string name="day_label_wed">Çar</string>
+    <string name="day_label_thu">Per</string>
+    <string name="day_label_fri">Cum</string>
+    <string name="day_label_sat">Cmt</string>
+    <string name="day_label_sun">Paz</string>
+    <string name="month_label_jan">Oca</string>
+    <string name="month_label_feb">Şub</string>
+    <string name="month_label_mar">Mar</string>
+    <string name="month_label_apr">Nis</string>
+    <string name="month_label_may">May</string>
+    <string name="month_label_jun">Haz</string>
+    <string name="month_label_jul">Tem</string>
+    <string name="month_label_aug">Ağu</string>
+    <string name="month_label_sep">Eyl</string>
+    <string name="month_label_oct">Eki</string>
+    <string name="month_label_nov">Kas</string>
+    <string name="month_label_dec">Ara</string>
+    <string name="stats_best_day_format">%1$s %2$d (%3$d)</string>
+    <!-- Widget -->
+    <string name="widget_label_focus">Odaklanma</string>
+    <string name="widget_label_break">Mola</string>
+    <string name="widget_description">Pomodoro Timer Widget’ı</string>
+    <!-- Notifications -->
+    <string name="notif_channel_name">Pomodoro Timer</string>
+    <string name="notif_channel_description">Aktif zamanlayıcı kontrolleri</string>
+    <string name="notif_action_pause">Duraklat</string>
+    <string name="notif_action_resume">Sürdür</string>
+    <string name="notif_action_skip">Atla</string>
+    <!-- AdMob consent -->
+    <string name="ads_loading">Yükleniyor...</string>
+    <!-- Remote Config UI -->
+    <string name="force_update_title">Güncelleme gerekli</string>
+    <string name="force_update_message">Devam etmek için Pomodoro Timer’ın daha yeni bir sürümü gerekir.</string>
+    <string name="force_update_button">Güncelle</string>
+    <string name="motd_dismiss_cd">Mesajı kapat</string>
+
 </resources>

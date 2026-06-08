@@ -1,7 +1,10 @@
 package com.matias.pomodoro
 
 import android.Manifest
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -16,7 +19,12 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.ui.Modifier
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -26,6 +34,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.matias.pomodoro.config.RemoteConfigManager
+import com.matias.pomodoro.consent.ConsentManager
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.matias.pomodoro.ui.screens.PomodoroScreen
 import com.matias.pomodoro.ui.screens.PomodoroStatsScreen
@@ -35,6 +45,7 @@ import com.matias.pomodoro.viewmodel.PomodoroViewModel
 
 class MainActivity : ComponentActivity() {
     private val viewModel: PomodoroViewModel by viewModels()
+    private var remoteUiState by mutableStateOf(RemoteUiState())
 
     private val notificationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -62,6 +73,7 @@ class MainActivity : ComponentActivity() {
             val weekStats by viewModel.weekStats.collectAsStateWithLifecycle()
             val monthStats by viewModel.monthStats.collectAsStateWithLifecycle()
             val dailyGoalProgress by viewModel.dailyGoalProgress.collectAsStateWithLifecycle()
+            val dismissedMotdText by viewModel.dismissedMotdText.collectAsStateWithLifecycle()
             val navController = rememberNavController()
 
             PomodoroTheme(
@@ -85,14 +97,33 @@ class MainActivity : ComponentActivity() {
                     weekStats = weekStats,
                     monthStats = monthStats,
                     dailyGoalProgress = dailyGoalProgress,
+                    dismissedMotdText = dismissedMotdText,
+                    remoteUiState = remoteUiState,
                     onStart = { startTimerWithPermissionCheck() },
                     onPause = viewModel::pauseTimer,
                     onSkip = viewModel::skipPhase,
                     onReset = viewModel::resetPhase,
+                    onDismissMotd = viewModel::dismissMotd,
                     onUpdateSettings = viewModel::updateSettings
                 )
+
+                if (remoteUiState.forceUpdateRequired) {
+                    ForceUpdateDialog(onUpdate = ::openPlayStoreListing)
+                }
             }
         }
+
+        requestConsentAndRemoteConfig()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        (application as PomodoroApplication).adInterstitialManager.attachActivity(this)
+    }
+
+    override fun onStop() {
+        (application as PomodoroApplication).adInterstitialManager.detachActivity(this)
+        super.onStop()
     }
 
     private fun startTimerWithPermissionCheck() {
@@ -110,6 +141,69 @@ class MainActivity : ComponentActivity() {
                 Manifest.permission.POST_NOTIFICATIONS
             ) == PackageManager.PERMISSION_GRANTED
     }
+
+    private fun requestConsentAndRemoteConfig() {
+        val app = application as PomodoroApplication
+        ConsentManager(this).requestConsent { consentObtained ->
+            if (consentObtained) {
+                app.initializeMobileAds()
+            }
+            RemoteConfigManager.fetchAndActivate {
+                val interstitialEnabled = consentObtained && RemoteConfigManager.adInterstitialEnabled
+                app.adInterstitialManager.configure(
+                    interstitialEnabled = interstitialEnabled,
+                    interstitialFrequency = RemoteConfigManager.adInterstitialFrequency
+                )
+                remoteUiState = RemoteUiState(
+                    featureStatsEnabled = RemoteConfigManager.featureStatsEnabled,
+                    featureDailyGoalEnabled = RemoteConfigManager.featureDailyGoalEnabled,
+                    adBannerEnabled = consentObtained && RemoteConfigManager.adBannerEnabled,
+                    adInterstitialEnabled = interstitialEnabled,
+                    adInterstitialFrequency = RemoteConfigManager.adInterstitialFrequency,
+                    motdText = RemoteConfigManager.motdText,
+                    motdEnabled = RemoteConfigManager.motdEnabled,
+                    forceUpdateRequired = BuildConfig.VERSION_CODE < RemoteConfigManager.minSupportedVersionCode
+                )
+            }
+        }
+    }
+
+    private fun openPlayStoreListing() {
+        val marketIntent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName"))
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageName"))
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        try {
+            startActivity(marketIntent)
+        } catch (_: ActivityNotFoundException) {
+            startActivity(webIntent)
+        }
+    }
+}
+
+data class RemoteUiState(
+    val featureStatsEnabled: Boolean = true,
+    val featureDailyGoalEnabled: Boolean = true,
+    val adBannerEnabled: Boolean = true,
+    val adInterstitialEnabled: Boolean = true,
+    val adInterstitialFrequency: Int = 2,
+    val motdText: String = "",
+    val motdEnabled: Boolean = false,
+    val forceUpdateRequired: Boolean = false
+)
+
+@Composable
+private fun ForceUpdateDialog(onUpdate: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = {},
+        title = { Text(text = androidx.compose.ui.res.stringResource(R.string.force_update_title)) },
+        text = { Text(text = androidx.compose.ui.res.stringResource(R.string.force_update_message)) },
+        confirmButton = {
+            TextButton(onClick = onUpdate) {
+                Text(text = androidx.compose.ui.res.stringResource(R.string.force_update_button))
+            }
+        }
+    )
 }
 
 @Composable
@@ -121,11 +215,14 @@ private fun PomodoroNavHost(
     weekStats: List<com.matias.pomodoro.data.PomodoroSession>,
     monthStats: List<com.matias.pomodoro.data.PomodoroSession>,
     dailyGoalProgress: Float,
+    dismissedMotdText: String,
+    remoteUiState: RemoteUiState,
     onStart: () -> Unit,
     onPause: () -> Unit,
     onSkip: () -> Unit,
     onReset: () -> Unit,
-    onUpdateSettings: (suspend com.matias.pomodoro.data.preferences.PomodoroPreferences.() -> Unit) -> Unit
+    onDismissMotd: (String) -> Unit,
+    onUpdateSettings: (String, String, suspend com.matias.pomodoro.data.preferences.PomodoroPreferences.() -> Unit) -> Unit
 ) {
     NavHost(
         navController = navController,
@@ -162,11 +259,21 @@ private fun PomodoroNavHost(
                 settings = settings,
                 todayStats = todayStats,
                 dailyGoalProgress = dailyGoalProgress,
+                featureStatsEnabled = remoteUiState.featureStatsEnabled,
+                featureDailyGoalEnabled = remoteUiState.featureDailyGoalEnabled,
+                motdText = remoteUiState.motdText,
+                motdEnabled = remoteUiState.motdEnabled,
+                dismissedMotdText = dismissedMotdText,
                 onStart = onStart,
                 onPause = onPause,
                 onSkip = onSkip,
                 onReset = onReset,
-                onOpenStats = { navController.navigate(ROUTE_STATS) { launchSingleTop = true } },
+                onOpenStats = {
+                    if (remoteUiState.featureStatsEnabled) {
+                        navController.navigate(ROUTE_STATS) { launchSingleTop = true }
+                    }
+                },
+                onDismissMotd = onDismissMotd,
                 onUpdateSettings = onUpdateSettings,
                 modifier = Modifier.fillMaxSize()
             )
@@ -178,6 +285,8 @@ private fun PomodoroNavHost(
                 weekStats = weekStats,
                 monthStats = monthStats,
                 dailyGoalProgress = dailyGoalProgress,
+                featureDailyGoalEnabled = remoteUiState.featureDailyGoalEnabled,
+                adBannerEnabled = remoteUiState.adBannerEnabled,
                 onBack = { navController.navigateUp() },
                 modifier = Modifier.fillMaxSize()
             )

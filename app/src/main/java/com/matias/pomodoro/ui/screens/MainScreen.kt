@@ -6,6 +6,7 @@ import android.media.SoundPool
 import android.view.accessibility.AccessibilityManager
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -27,6 +28,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Canvas
@@ -66,6 +68,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
@@ -139,6 +142,11 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.ValueFormatter
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
+import com.matias.pomodoro.analytics.AnalyticsManager
 import com.matias.pomodoro.R
 import com.matias.pomodoro.data.PomodoroSession
 import com.matias.pomodoro.data.preferences.PomodoroPreferences
@@ -149,14 +157,16 @@ import com.matias.pomodoro.timer.TimerStatus
 import com.matias.pomodoro.ui.theme.LocalPomodoroColors
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.format.DateTimeParseException
 import kotlin.math.cos
 import kotlin.math.roundToInt
 import kotlin.math.sin
 
-private enum class StatsPeriod(val labelRes: Int) {
-    Day(R.string.stats_period_day),
-    Week(R.string.stats_period_week),
-    Month(R.string.stats_period_month)
+private enum class StatsPeriod(val labelRes: Int, val analyticsValue: String) {
+    Day(R.string.stats_tab_day, "day"),
+    Week(R.string.stats_tab_week, "week"),
+    Month(R.string.stats_tab_month, "month")
 }
 
 private data class ThemeOption(
@@ -178,12 +188,18 @@ fun PomodoroScreen(
     settings: PomodoroSettings,
     todayStats: PomodoroSession?,
     dailyGoalProgress: Float,
+    featureStatsEnabled: Boolean,
+    featureDailyGoalEnabled: Boolean,
+    motdText: String,
+    motdEnabled: Boolean,
+    dismissedMotdText: String,
     onStart: () -> Unit,
     onPause: () -> Unit,
     onSkip: () -> Unit,
     onReset: () -> Unit,
     onOpenStats: () -> Unit,
-    onUpdateSettings: (suspend PomodoroPreferences.() -> Unit) -> Unit,
+    onDismissMotd: (String) -> Unit,
+    onUpdateSettings: (String, String, suspend PomodoroPreferences.() -> Unit) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var showSettings by remember { mutableStateOf(false) }
@@ -213,7 +229,15 @@ fun PomodoroScreen(
             ) {
                 HeaderActions(
                     onOpenStats = onOpenStats,
-                    onOpenSettings = { showSettings = true }
+                    onOpenSettings = { showSettings = true },
+                    featureStatsEnabled = featureStatsEnabled
+                )
+
+                MotdBanner(
+                    text = motdText,
+                    visible = motdEnabled && motdText.isNotBlank() && dismissedMotdText != motdText,
+                    onDismiss = { onDismissMotd(motdText) },
+                    modifier = Modifier.fillMaxWidth()
                 )
 
                 PhaseIndicator(
@@ -231,17 +255,19 @@ fun PomodoroScreen(
 
                 Spacer(Modifier.height(30.dp))
 
-                TodayProgressRow(
-                    completedPomodoros = todayStats?.completedPomodoros ?: timerState.completedPomodoros,
-                    dailyGoal = settings.dailyGoalPomodoros,
-                    progress = dailyGoalProgress,
-                    modifier = Modifier.fillMaxWidth()
-                )
+                if (featureDailyGoalEnabled) {
+                    TodayProgressRow(
+                        completedPomodoros = todayStats?.completedPomodoros ?: timerState.completedPomodoros,
+                        dailyGoal = settings.dailyGoalPomodoros,
+                        progress = dailyGoalProgress,
+                        modifier = Modifier.fillMaxWidth()
+                    )
 
-                Spacer(Modifier.height(28.dp))
+                    Spacer(Modifier.height(28.dp))
+                }
 
                 TimerControls(
-                    isRunning = isRunning,
+                    timerStatus = timerState.status,
                     onReset = onReset,
                     onStart = onStart,
                     onPause = onPause,
@@ -268,6 +294,7 @@ fun PomodoroScreen(
         ) {
             SettingsScreen(
                 settings = settings,
+                featureDailyGoalEnabled = featureDailyGoalEnabled,
                 onUpdateSettings = onUpdateSettings,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -281,22 +308,25 @@ fun PomodoroScreen(
 @Composable
 private fun HeaderActions(
     onOpenStats: () -> Unit,
-    onOpenSettings: () -> Unit
+    onOpenSettings: () -> Unit,
+    featureStatsEnabled: Boolean
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.End,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        IconButton(
-            onClick = onOpenStats,
-            modifier = Modifier.size(48.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Default.BarChart,
-                contentDescription = stringResource(R.string.stats_content_description),
-                tint = LocalPomodoroColors.current.muted
-            )
+        if (featureStatsEnabled) {
+            IconButton(
+                onClick = onOpenStats,
+                modifier = Modifier.size(48.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.BarChart,
+                    contentDescription = stringResource(R.string.pomodoro_cd_stats),
+                    tint = LocalPomodoroColors.current.muted
+                )
+            }
         }
         IconButton(
             onClick = onOpenSettings,
@@ -304,9 +334,47 @@ private fun HeaderActions(
         ) {
             Icon(
                 imageVector = Icons.Default.Settings,
-                contentDescription = stringResource(R.string.settings_content_description),
+                contentDescription = stringResource(R.string.pomodoro_cd_settings),
                 tint = LocalPomodoroColors.current.muted
             )
+        }
+    }
+}
+
+@Composable
+private fun MotdBanner(
+    text: String,
+    visible: Boolean,
+    onDismiss: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val colors = LocalPomodoroColors.current
+    AnimatedVisibility(
+        visible = visible,
+        enter = slideInVertically(initialOffsetY = { -it }) + fadeIn(tween(250)),
+        modifier = modifier
+    ) {
+        Row(
+            modifier = Modifier
+                .clip(RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp))
+                .background(colors.primary.copy(alpha = 0.20f))
+                .padding(start = 16.dp, end = 6.dp, top = 12.dp, bottom = 12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            Text(
+                text = text,
+                color = colors.onBackground,
+                fontSize = 13.sp,
+                modifier = Modifier.weight(1f)
+            )
+            IconButton(onClick = onDismiss, modifier = Modifier.size(40.dp)) {
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = stringResource(R.string.motd_dismiss_cd),
+                    tint = colors.onBackground
+                )
+            }
         }
     }
 }
@@ -323,7 +391,7 @@ private fun PhaseIndicator(
         animationSpec = spring(dampingRatio = Spring.DampingRatioMediumBouncy),
         label = "phase_indicator_scale"
     )
-    val dotDescriptionFormat = R.string.session_dot_content_description_format
+    val dotDescriptionFormat = R.string.pomodoro_session_label
     val filledDots = when (timerState.phase) {
         PomodoroPhase.Work -> timerState.currentSessionNumber - 1
         PomodoroPhase.ShortBreak -> timerState.currentSessionNumber
@@ -427,14 +495,10 @@ private fun CircularPomodoroTimer(
         }
     }
 
-    val timerDescription = stringResource(
-        R.string.timer_accessibility_format,
-        phaseTitle(timerState.phase),
-        formatTime(timerState.remainingSeconds)
-    )
+    val timerDescription = stringResource(R.string.pomodoro_cd_timer_circle, formatTime(timerState.remainingSeconds))
     val view = LocalView.current
     val accessibilityManager = LocalContext.current.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
-    val phaseAnnouncement = stringResource(R.string.phase_changed_announcement_format, phaseTitle(timerState.phase))
+    val phaseAnnouncement = phaseTitle(timerState.phase)
     LaunchedEffect(timerState.phase) {
         if (accessibilityManager.isEnabled) {
             view.announceForAccessibility(phaseAnnouncement)
@@ -574,7 +638,7 @@ private fun TodayProgressRow(
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Text(
-            text = stringResource(R.string.today_pomodoros_format, completedPomodoros),
+            text = stringResource(R.string.pomodoro_today_count, completedPomodoros),
             color = colors.onBackground,
             fontSize = 13.sp,
             modifier = Modifier.weight(1.1f)
@@ -589,7 +653,7 @@ private fun TodayProgressRow(
             trackColor = colors.track
         )
         Text(
-            text = stringResource(R.string.goal_progress_format, completedPomodoros.coerceAtMost(dailyGoal), dailyGoal),
+            text = stringResource(R.string.pomodoro_goal_label, completedPomodoros.coerceAtMost(dailyGoal), dailyGoal),
             color = colors.muted,
             fontSize = 13.sp,
             textAlign = TextAlign.End,
@@ -600,13 +664,20 @@ private fun TodayProgressRow(
 
 @Composable
 private fun TimerControls(
-    isRunning: Boolean,
+    timerStatus: TimerStatus,
     onReset: () -> Unit,
     onStart: () -> Unit,
     onPause: () -> Unit,
     onSkip: () -> Unit
 ) {
     val colors = LocalPomodoroColors.current
+    val isRunning = timerStatus == TimerStatus.RUNNING
+    val primaryActionDescription = when (timerStatus) {
+        TimerStatus.RUNNING -> stringResource(R.string.pomodoro_btn_pause)
+        TimerStatus.PAUSED -> stringResource(R.string.pomodoro_btn_resume)
+        TimerStatus.IDLE,
+        TimerStatus.COMPLETED -> stringResource(R.string.pomodoro_btn_start)
+    }
     Row(
         horizontalArrangement = Arrangement.spacedBy(20.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -616,7 +687,7 @@ private fun TimerControls(
             containerColor = colors.surfaceElevated,
             contentColor = colors.primary,
             size = 56.dp,
-            contentDescription = stringResource(R.string.reset_content_description)
+            contentDescription = stringResource(R.string.pomodoro_btn_reset)
         ) {
             Icon(Icons.Default.Refresh, contentDescription = null)
         }
@@ -625,7 +696,7 @@ private fun TimerControls(
             containerColor = colors.primary,
             contentColor = colors.onPrimary,
             size = 76.dp,
-            contentDescription = stringResource(if (isRunning) R.string.pause_content_description else R.string.play_content_description)
+            contentDescription = primaryActionDescription
         ) {
             Crossfade(targetState = isRunning, label = "play_pause_icon") { running ->
                 Icon(
@@ -640,7 +711,7 @@ private fun TimerControls(
             containerColor = colors.surfaceElevated,
             contentColor = colors.primary,
             size = 56.dp,
-            contentDescription = stringResource(R.string.skip_content_description)
+            contentDescription = stringResource(R.string.pomodoro_btn_skip)
         ) {
             Icon(Icons.Default.SkipNext, contentDescription = null)
         }
@@ -686,11 +757,6 @@ private fun BottomPhaseLabel(
     sessionsBeforeLongBreak: Int
 ) {
     val colors = LocalPomodoroColors.current
-    val nextPhase = when (phase) {
-        PomodoroPhase.Work -> if (currentSessionNumber >= sessionsBeforeLongBreak) PomodoroPhase.LongBreak else PomodoroPhase.ShortBreak
-        PomodoroPhase.ShortBreak,
-        PomodoroPhase.LongBreak -> PomodoroPhase.Work
-    }
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
             text = phaseTitle(phase),
@@ -700,7 +766,7 @@ private fun BottomPhaseLabel(
         )
         Spacer(Modifier.height(4.dp))
         Text(
-            text = stringResource(R.string.next_phase_format, phaseTitle(nextPhase)),
+            text = stringResource(R.string.pomodoro_session_label, currentSessionNumber, sessionsBeforeLongBreak),
             color = colors.muted,
             fontSize = 13.sp
         )
@@ -754,7 +820,8 @@ private fun AmbientBackground(
 @Composable
 private fun SettingsScreen(
     settings: PomodoroSettings,
-    onUpdateSettings: (suspend PomodoroPreferences.() -> Unit) -> Unit,
+    featureDailyGoalEnabled: Boolean,
+    onUpdateSettings: (String, String, suspend PomodoroPreferences.() -> Unit) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val colors = LocalPomodoroColors.current
@@ -771,14 +838,16 @@ private fun SettingsScreen(
             fontWeight = FontWeight.SemiBold
         )
 
-        SettingsSection(title = stringResource(R.string.settings_timer_durations)) {
+        SettingsSection(title = stringResource(R.string.settings_section_timer)) {
             DebouncedDurationSlider(
                 label = stringResource(R.string.settings_work_duration),
                 value = settings.workDurationMinutes,
                 min = 5,
                 max = 60,
                 step = 5,
-                onValueCommitted = { value -> onUpdateSettings { updateWorkDurationMinutes(value) } }
+                onValueCommitted = { value ->
+                    onUpdateSettings("work_duration_minutes", value.toString()) { updateWorkDurationMinutes(value) }
+                }
             )
             DebouncedDurationSlider(
                 label = stringResource(R.string.settings_short_break),
@@ -786,7 +855,9 @@ private fun SettingsScreen(
                 min = 1,
                 max = 15,
                 step = 1,
-                onValueCommitted = { value -> onUpdateSettings { updateShortBreakMinutes(value) } }
+                onValueCommitted = { value ->
+                    onUpdateSettings("short_break_minutes", value.toString()) { updateShortBreakMinutes(value) }
+                }
             )
             DebouncedDurationSlider(
                 label = stringResource(R.string.settings_long_break),
@@ -794,42 +865,54 @@ private fun SettingsScreen(
                 min = 10,
                 max = 30,
                 step = 5,
-                onValueCommitted = { value -> onUpdateSettings { updateLongBreakMinutes(value) } }
+                onValueCommitted = { value ->
+                    onUpdateSettings("long_break_minutes", value.toString()) { updateLongBreakMinutes(value) }
+                }
             )
             Text(
-                text = stringResource(R.string.settings_sessions_before_long_break),
+                text = stringResource(R.string.settings_sessions_before_long),
                 color = colors.muted,
                 fontSize = 13.sp
             )
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 (2..6).forEach { count ->
                     SelectableChip(
-                        label = stringResource(R.string.settings_sessions_count_format, count),
+                        label = count.toString(),
                         selected = settings.sessionsBeforeLongBreak == count,
-                        onClick = { onUpdateSettings { updateSessionsBeforeLongBreak(count) } }
+                        onClick = {
+                            onUpdateSettings("sessions_before_long_break", count.toString()) {
+                                updateSessionsBeforeLongBreak(count)
+                            }
+                        }
                     )
                 }
             }
         }
 
-        SettingsSection(title = stringResource(R.string.settings_automation)) {
+        SettingsSection(title = stringResource(R.string.settings_section_automation)) {
             SettingsSwitchRow(
                 text = stringResource(R.string.settings_auto_start_breaks),
                 checked = settings.autoStartBreaks,
-                onCheckedChange = { onUpdateSettings { updateAutoStartBreaks(it) } }
+                onCheckedChange = { value ->
+                    onUpdateSettings("auto_start_breaks", value.toString()) { updateAutoStartBreaks(value) }
+                }
             )
             SettingsSwitchRow(
                 text = stringResource(R.string.settings_auto_start_work),
                 checked = settings.autoStartWork,
-                onCheckedChange = { onUpdateSettings { updateAutoStartWork(it) } }
+                onCheckedChange = { value ->
+                    onUpdateSettings("auto_start_work", value.toString()) { updateAutoStartWork(value) }
+                }
             )
         }
 
-        SettingsSection(title = stringResource(R.string.settings_sound_vibration)) {
+        SettingsSection(title = stringResource(R.string.settings_section_sound)) {
             SettingsSwitchRow(
                 text = stringResource(R.string.settings_sound_enabled),
                 checked = settings.soundEnabled,
-                onCheckedChange = { onUpdateSettings { updateSoundEnabled(it) } }
+                onCheckedChange = { value ->
+                    onUpdateSettings("sound_enabled", value.toString()) { updateSoundEnabled(value) }
+                }
             )
             if (settings.soundEnabled) {
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(10.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -837,7 +920,11 @@ private fun SettingsScreen(
                         SoundChip(
                             option = option,
                             selected = settings.notificationSound == option.key,
-                            onSelect = { onUpdateSettings { updateNotificationSound(option.key) } },
+                            onSelect = {
+                                onUpdateSettings("notification_sound", option.key) {
+                                    updateNotificationSound(option.key)
+                                }
+                            },
                             onPreview = { soundPreviewer.play(option.key, option.rawRes) }
                         )
                     }
@@ -846,11 +933,13 @@ private fun SettingsScreen(
             SettingsSwitchRow(
                 text = stringResource(R.string.settings_vibration_enabled),
                 checked = settings.vibrationEnabled,
-                onCheckedChange = { onUpdateSettings { updateVibrationEnabled(it) } }
+                onCheckedChange = { value ->
+                    onUpdateSettings("vibration_enabled", value.toString()) { updateVibrationEnabled(value) }
+                }
             )
         }
 
-        SettingsSection(title = stringResource(R.string.settings_theme)) {
+        SettingsSection(title = stringResource(R.string.settings_section_theme)) {
             Row(
                 modifier = Modifier.horizontalScroll(rememberScrollState()),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -859,35 +948,58 @@ private fun SettingsScreen(
                     ThemeCircle(
                         option = option,
                         selected = settings.selectedTheme == option.key,
-                        onSelect = { onUpdateSettings { updateSelectedTheme(option.key) } }
+                        onSelect = {
+                            onUpdateSettings("selected_theme", option.key) {
+                                updateSelectedTheme(option.key)
+                            }
+                        }
                     )
                 }
             }
         }
 
-        SettingsSection(title = stringResource(R.string.settings_daily_goal)) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                IconButton(
-                    onClick = { onUpdateSettings { updateDailyGoalPomodoros(settings.dailyGoalPomodoros - 1) } },
-                    modifier = Modifier.size(48.dp)
+        if (featureDailyGoalEnabled) {
+            SettingsSection(title = stringResource(R.string.settings_section_goal)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Icon(Icons.Default.Remove, contentDescription = stringResource(R.string.settings_decrease_goal_content_description), tint = colors.primary)
-                }
-                Text(
-                    text = stringResource(R.string.settings_daily_goal_count_format, settings.dailyGoalPomodoros),
-                    color = colors.onBackground,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-                IconButton(
-                    onClick = { onUpdateSettings { updateDailyGoalPomodoros(settings.dailyGoalPomodoros + 1) } },
-                    modifier = Modifier.size(48.dp)
-                ) {
-                    Icon(Icons.Default.Add, contentDescription = stringResource(R.string.settings_increase_goal_content_description), tint = colors.primary)
+                    IconButton(
+                        onClick = {
+                            val value = settings.dailyGoalPomodoros - 1
+                            onUpdateSettings("daily_goal_pomodoros", value.toString()) {
+                                updateDailyGoalPomodoros(value)
+                            }
+                        },
+                        modifier = Modifier.size(48.dp)
+                    ) {
+                        Icon(Icons.Default.Remove, contentDescription = stringResource(R.string.settings_daily_goal), tint = colors.primary)
+                    }
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            text = stringResource(R.string.settings_daily_goal),
+                            color = colors.muted,
+                            fontSize = 12.sp
+                        )
+                        Text(
+                            text = settings.dailyGoalPomodoros.toString(),
+                            color = colors.onBackground,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
+                    IconButton(
+                        onClick = {
+                            val value = settings.dailyGoalPomodoros + 1
+                            onUpdateSettings("daily_goal_pomodoros", value.toString()) {
+                                updateDailyGoalPomodoros(value)
+                            }
+                        },
+                        modifier = Modifier.size(48.dp)
+                    ) {
+                        Icon(Icons.Default.Add, contentDescription = stringResource(R.string.settings_daily_goal), tint = colors.primary)
+                    }
                 }
             }
         }
@@ -932,7 +1044,7 @@ private fun DebouncedDurationSlider(
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Text(label, color = colors.muted, fontSize = 13.sp)
-            Text(stringResource(R.string.settings_duration_minutes_format, localValue), color = colors.onBackground, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
+            Text(stringResource(R.string.settings_minutes_suffix, localValue), color = colors.onBackground, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
         }
         Slider(
             value = localValue.toFloat(),
@@ -1005,7 +1117,7 @@ private fun SoundChip(
     ) {
         Text(label, color = if (selected) LocalPomodoroColors.current.onPrimary else LocalPomodoroColors.current.onBackground, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
         IconButton(onClick = onPreview, modifier = Modifier.size(36.dp)) {
-            Icon(Icons.Default.PlayArrow, contentDescription = stringResource(R.string.settings_preview_sound_content_description_format, label), tint = if (selected) LocalPomodoroColors.current.onPrimary else LocalPomodoroColors.current.primary)
+            Icon(Icons.Default.PlayArrow, contentDescription = stringResource(R.string.settings_sound_preview), tint = if (selected) LocalPomodoroColors.current.onPrimary else LocalPomodoroColors.current.primary)
         }
     }
 }
@@ -1018,7 +1130,6 @@ private fun ThemeCircle(
 ) {
     val scale by animateFloatAsState(if (selected) 1.15f else 1f, spring(dampingRatio = Spring.DampingRatioMediumBouncy), label = "theme_scale")
     val label = stringResource(option.labelRes)
-    val themeContentDescription = stringResource(R.string.settings_theme_content_description_format, label)
     Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Box(
             modifier = Modifier
@@ -1028,7 +1139,7 @@ private fun ThemeCircle(
                 .background(Brush.linearGradient(option.previewColors))
                 .border(2.dp, if (selected) LocalPomodoroColors.current.accent else Color.Transparent, CircleShape)
                 .clickable(onClick = onSelect)
-                .semantics { contentDescription = themeContentDescription },
+                .semantics { contentDescription = label },
             contentAlignment = Alignment.Center
         ) {
             if (selected) Icon(Icons.Default.Check, contentDescription = null, tint = Color.White)
@@ -1044,6 +1155,8 @@ fun PomodoroStatsScreen(
     weekStats: List<PomodoroSession>,
     monthStats: List<PomodoroSession>,
     dailyGoalProgress: Float,
+    featureDailyGoalEnabled: Boolean,
+    adBannerEnabled: Boolean,
     onBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -1056,6 +1169,9 @@ fun PomodoroStatsScreen(
     }
 
     BackHandler(onBack = onBack)
+    LaunchedEffect(selectedPeriod) {
+        AnalyticsManager.logStatsViewed(selectedPeriod.analyticsValue)
+    }
 
     Surface(modifier.fillMaxSize(), color = colors.background) {
         Column(
@@ -1069,13 +1185,15 @@ fun PomodoroStatsScreen(
         ) {
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = onBack, modifier = Modifier.size(48.dp)) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.stats_back_content_description), tint = colors.muted)
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.stats_back_cd), tint = colors.muted)
                 }
                 Text(stringResource(R.string.stats_title), color = colors.onBackground, fontSize = 28.sp, fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f), textAlign = TextAlign.Center)
                 Spacer(Modifier.width(48.dp))
             }
 
-            DailyGoalRing(progress = dailyGoalProgress, completed = todayStats?.completedPomodoros ?: 0, goal = settings.dailyGoalPomodoros)
+            if (featureDailyGoalEnabled) {
+                DailyGoalRing(progress = dailyGoalProgress, completed = todayStats?.completedPomodoros ?: 0, goal = settings.dailyGoalPomodoros)
+            }
 
             TabRow(selectedTabIndex = selectedPeriod.ordinal, containerColor = colors.surface, contentColor = colors.primary) {
                 StatsPeriod.entries.forEach { period ->
@@ -1091,8 +1209,22 @@ fun PomodoroStatsScreen(
                 EmptyStatsState()
             } else {
                 SummaryGrid(sessions = sessions)
-                PomodoroBarChart(sessions = sessions, title = stringResource(R.string.stats_pomodoros_completed_chart))
-                FocusLineChart(sessions = sessions, title = stringResource(R.string.stats_focus_minutes_chart))
+                PomodoroBarChart(
+                    sessions = sessions,
+                    period = selectedPeriod,
+                    title = stringResource(R.string.stats_chart_pomodoros_title),
+                    label = stringResource(R.string.stats_chart_pomodoros_label)
+                )
+                FocusLineChart(
+                    sessions = sessions,
+                    period = selectedPeriod,
+                    title = stringResource(R.string.stats_chart_focus_title),
+                    label = stringResource(R.string.stats_chart_focus_label)
+                )
+            }
+
+            if (adBannerEnabled) {
+                BannerAd(modifier = Modifier.fillMaxWidth())
             }
         }
     }
@@ -1112,8 +1244,8 @@ private fun DailyGoalRing(progress: Float, completed: Int, goal: Int) {
                 drawArc(colors.primary, -90f, animatedProgress * 360f, false, topLeft, sizeArc, style = Stroke(stroke, cap = StrokeCap.Round))
             }
             Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
-                Text(stringResource(R.string.stats_goal_ring_title), color = colors.muted, fontSize = 13.sp)
-                Text(stringResource(R.string.goal_progress_format, completed.coerceAtMost(goal), goal), color = colors.onBackground, fontSize = 26.sp, fontWeight = FontWeight.SemiBold)
+                Text(stringResource(R.string.stats_goal_ring_label), color = colors.muted, fontSize = 13.sp)
+                Text(stringResource(R.string.pomodoro_goal_label, completed.coerceAtMost(goal), goal), color = colors.onBackground, fontSize = 26.sp, fontWeight = FontWeight.SemiBold)
             }
         }
     }
@@ -1127,12 +1259,12 @@ private fun SummaryGrid(sessions: List<PomodoroSession>) {
     val best = sessions.maxByOrNull { it.completedPomodoros }
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            SummaryCard(stringResource(R.string.stats_total_pomodoros), stringResource(R.string.stats_count_format, totalPomodoros), Modifier.weight(1f))
-            SummaryCard(stringResource(R.string.stats_daily_average), stringResource(R.string.stats_decimal_format, dailyAverage), Modifier.weight(1f))
+            SummaryCard(stringResource(R.string.stats_total_pomodoros), totalPomodoros.toString(), Modifier.weight(1f))
+            SummaryCard(stringResource(R.string.stats_daily_average), String.format("%.1f", dailyAverage), Modifier.weight(1f))
         }
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             SummaryCard(stringResource(R.string.stats_total_focus_time), formatDuration(totalFocusSeconds), Modifier.weight(1f))
-            SummaryCard(stringResource(R.string.stats_best_day), best?.let { stringResource(R.string.stats_best_day_format, it.date, it.completedPomodoros) } ?: stringResource(R.string.stats_no_best_day), Modifier.weight(1f))
+            SummaryCard(stringResource(R.string.stats_best_day), bestDayText(best), Modifier.weight(1f))
         }
     }
 }
@@ -1153,20 +1285,27 @@ private fun SummaryCard(title: String, value: String, modifier: Modifier = Modif
 }
 
 @Composable
-private fun PomodoroBarChart(sessions: List<PomodoroSession>, title: String) {
+private fun PomodoroBarChart(
+    sessions: List<PomodoroSession>,
+    period: StatsPeriod,
+    title: String,
+    label: String
+) {
     ChartCard(title = title) {
         val primary = LocalPomodoroColors.current.primary
+        val labels = chartLabels(sessions, period)
         AndroidView(
             modifier = Modifier.fillMaxWidth().height(220.dp),
             factory = { context -> BarChart(context).apply { styleBaseChart(primary) } },
             update = { chart ->
                 val entries = sessions.mapIndexed { index, session -> BarEntry(index.toFloat(), session.completedPomodoros.toFloat()) }
-                val dataSet = BarDataSet(entries, title).apply {
+                val dataSet = BarDataSet(entries, label).apply {
                     color = primary.toArgbCompat()
                     valueTextColor = Color.Transparent.toArgbCompat()
                     setDrawValues(false)
                 }
                 chart.data = BarData(dataSet).apply { barWidth = 0.48f }
+                chart.xAxis.valueFormatter = IndexedLabelFormatter(labels)
                 chart.invalidate()
             }
         )
@@ -1174,15 +1313,21 @@ private fun PomodoroBarChart(sessions: List<PomodoroSession>, title: String) {
 }
 
 @Composable
-private fun FocusLineChart(sessions: List<PomodoroSession>, title: String) {
+private fun FocusLineChart(
+    sessions: List<PomodoroSession>,
+    period: StatsPeriod,
+    title: String,
+    label: String
+) {
     ChartCard(title = title) {
         val accent = LocalPomodoroColors.current.accent
+        val labels = chartLabels(sessions, period)
         AndroidView(
             modifier = Modifier.fillMaxWidth().height(220.dp),
             factory = { context -> LineChart(context).apply { styleBaseChart(accent) } },
             update = { chart ->
                 val entries = sessions.mapIndexed { index, session -> Entry(index.toFloat(), session.totalFocusSeconds / 60f) }
-                val dataSet = LineDataSet(entries, title).apply {
+                val dataSet = LineDataSet(entries, label).apply {
                     color = accent.toArgbCompat()
                     setCircleColor(accent.toArgbCompat())
                     lineWidth = 3f
@@ -1192,6 +1337,7 @@ private fun FocusLineChart(sessions: List<PomodoroSession>, title: String) {
                     setDrawValues(false)
                 }
                 chart.data = LineData(dataSet)
+                chart.xAxis.valueFormatter = IndexedLabelFormatter(labels)
                 chart.invalidate()
             }
         )
@@ -1219,6 +1365,93 @@ private fun EmptyStatsState() {
         Text(stringResource(R.string.stats_empty_message), color = colors.muted, textAlign = TextAlign.Center, modifier = Modifier.padding(24.dp))
     }
 }
+
+@Composable
+private fun BannerAd(modifier: Modifier = Modifier) {
+    AndroidView(
+        modifier = modifier.height(AdSize.BANNER.height.dp),
+        factory = { context ->
+            AdView(context).apply {
+                setAdSize(AdSize.BANNER)
+                adUnitId = BANNER_AD_UNIT_ID
+                loadAd(AdRequest.Builder().build())
+            }
+        }
+    )
+}
+
+@Composable
+private fun bestDayText(session: PomodoroSession?): String {
+    if (session == null) return "0"
+    val date = parseSessionDate(session.date) ?: return session.completedPomodoros.toString()
+    return stringResource(
+        R.string.stats_best_day_format,
+        monthLabel(date.monthValue),
+        date.dayOfMonth,
+        session.completedPomodoros
+    )
+}
+
+@Composable
+private fun chartLabels(sessions: List<PomodoroSession>, period: StatsPeriod): List<String> {
+    return sessions.map { session ->
+        val date = parseSessionDate(session.date)
+        when {
+            date == null -> session.completedPomodoros.toString()
+            period == StatsPeriod.Month -> monthLabel(date.monthValue)
+            else -> dayLabel(date.dayOfWeek.value)
+        }
+    }
+}
+
+@Composable
+private fun dayLabel(dayOfWeekValue: Int): String {
+    val labelRes = when (dayOfWeekValue) {
+        1 -> R.string.day_label_mon
+        2 -> R.string.day_label_tue
+        3 -> R.string.day_label_wed
+        4 -> R.string.day_label_thu
+        5 -> R.string.day_label_fri
+        6 -> R.string.day_label_sat
+        else -> R.string.day_label_sun
+    }
+    return stringResource(labelRes)
+}
+
+@Composable
+private fun monthLabel(monthValue: Int): String {
+    val labelRes = when (monthValue) {
+        1 -> R.string.month_label_jan
+        2 -> R.string.month_label_feb
+        3 -> R.string.month_label_mar
+        4 -> R.string.month_label_apr
+        5 -> R.string.month_label_may
+        6 -> R.string.month_label_jun
+        7 -> R.string.month_label_jul
+        8 -> R.string.month_label_aug
+        9 -> R.string.month_label_sep
+        10 -> R.string.month_label_oct
+        11 -> R.string.month_label_nov
+        else -> R.string.month_label_dec
+    }
+    return stringResource(labelRes)
+}
+
+private fun parseSessionDate(date: String): LocalDate? {
+    return try {
+        LocalDate.parse(date)
+    } catch (_: DateTimeParseException) {
+        null
+    }
+}
+
+private class IndexedLabelFormatter(private val labels: List<String>) : ValueFormatter() {
+    override fun getFormattedValue(value: Float): String {
+        return labels.getOrNull(value.roundToInt()).orEmpty()
+    }
+}
+
+private const val BANNER_AD_UNIT_ID = "ca-app-pub-4712794855635991/4313841604"
 
 private fun BarChart.styleBaseChart(color: Color) {
     description.isEnabled = false
@@ -1251,11 +1484,11 @@ private fun LineChart.styleBaseChart(color: Color) {
 }
 
 private fun themeOptions(): List<ThemeOption> = listOf(
-    ThemeOption("emerald", R.string.theme_emerald, listOf(Color(0xFF00C896), Color(0xFF00FFB2))),
-    ThemeOption("sunset", R.string.theme_sunset, listOf(Color(0xFFE05C3A), Color(0xFFFF9966))),
-    ThemeOption("ocean", R.string.theme_ocean, listOf(Color(0xFF3A7BD5), Color(0xFF80B4FF))),
-    ThemeOption("forest", R.string.theme_forest, listOf(Color(0xFF5AAE3A), Color(0xFFA0FF70))),
-    ThemeOption("lavender", R.string.theme_lavender, listOf(Color(0xFF8A5AE0), Color(0xFFC4A0FF)))
+    ThemeOption("emerald", R.string.settings_theme_emerald, listOf(Color(0xFF00C896), Color(0xFF00FFB2))),
+    ThemeOption("sunset", R.string.settings_theme_sunset, listOf(Color(0xFFE05C3A), Color(0xFFFF9966))),
+    ThemeOption("ocean", R.string.settings_theme_ocean, listOf(Color(0xFF3A7BD5), Color(0xFF80B4FF))),
+    ThemeOption("forest", R.string.settings_theme_forest, listOf(Color(0xFF5AAE3A), Color(0xFFA0FF70))),
+    ThemeOption("lavender", R.string.settings_theme_lavender, listOf(Color(0xFF8A5AE0), Color(0xFFC4A0FF)))
 )
 
 private fun soundOptions(): List<SoundOption> = listOf(
@@ -1297,23 +1530,23 @@ private class SoundPreviewer(context: Context) {
 
 @Composable
 private fun phaseLabel(phase: PomodoroPhase): String = when (phase) {
-    PomodoroPhase.Work -> stringResource(R.string.phase_focus)
-    PomodoroPhase.ShortBreak -> stringResource(R.string.phase_short_break)
-    PomodoroPhase.LongBreak -> stringResource(R.string.phase_long_break)
+    PomodoroPhase.Work -> stringResource(R.string.pomodoro_phase_work)
+    PomodoroPhase.ShortBreak -> stringResource(R.string.pomodoro_phase_short_break)
+    PomodoroPhase.LongBreak -> stringResource(R.string.pomodoro_phase_long_break)
 }
 
 @Composable
 private fun phaseTitle(phase: PomodoroPhase): String = when (phase) {
-    PomodoroPhase.Work -> stringResource(R.string.phase_focus_title)
-    PomodoroPhase.ShortBreak -> stringResource(R.string.phase_short_break_title)
-    PomodoroPhase.LongBreak -> stringResource(R.string.phase_long_break_title)
+    PomodoroPhase.Work -> stringResource(R.string.pomodoro_phase_work)
+    PomodoroPhase.ShortBreak -> stringResource(R.string.pomodoro_phase_short_break)
+    PomodoroPhase.LongBreak -> stringResource(R.string.pomodoro_phase_long_break)
 }
 
 @Composable
 private fun formatDuration(seconds: Int): String {
     val hours = seconds / 3600
     val minutes = (seconds % 3600) / 60
-    return if (hours > 0) stringResource(R.string.stats_hours_minutes_format, hours, minutes) else stringResource(R.string.stats_minutes_format, minutes)
+    return stringResource(R.string.stats_focus_time_format, hours, minutes)
 }
 
 @Composable
@@ -1321,7 +1554,7 @@ private fun formatTime(totalSeconds: Int): String {
     val safeSeconds = totalSeconds.coerceAtLeast(0)
     val minutes = safeSeconds / 60
     val seconds = safeSeconds % 60
-    return stringResource(R.string.time_minutes_seconds_format, minutes, seconds)
+    return "%02d:%02d".format(minutes, seconds)
 }
 
 private fun Color.toArgbCompat(): Int = android.graphics.Color.argb(

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defaultsMap>
+    <!-- Ad frequency: show interstitial every N completions -->
+    <entry>
+        <key>ad_interstitial_frequency</key>
+        <value>2</value>
+    </entry>
+    <!-- Enable/disable interstitial ads entirely -->
+    <entry>
+        <key>ad_interstitial_enabled</key>
+        <value>true</value>
+    </entry>
+    <!-- Enable/disable banner on stats screen -->
+    <entry>
+        <key>ad_banner_enabled</key>
+        <value>true</value>
+    </entry>
+    <!-- Daily goal feature visible -->
+    <entry>
+        <key>feature_daily_goal_enabled</key>
+        <value>true</value>
+    </entry>
+    <!-- Stats screen available -->
+    <entry>
+        <key>feature_stats_enabled</key>
+        <value>true</value>
+    </entry>
+    <!-- Minimum app version that can run (for force update) -->
+    <entry>
+        <key>min_supported_version_code</key>
+        <value>1</value>
+    </entry>
+    <!-- MOTD shown as a dismissible banner on main screen -->
+    <entry>
+        <key>motd_text</key>
+        <value></value>
+    </entry>
+    <entry>
+        <key>motd_enabled</key>
+        <value>false</value>
+    </entry>
+</defaultsMap>

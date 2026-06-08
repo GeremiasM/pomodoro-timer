@@ -109,4 +109,112 @@
     <string name="pro_badge">PRO</string>
     <string name="pomodoro_pro_description">Наслаждайтесь Pomodoro Timer без рекламы, персонализируйте свой опыт с помощью эксклюзивных цветовых тем и отслеживайте свой прогресс с помощью подробной статистики.</string>
     <string name="pomodoro_pro_play_store_content_description">Перейти на Play Store</string>
+    <!-- Pomodoro Timer UI -->
+    <!-- Phase names -->
+    <string name="pomodoro_phase_work">Фокус</string>
+    <string name="pomodoro_phase_short_break">Короткий перерыв</string>
+    <string name="pomodoro_phase_long_break">Длинный перерыв</string>
+    <!-- Phase labels in notification -->
+    <string name="pomodoro_notif_work">🍅 Фокус</string>
+    <string name="pomodoro_notif_short_break">☕ Короткий перерыв</string>
+    <string name="pomodoro_notif_long_break">🌙 Длинный перерыв</string>
+    <!-- Timer screen -->
+    <string name="pomodoro_session_label">Сеанс %1$d из %2$d</string>
+    <string name="pomodoro_today_count">Pomodoro сегодня: %1$d</string>
+    <string name="pomodoro_goal_label">Цель: %1$d / %2$d</string>
+    <string name="pomodoro_btn_start">Старт</string>
+    <string name="pomodoro_btn_pause">Пауза</string>
+    <string name="pomodoro_btn_resume">Продолжить</string>
+    <string name="pomodoro_btn_skip">Пропустить</string>
+    <string name="pomodoro_btn_reset">Сбросить</string>
+    <string name="pomodoro_cd_settings">Открыть настройки</string>
+    <string name="pomodoro_cd_stats">Посмотреть статистику</string>
+    <string name="pomodoro_cd_timer_circle">Таймер: осталось %1$s</string>
+    <!-- Phase transition messages -->
+    <string name="pomodoro_msg_work_complete">Отличная работа! Время для перерыва.</string>
+    <string name="pomodoro_msg_short_break_complete">Перерыв окончен. Готовы сфокусироваться?</string>
+    <string name="pomodoro_msg_long_break_complete">Восстановились! Вернемся к работе.</string>
+    <string name="pomodoro_msg_cycle_complete">Цикл завершен! 🎉</string>
+    <!-- Settings screen -->
+    <string name="settings_title">Настройки</string>
+    <string name="settings_section_timer">Таймер</string>
+    <string name="settings_work_duration">Длительность фокуса</string>
+    <string name="settings_short_break">Короткий перерыв</string>
+    <string name="settings_long_break">Длинный перерыв</string>
+    <string name="settings_sessions_before_long">Сеансов до длинного перерыва</string>
+    <string name="settings_section_automation">Автоматизация</string>
+    <string name="settings_auto_start_breaks">Автозапуск перерывов</string>
+    <string name="settings_auto_start_work">Автозапуск рабочих сеансов</string>
+    <string name="settings_section_sound">Звук и вибрация</string>
+    <string name="settings_sound_enabled">Звук</string>
+    <string name="settings_vibration_enabled">Вибрация</string>
+    <string name="settings_sound_bell">Колокол</string>
+    <string name="settings_sound_digital">Цифровой</string>
+    <string name="settings_sound_soft">Мягкий</string>
+    <string name="settings_sound_preview">Прослушать</string>
+    <string name="settings_section_theme">Тема</string>
+    <string name="settings_theme_emerald">Изумруд</string>
+    <string name="settings_theme_sunset">Закат</string>
+    <string name="settings_theme_ocean">Океан</string>
+    <string name="settings_theme_forest">Лес</string>
+    <string name="settings_theme_lavender">Лаванда</string>
+    <string name="settings_section_goal">Цель на день</string>
+    <string name="settings_daily_goal">Ежедневная цель Pomodoro</string>
+    <string name="settings_minutes_suffix">%1$d мин</string>
+    <!-- Stats screen -->
+    <string name="stats_title">Статистика</string>
+    <string name="stats_tab_day">День</string>
+    <string name="stats_tab_week">Неделя</string>
+    <string name="stats_tab_month">Месяц</string>
+    <string name="stats_total_pomodoros">Всего Pomodoro</string>
+    <string name="stats_daily_average">Среднее за день</string>
+    <string name="stats_total_focus_time">Время фокуса</string>
+    <string name="stats_best_day">Лучший день</string>
+    <string name="stats_chart_pomodoros_title">Завершенные Pomodoro</string>
+    <string name="stats_chart_focus_title">Минуты фокуса</string>
+    <string name="stats_chart_pomodoros_label">Pomodoro</string>
+    <string name="stats_chart_focus_label">Минуты</string>
+    <string name="stats_empty_message">Завершите первый Pomodoro, чтобы увидеть статистику 🍅</string>
+    <string name="stats_back_cd">Назад</string>
+    <string name="stats_goal_ring_label">Цель на сегодня</string>
+    <string name="stats_focus_time_format">%1$d ч %2$d мин</string>
+    <!-- Day and month labels for charts -->
+    <string name="day_label_mon">Пн</string>
+    <string name="day_label_tue">Вт</string>
+    <string name="day_label_wed">Ср</string>
+    <string name="day_label_thu">Чт</string>
+    <string name="day_label_fri">Пт</string>
+    <string name="day_label_sat">Сб</string>
+    <string name="day_label_sun">Вс</string>
+    <string name="month_label_jan">янв.</string>
+    <string name="month_label_feb">февр.</string>
+    <string name="month_label_mar">март</string>
+    <string name="month_label_apr">апр.</string>
+    <string name="month_label_may">май</string>
+    <string name="month_label_jun">июнь</string>
+    <string name="month_label_jul">июль</string>
+    <string name="month_label_aug">авг.</string>
+    <string name="month_label_sep">сент.</string>
+    <string name="month_label_oct">окт.</string>
+    <string name="month_label_nov">нояб.</string>
+    <string name="month_label_dec">дек.</string>
+    <string name="stats_best_day_format">%1$s %2$d (%3$d)</string>
+    <!-- Widget -->
+    <string name="widget_label_focus">Фокус</string>
+    <string name="widget_label_break">Перерыв</string>
+    <string name="widget_description">Виджет Pomodoro Timer</string>
+    <!-- Notifications -->
+    <string name="notif_channel_name">Pomodoro Timer</string>
+    <string name="notif_channel_description">Управление активным таймером</string>
+    <string name="notif_action_pause">Пауза</string>
+    <string name="notif_action_resume">Продолжить</string>
+    <string name="notif_action_skip">Пропустить</string>
+    <!-- AdMob consent -->
+    <string name="ads_loading">Загрузка...</string>
+    <!-- Remote Config UI -->
+    <string name="force_update_title">Требуется обновление</string>
+    <string name="force_update_message">Для продолжения нужна более новая версия Pomodoro Timer.</string>
+    <string name="force_update_button">Обновить</string>
+    <string name="motd_dismiss_cd">Закрыть сообщение</string>
+
 </resources>

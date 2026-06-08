@@ -109,4 +109,112 @@
     <string name="pro_badge">PRO</string>
     <string name="pomodoro_pro_description">Enjoy Pomodoro Timer without ads, personalize your experience with exclusive color themes, and monitor your progress with detailed stats.</string>
     <string name="pomodoro_pro_play_store_content_description">Go to Play Store</string>
+    <!-- Pomodoro Timer UI -->
+    <!-- Phase names -->
+    <string name="pomodoro_phase_work">फ़ोकस</string>
+    <string name="pomodoro_phase_short_break">छोटा ब्रेक</string>
+    <string name="pomodoro_phase_long_break">लंबा ब्रेक</string>
+    <!-- Phase labels in notification -->
+    <string name="pomodoro_notif_work">🍅 फ़ोकस</string>
+    <string name="pomodoro_notif_short_break">☕ छोटा ब्रेक</string>
+    <string name="pomodoro_notif_long_break">🌙 लंबा ब्रेक</string>
+    <!-- Timer screen -->
+    <string name="pomodoro_session_label">सत्र %1$d में से %2$d</string>
+    <string name="pomodoro_today_count">आज %1$d Pomodoro</string>
+    <string name="pomodoro_goal_label">लक्ष्य: %1$d / %2$d</string>
+    <string name="pomodoro_btn_start">शुरू करें</string>
+    <string name="pomodoro_btn_pause">रोकें</string>
+    <string name="pomodoro_btn_resume">फिर शुरू करें</string>
+    <string name="pomodoro_btn_skip">छोड़ें</string>
+    <string name="pomodoro_btn_reset">रीसेट</string>
+    <string name="pomodoro_cd_settings">सेटिंग खोलें</string>
+    <string name="pomodoro_cd_stats">आँकड़े देखें</string>
+    <string name="pomodoro_cd_timer_circle">टाइमर: %1$s बाकी</string>
+    <!-- Phase transition messages -->
+    <string name="pomodoro_msg_work_complete">बहुत अच्छा! अब ब्रेक का समय है।</string>
+    <string name="pomodoro_msg_short_break_complete">ब्रेक खत्म। फ़ोकस के लिए तैयार?</string>
+    <string name="pomodoro_msg_long_break_complete">ताज़गी मिल गई! फिर से शुरू करें।</string>
+    <string name="pomodoro_msg_cycle_complete">पूरा चक्र पूरा! 🎉</string>
+    <!-- Settings screen -->
+    <string name="settings_title">सेटिंग</string>
+    <string name="settings_section_timer">टाइमर</string>
+    <string name="settings_work_duration">फ़ोकस अवधि</string>
+    <string name="settings_short_break">छोटा ब्रेक</string>
+    <string name="settings_long_break">लंबा ब्रेक</string>
+    <string name="settings_sessions_before_long">लंबे ब्रेक से पहले सत्र</string>
+    <string name="settings_section_automation">ऑटोमेशन</string>
+    <string name="settings_auto_start_breaks">ब्रेक अपने आप शुरू करें</string>
+    <string name="settings_auto_start_work">कार्य सत्र अपने आप शुरू करें</string>
+    <string name="settings_section_sound">ध्वनि और कंपन</string>
+    <string name="settings_sound_enabled">ध्वनि</string>
+    <string name="settings_vibration_enabled">कंपन</string>
+    <string name="settings_sound_bell">घंटी</string>
+    <string name="settings_sound_digital">डिजिटल</string>
+    <string name="settings_sound_soft">सॉफ्ट</string>
+    <string name="settings_sound_preview">पूर्वावलोकन</string>
+    <string name="settings_section_theme">थीम</string>
+    <string name="settings_theme_emerald">एमराल्ड</string>
+    <string name="settings_theme_sunset">सनसेट</string>
+    <string name="settings_theme_ocean">ओशन</string>
+    <string name="settings_theme_forest">फ़ॉरेस्ट</string>
+    <string name="settings_theme_lavender">लैवेंडर</string>
+    <string name="settings_section_goal">दैनिक लक्ष्य</string>
+    <string name="settings_daily_goal">दैनिक Pomodoro लक्ष्य</string>
+    <string name="settings_minutes_suffix">%1$d मिनट</string>
+    <!-- Stats screen -->
+    <string name="stats_title">आँकड़े</string>
+    <string name="stats_tab_day">दिन</string>
+    <string name="stats_tab_week">सप्ताह</string>
+    <string name="stats_tab_month">माह</string>
+    <string name="stats_total_pomodoros">कुल Pomodoro</string>
+    <string name="stats_daily_average">दैनिक औसत</string>
+    <string name="stats_total_focus_time">फ़ोकस समय</string>
+    <string name="stats_best_day">सबसे अच्छा दिन</string>
+    <string name="stats_chart_pomodoros_title">पूरे किए गए Pomodoro</string>
+    <string name="stats_chart_focus_title">फ़ोकस मिनट</string>
+    <string name="stats_chart_pomodoros_label">Pomodoro</string>
+    <string name="stats_chart_focus_label">मिनट</string>
+    <string name="stats_empty_message">अपने आँकड़े देखने के लिए पहला Pomodoro पूरा करें 🍅</string>
+    <string name="stats_back_cd">वापस जाएँ</string>
+    <string name="stats_goal_ring_label">आज का लक्ष्य</string>
+    <string name="stats_focus_time_format">%1$d घं %2$d मि</string>
+    <!-- Day and month labels for charts -->
+    <string name="day_label_mon">सोम</string>
+    <string name="day_label_tue">मंगल</string>
+    <string name="day_label_wed">बुध</string>
+    <string name="day_label_thu">गुरु</string>
+    <string name="day_label_fri">शुक्र</string>
+    <string name="day_label_sat">शनि</string>
+    <string name="day_label_sun">रवि</string>
+    <string name="month_label_jan">जन</string>
+    <string name="month_label_feb">फ़र</string>
+    <string name="month_label_mar">मार्च</string>
+    <string name="month_label_apr">अप्रै</string>
+    <string name="month_label_may">मई</string>
+    <string name="month_label_jun">जून</string>
+    <string name="month_label_jul">जुल</string>
+    <string name="month_label_aug">अग</string>
+    <string name="month_label_sep">सित</string>
+    <string name="month_label_oct">अक्तू</string>
+    <string name="month_label_nov">नव</string>
+    <string name="month_label_dec">दिस</string>
+    <string name="stats_best_day_format">%1$s %2$d (%3$d)</string>
+    <!-- Widget -->
+    <string name="widget_label_focus">फ़ोकस</string>
+    <string name="widget_label_break">ब्रेक</string>
+    <string name="widget_description">Pomodoro Timer विजेट</string>
+    <!-- Notifications -->
+    <string name="notif_channel_name">Pomodoro Timer</string>
+    <string name="notif_channel_description">सक्रिय टाइमर नियंत्रण</string>
+    <string name="notif_action_pause">रोकें</string>
+    <string name="notif_action_resume">फिर शुरू करें</string>
+    <string name="notif_action_skip">छोड़ें</string>
+    <!-- AdMob consent -->
+    <string name="ads_loading">लोड हो रहा है...</string>
+    <!-- Remote Config UI -->
+    <string name="force_update_title">अपडेट ज़रूरी है</string>
+    <string name="force_update_message">जारी रखने के लिए Pomodoro Timer का नया संस्करण चाहिए।</string>
+    <string name="force_update_button">अपडेट</string>
+    <string name="motd_dismiss_cd">संदेश बंद करें</string>
+
 </resources>

@@ -18,8 +18,10 @@ import android.os.Vibrator
 import android.os.VibratorManager
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.matias.pomodoro.MainActivity
 import com.matias.pomodoro.R
+import com.matias.pomodoro.analytics.AnalyticsManager
 import com.matias.pomodoro.data.PomodoroDateUtils
 import com.matias.pomodoro.data.preferences.PomodoroSettings
 import com.matias.pomodoro.di.PomodoroContainer
@@ -47,6 +49,7 @@ class PomodoroTimerService : Service() {
     private var soundPool: SoundPool? = null
     private var soundIds: Map<String, Int> = emptyMap()
     private var isForeground = false
+    private var phaseStartedAutomatically = false
 
     override fun onCreate() {
         super.onCreate()
@@ -140,6 +143,9 @@ class PomodoroTimerService : Service() {
 
     private fun startOrResumeCurrentPhase() {
         val current = state.value
+        if (current.status != TimerStatus.PAUSED) {
+            phaseStartedAutomatically = false
+        }
         val duration = durationForPhase(current.phase)
         val remaining = when {
             current.status == TimerStatus.PAUSED && current.remainingSeconds > 0 -> current.remainingSeconds
@@ -168,6 +174,7 @@ class PomodoroTimerService : Service() {
 
     private fun resetCurrentPhase() {
         stopTimerJob()
+        phaseStartedAutomatically = false
         val duration = durationForPhase(state.value.phase)
         state.update {
             it.copy(
@@ -182,6 +189,7 @@ class PomodoroTimerService : Service() {
 
     private fun resetAllPhases() {
         stopTimerJob()
+        phaseStartedAutomatically = false
         val duration = currentSettings.workDurationSeconds
         state.update {
             it.copy(
@@ -222,54 +230,77 @@ class PomodoroTimerService : Service() {
     }
 
     private suspend fun completeCurrentPhase(countAsCompleted: Boolean, alert: Boolean) {
-        stopTimerJob()
-        val completedState = state.value
-        val settings = currentSettings
+        try {
+            stopTimerJob()
+            val completedState = state.value
+            val settings = currentSettings
+            val completedAutoStarted = phaseStartedAutomatically
 
-        if (countAsCompleted) {
-            when (completedState.phase) {
-                PomodoroPhase.Work -> PomodoroContainer.repository.recordWorkSessionCompleted(
-                    focusSeconds = completedState.totalDurationSeconds
-                )
-                PomodoroPhase.ShortBreak -> PomodoroContainer.repository.recordBreakSessionCompleted(
-                    breakSeconds = completedState.totalDurationSeconds,
-                    completedCycle = false
-                )
-                PomodoroPhase.LongBreak -> PomodoroContainer.repository.recordBreakSessionCompleted(
-                    breakSeconds = completedState.totalDurationSeconds,
-                    completedCycle = true
+            if (countAsCompleted) {
+                when (completedState.phase) {
+                    PomodoroPhase.Work -> {
+                        PomodoroContainer.repository.recordWorkSessionCompleted(
+                            focusSeconds = completedState.totalDurationSeconds
+                        )
+                        AnalyticsManager.logPomodoroCompleted(
+                            sessionNumber = completedState.currentSessionNumber.coerceIn(1, 6),
+                            durationSeconds = completedState.totalDurationSeconds,
+                            theme = settings.selectedTheme,
+                            autoStarted = completedAutoStarted
+                        )
+                    }
+                    PomodoroPhase.ShortBreak -> PomodoroContainer.repository.recordBreakSessionCompleted(
+                        breakSeconds = completedState.totalDurationSeconds,
+                        completedCycle = false
+                    )
+                    PomodoroPhase.LongBreak -> {
+                        PomodoroContainer.repository.recordBreakSessionCompleted(
+                            breakSeconds = completedState.totalDurationSeconds,
+                            completedCycle = true
+                        )
+                        AnalyticsManager.logCycleCompleted(
+                            totalToday = completedState.completedPomodoros,
+                            cycleDurationMinutes = cycleDurationMinutes(settings),
+                            theme = settings.selectedTheme
+                        )
+                    }
+                }
+            } else {
+                logBreakSkippedIfNeeded(completedState)
+            }
+
+            if (alert) {
+                playCompletionSound()
+                vibrateCompletion()
+            }
+
+            val nextPhase = nextPhaseAfter(completedState.phase, completedState.currentSessionNumber, settings)
+            val nextSessionNumber = nextSessionNumberAfter(completedState.phase, completedState.currentSessionNumber, settings)
+            val nextDuration = durationForPhase(nextPhase, settings)
+            val shouldAutoStart = when (nextPhase) {
+                PomodoroPhase.Work -> settings.autoStartWork
+                PomodoroPhase.ShortBreak,
+                PomodoroPhase.LongBreak -> settings.autoStartBreaks
+            }
+            phaseStartedAutomatically = shouldAutoStart
+
+            state.update {
+                it.copy(
+                    phase = nextPhase,
+                    status = if (shouldAutoStart) TimerStatus.RUNNING else TimerStatus.COMPLETED,
+                    currentSessionNumber = nextSessionNumber,
+                    totalDurationSeconds = nextDuration,
+                    remainingSeconds = nextDuration,
+                    progressFraction = 1f
                 )
             }
-        }
+            updateNotificationIfForeground()
 
-        if (alert) {
-            playCompletionSound()
-            vibrateCompletion()
-        }
-
-        val nextPhase = nextPhaseAfter(completedState.phase, completedState.currentSessionNumber, settings)
-        val nextSessionNumber = nextSessionNumberAfter(completedState.phase, completedState.currentSessionNumber, settings)
-        val nextDuration = durationForPhase(nextPhase, settings)
-        val shouldAutoStart = when (nextPhase) {
-            PomodoroPhase.Work -> settings.autoStartWork
-            PomodoroPhase.ShortBreak,
-            PomodoroPhase.LongBreak -> settings.autoStartBreaks
-        }
-
-        state.update {
-            it.copy(
-                phase = nextPhase,
-                status = if (shouldAutoStart) TimerStatus.RUNNING else TimerStatus.COMPLETED,
-                currentSessionNumber = nextSessionNumber,
-                totalDurationSeconds = nextDuration,
-                remainingSeconds = nextDuration,
-                progressFraction = 1f
-            )
-        }
-        updateNotificationIfForeground()
-
-        if (shouldAutoStart) {
-            startCountdownLoop()
+            if (shouldAutoStart) {
+                startCountdownLoop()
+            }
+        } catch (exception: Exception) {
+            recordTimerException(exception)
         }
     }
 
@@ -309,6 +340,26 @@ class PomodoroTimerService : Service() {
         }
     }
 
+    private fun cycleDurationMinutes(settings: PomodoroSettings): Int {
+        val sessions = settings.sessionsBeforeLongBreak
+        val seconds = settings.workDurationSeconds * sessions +
+            settings.shortBreakSeconds * (sessions - 1).coerceAtLeast(0) +
+            settings.longBreakSeconds
+        return seconds / 60
+    }
+
+    private fun logBreakSkippedIfNeeded(timerState: PomodoroTimerState) {
+        val breakType = when (timerState.phase) {
+            PomodoroPhase.Work -> return
+            PomodoroPhase.ShortBreak -> "short"
+            PomodoroPhase.LongBreak -> "long"
+        }
+        AnalyticsManager.logBreakSkipped(
+            breakType = breakType,
+            remainingSeconds = timerState.remainingSeconds.coerceAtLeast(0)
+        )
+    }
+
     private fun progressFor(totalDurationSeconds: Int, remainingSeconds: Int): Float {
         if (totalDurationSeconds <= 0) return 1f
         return (remainingSeconds.toFloat() / totalDurationSeconds.toFloat()).coerceIn(0f, 1f)
@@ -319,10 +370,10 @@ class PomodoroTimerService : Service() {
         val notificationManager = getSystemService(NotificationManager::class.java)
         val channel = NotificationChannel(
             CHANNEL_ID,
-            "Pomodoro Timer",
+            getString(R.string.notif_channel_name),
             NotificationManager.IMPORTANCE_LOW
         ).apply {
-            description = "Persistent Pomodoro timer"
+            description = getString(R.string.notif_channel_description)
             setShowBadge(false)
         }
         notificationManager.createNotificationChannel(channel)
@@ -350,11 +401,11 @@ class PomodoroTimerService : Service() {
     private fun buildNotification(): Notification {
         val current = state.value
         val pauseOrResumeAction = if (current.status == TimerStatus.RUNNING) ACTION_PAUSE else ACTION_START
-        val pauseOrResumeLabel = getString(if (current.status == TimerStatus.RUNNING) R.string.notification_action_pause else R.string.notification_action_resume)
+        val pauseOrResumeLabel = getString(if (current.status == TimerStatus.RUNNING) R.string.notif_action_pause else R.string.notif_action_resume)
 
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_eye_notification)
-            .setContentTitle(getString(R.string.notification_timer_title))
+            .setContentTitle(notificationTitle(current))
             .setContentText(notificationText(current))
             .setContentIntent(mainActivityPendingIntent())
             .setOngoing(current.status == TimerStatus.RUNNING)
@@ -372,25 +423,28 @@ class PomodoroTimerService : Service() {
             )
             .addAction(
                 R.drawable.ic_eye_notification,
-                getString(R.string.notification_action_skip),
+                getString(R.string.notif_action_skip),
                 servicePendingIntent(requestCode = 2, action = ACTION_SKIP)
             )
             .build()
     }
 
-    private fun notificationText(timerState: PomodoroTimerState): String {
-        val label = when (timerState.phase) {
-            PomodoroPhase.Work -> getString(R.string.notification_phase_work)
-            PomodoroPhase.ShortBreak -> getString(R.string.notification_phase_short_break)
-            PomodoroPhase.LongBreak -> getString(R.string.notification_phase_long_break)
+    private fun notificationTitle(timerState: PomodoroTimerState): String {
+        return when (timerState.phase) {
+            PomodoroPhase.Work -> getString(R.string.pomodoro_notif_work)
+            PomodoroPhase.ShortBreak -> getString(R.string.pomodoro_notif_short_break)
+            PomodoroPhase.LongBreak -> getString(R.string.pomodoro_notif_long_break)
         }
-        return getString(R.string.notification_phase_time_format, label, formatTime(timerState.remainingSeconds))
+    }
+
+    private fun notificationText(timerState: PomodoroTimerState): String {
+        return getString(R.string.pomodoro_cd_timer_circle, formatTime(timerState.remainingSeconds))
     }
 
     private fun formatTime(totalSeconds: Int): String {
         val minutes = totalSeconds.coerceAtLeast(0) / 60
         val seconds = totalSeconds.coerceAtLeast(0) % 60
-        return getString(R.string.time_minutes_seconds_format, minutes, seconds)
+        return "%02d:%02d".format(minutes, seconds)
     }
 
     private fun mainActivityPendingIntent(): PendingIntent {
@@ -434,44 +488,67 @@ class PomodoroTimerService : Service() {
     }
 
     private fun initializeSoundPool() {
-        val attributes = AudioAttributes.Builder()
-            .setUsage(AudioAttributes.USAGE_NOTIFICATION_EVENT)
-            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-            .build()
-        soundPool = SoundPool.Builder()
-            .setMaxStreams(1)
-            .setAudioAttributes(attributes)
-            .build()
-        soundIds = mapOf(
-            "bell" to requireNotNull(soundPool).load(this, R.raw.bell, 1),
-            "digital" to requireNotNull(soundPool).load(this, R.raw.digital, 1),
-            "soft" to requireNotNull(soundPool).load(this, R.raw.soft, 1)
-        )
+        try {
+            val attributes = AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_NOTIFICATION_EVENT)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .build()
+            soundPool = SoundPool.Builder()
+                .setMaxStreams(1)
+                .setAudioAttributes(attributes)
+                .build()
+            soundIds = mapOf(
+                "bell" to requireNotNull(soundPool).load(this, R.raw.bell, 1),
+                "digital" to requireNotNull(soundPool).load(this, R.raw.digital, 1),
+                "soft" to requireNotNull(soundPool).load(this, R.raw.soft, 1)
+            )
+        } catch (exception: Exception) {
+            recordTimerException(exception)
+        }
     }
 
     private fun playCompletionSound() {
-        if (!currentSettings.soundEnabled) return
-        val pool = soundPool ?: return
-        val soundId = soundIds[currentSettings.notificationSound] ?: soundIds["bell"] ?: return
-        pool.play(soundId, 1f, 1f, 1, 0, 1f)
+        try {
+            if (!currentSettings.soundEnabled) return
+            val pool = soundPool ?: return
+            val soundId = soundIds[currentSettings.notificationSound] ?: soundIds["bell"] ?: return
+            pool.play(soundId, 1f, 1f, 1, 0, 1f)
+        } catch (exception: Exception) {
+            recordTimerException(exception)
+        }
     }
 
     private fun vibrateCompletion() {
-        if (!currentSettings.vibrationEnabled) return
-        val pattern = longArrayOf(0, 200, 100, 200)
-        val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val manager = getSystemService(VibratorManager::class.java)
-            manager.defaultVibrator
-        } else {
-            @Suppress("DEPRECATION")
-            getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        }
+        try {
+            if (!currentSettings.vibrationEnabled) return
+            val pattern = longArrayOf(0, 200, 100, 200)
+            val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                val manager = getSystemService(VibratorManager::class.java)
+                manager.defaultVibrator
+            } else {
+                @Suppress("DEPRECATION")
+                getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            vibrator.vibrate(VibrationEffect.createWaveform(pattern, -1))
-        } else {
-            @Suppress("DEPRECATION")
-            vibrator.vibrate(pattern, -1)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createWaveform(pattern, -1))
+            } else {
+                @Suppress("DEPRECATION")
+                vibrator.vibrate(pattern, -1)
+            }
+        } catch (exception: Exception) {
+            recordTimerException(exception)
+        }
+    }
+
+    private fun recordTimerException(exception: Exception) {
+        val current = state.value
+        FirebaseCrashlytics.getInstance().apply {
+            setCustomKey("timer_phase", current.phase.toString())
+            setCustomKey("timer_status", current.status.toString())
+            setCustomKey("remaining_seconds", current.remainingSeconds)
+            setCustomKey("selected_theme", currentSettings.selectedTheme)
+            recordException(exception)
         }
     }
 

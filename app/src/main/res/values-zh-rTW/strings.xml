@@ -109,4 +109,112 @@
     <string name="pro_badge">PRO</string>
     <string name="pomodoro_pro_description">Enjoy Pomodoro Timer without ads, personalize your experience with exclusive color themes, and monitor your progress with detailed stats.</string>
     <string name="pomodoro_pro_play_store_content_description">Go to Play Store</string>
+    <!-- Pomodoro Timer UI -->
+    <!-- Phase names -->
+    <string name="pomodoro_phase_work">專注</string>
+    <string name="pomodoro_phase_short_break">短休息</string>
+    <string name="pomodoro_phase_long_break">長休息</string>
+    <!-- Phase labels in notification -->
+    <string name="pomodoro_notif_work">🍅 專注</string>
+    <string name="pomodoro_notif_short_break">☕ 短休息</string>
+    <string name="pomodoro_notif_long_break">🌙 長休息</string>
+    <!-- Timer screen -->
+    <string name="pomodoro_session_label">第 %1$d / %2$d 輪</string>
+    <string name="pomodoro_today_count">今天 %1$d 個 Pomodoro</string>
+    <string name="pomodoro_goal_label">目標：%1$d / %2$d</string>
+    <string name="pomodoro_btn_start">開始</string>
+    <string name="pomodoro_btn_pause">暫停</string>
+    <string name="pomodoro_btn_resume">繼續</string>
+    <string name="pomodoro_btn_skip">略過</string>
+    <string name="pomodoro_btn_reset">重設</string>
+    <string name="pomodoro_cd_settings">開啟設定</string>
+    <string name="pomodoro_cd_stats">查看統計</string>
+    <string name="pomodoro_cd_timer_circle">計時器：剩餘 %1$s</string>
+    <!-- Phase transition messages -->
+    <string name="pomodoro_msg_work_complete">做得好！該休息了。</string>
+    <string name="pomodoro_msg_short_break_complete">休息結束。準備專注了嗎？</string>
+    <string name="pomodoro_msg_long_break_complete">恢復精神了！繼續開始吧。</string>
+    <string name="pomodoro_msg_cycle_complete">完整循環完成！🎉</string>
+    <!-- Settings screen -->
+    <string name="settings_title">設定</string>
+    <string name="settings_section_timer">計時器</string>
+    <string name="settings_work_duration">專注時長</string>
+    <string name="settings_short_break">短休息</string>
+    <string name="settings_long_break">長休息</string>
+    <string name="settings_sessions_before_long">長休息前的輪數</string>
+    <string name="settings_section_automation">自動化</string>
+    <string name="settings_auto_start_breaks">自動開始休息</string>
+    <string name="settings_auto_start_work">自動開始工作階段</string>
+    <string name="settings_section_sound">聲音與震動</string>
+    <string name="settings_sound_enabled">聲音</string>
+    <string name="settings_vibration_enabled">震動</string>
+    <string name="settings_sound_bell">鈴聲</string>
+    <string name="settings_sound_digital">電子音</string>
+    <string name="settings_sound_soft">柔和</string>
+    <string name="settings_sound_preview">預覽</string>
+    <string name="settings_section_theme">主題</string>
+    <string name="settings_theme_emerald">翡翠</string>
+    <string name="settings_theme_sunset">日落</string>
+    <string name="settings_theme_ocean">海洋</string>
+    <string name="settings_theme_forest">森林</string>
+    <string name="settings_theme_lavender">薰衣草</string>
+    <string name="settings_section_goal">每日目標</string>
+    <string name="settings_daily_goal">每日 Pomodoro 目標</string>
+    <string name="settings_minutes_suffix">%1$d 分鐘</string>
+    <!-- Stats screen -->
+    <string name="stats_title">統計</string>
+    <string name="stats_tab_day">日</string>
+    <string name="stats_tab_week">週</string>
+    <string name="stats_tab_month">月</string>
+    <string name="stats_total_pomodoros">Pomodoro 總數</string>
+    <string name="stats_daily_average">每日平均</string>
+    <string name="stats_total_focus_time">專注時間</string>
+    <string name="stats_best_day">最佳日期</string>
+    <string name="stats_chart_pomodoros_title">已完成的 Pomodoro</string>
+    <string name="stats_chart_focus_title">專注分鐘數</string>
+    <string name="stats_chart_pomodoros_label">Pomodoro</string>
+    <string name="stats_chart_focus_label">分鐘</string>
+    <string name="stats_empty_message">完成第一個 Pomodoro 後即可查看統計 🍅</string>
+    <string name="stats_back_cd">返回</string>
+    <string name="stats_goal_ring_label">今日目標</string>
+    <string name="stats_focus_time_format">%1$d小時%2$d分鐘</string>
+    <!-- Day and month labels for charts -->
+    <string name="day_label_mon">週一</string>
+    <string name="day_label_tue">週二</string>
+    <string name="day_label_wed">週三</string>
+    <string name="day_label_thu">週四</string>
+    <string name="day_label_fri">週五</string>
+    <string name="day_label_sat">週六</string>
+    <string name="day_label_sun">週日</string>
+    <string name="month_label_jan">1月</string>
+    <string name="month_label_feb">2月</string>
+    <string name="month_label_mar">3月</string>
+    <string name="month_label_apr">4月</string>
+    <string name="month_label_may">5月</string>
+    <string name="month_label_jun">6月</string>
+    <string name="month_label_jul">7月</string>
+    <string name="month_label_aug">8月</string>
+    <string name="month_label_sep">9月</string>
+    <string name="month_label_oct">10月</string>
+    <string name="month_label_nov">11月</string>
+    <string name="month_label_dec">12月</string>
+    <string name="stats_best_day_format">%1$s%2$d日（%3$d）</string>
+    <!-- Widget -->
+    <string name="widget_label_focus">專注</string>
+    <string name="widget_label_break">休息</string>
+    <string name="widget_description">Pomodoro Timer 小工具</string>
+    <!-- Notifications -->
+    <string name="notif_channel_name">Pomodoro Timer</string>
+    <string name="notif_channel_description">活動計時器控制項</string>
+    <string name="notif_action_pause">暫停</string>
+    <string name="notif_action_resume">繼續</string>
+    <string name="notif_action_skip">略過</string>
+    <!-- AdMob consent -->
+    <string name="ads_loading">載入中...</string>
+    <!-- Remote Config UI -->
+    <string name="force_update_title">需要更新</string>
+    <string name="force_update_message">需要較新版本的 Pomodoro Timer 才能繼續。</string>
+    <string name="force_update_button">更新</string>
+    <string name="motd_dismiss_cd">關閉訊息</string>
+
 </resources>

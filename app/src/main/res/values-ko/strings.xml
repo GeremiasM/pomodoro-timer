@@ -109,4 +109,112 @@
     <string name="pro_badge">PRO</string>
     <string name="pomodoro_pro_description">광고 없이 Pomodoro Timer를 즐기고, 독점적인 색상 테마로 경험을 개인화하고, 자세한 통계로 진행 상황을 모니터링하세요.</string>
     <string name="pomodoro_pro_play_store_content_description">Play Store로 이동</string>
+    <!-- Pomodoro Timer UI -->
+    <!-- Phase names -->
+    <string name="pomodoro_phase_work">집중</string>
+    <string name="pomodoro_phase_short_break">짧은 휴식</string>
+    <string name="pomodoro_phase_long_break">긴 휴식</string>
+    <!-- Phase labels in notification -->
+    <string name="pomodoro_notif_work">🍅 집중</string>
+    <string name="pomodoro_notif_short_break">☕ 짧은 휴식</string>
+    <string name="pomodoro_notif_long_break">🌙 긴 휴식</string>
+    <!-- Timer screen -->
+    <string name="pomodoro_session_label">세션 %1$d/%2$d</string>
+    <string name="pomodoro_today_count">오늘 Pomodoro %1$d개</string>
+    <string name="pomodoro_goal_label">목표: %1$d / %2$d</string>
+    <string name="pomodoro_btn_start">시작</string>
+    <string name="pomodoro_btn_pause">일시정지</string>
+    <string name="pomodoro_btn_resume">재개</string>
+    <string name="pomodoro_btn_skip">건너뛰기</string>
+    <string name="pomodoro_btn_reset">재설정</string>
+    <string name="pomodoro_cd_settings">설정 열기</string>
+    <string name="pomodoro_cd_stats">통계 보기</string>
+    <string name="pomodoro_cd_timer_circle">타이머: %1$s 남음</string>
+    <!-- Phase transition messages -->
+    <string name="pomodoro_msg_work_complete">좋아요! 이제 휴식 시간입니다.</string>
+    <string name="pomodoro_msg_short_break_complete">휴식이 끝났습니다. 집중할 준비가 되었나요?</string>
+    <string name="pomodoro_msg_long_break_complete">충전 완료! 다시 시작해요.</string>
+    <string name="pomodoro_msg_cycle_complete">전체 사이클 완료! 🎉</string>
+    <!-- Settings screen -->
+    <string name="settings_title">설정</string>
+    <string name="settings_section_timer">타이머</string>
+    <string name="settings_work_duration">집중 시간</string>
+    <string name="settings_short_break">짧은 휴식</string>
+    <string name="settings_long_break">긴 휴식</string>
+    <string name="settings_sessions_before_long">긴 휴식 전 세션 수</string>
+    <string name="settings_section_automation">자동화</string>
+    <string name="settings_auto_start_breaks">휴식 자동 시작</string>
+    <string name="settings_auto_start_work">작업 세션 자동 시작</string>
+    <string name="settings_section_sound">소리 및 진동</string>
+    <string name="settings_sound_enabled">소리</string>
+    <string name="settings_vibration_enabled">진동</string>
+    <string name="settings_sound_bell">벨</string>
+    <string name="settings_sound_digital">디지털</string>
+    <string name="settings_sound_soft">부드럽게</string>
+    <string name="settings_sound_preview">미리 듣기</string>
+    <string name="settings_section_theme">테마</string>
+    <string name="settings_theme_emerald">에메랄드</string>
+    <string name="settings_theme_sunset">선셋</string>
+    <string name="settings_theme_ocean">오션</string>
+    <string name="settings_theme_forest">포레스트</string>
+    <string name="settings_theme_lavender">라벤더</string>
+    <string name="settings_section_goal">일일 목표</string>
+    <string name="settings_daily_goal">일일 Pomodoro 목표</string>
+    <string name="settings_minutes_suffix">%1$d분</string>
+    <!-- Stats screen -->
+    <string name="stats_title">통계</string>
+    <string name="stats_tab_day">일</string>
+    <string name="stats_tab_week">주</string>
+    <string name="stats_tab_month">월</string>
+    <string name="stats_total_pomodoros">총 Pomodoro</string>
+    <string name="stats_daily_average">일일 평균</string>
+    <string name="stats_total_focus_time">집중 시간</string>
+    <string name="stats_best_day">최고 기록일</string>
+    <string name="stats_chart_pomodoros_title">완료한 Pomodoro</string>
+    <string name="stats_chart_focus_title">집중 시간(분)</string>
+    <string name="stats_chart_pomodoros_label">Pomodoro</string>
+    <string name="stats_chart_focus_label">분</string>
+    <string name="stats_empty_message">첫 Pomodoro를 완료하면 통계가 표시됩니다 🍅</string>
+    <string name="stats_back_cd">뒤로</string>
+    <string name="stats_goal_ring_label">오늘의 목표</string>
+    <string name="stats_focus_time_format">%1$d시간 %2$d분</string>
+    <!-- Day and month labels for charts -->
+    <string name="day_label_mon">월</string>
+    <string name="day_label_tue">화</string>
+    <string name="day_label_wed">수</string>
+    <string name="day_label_thu">목</string>
+    <string name="day_label_fri">금</string>
+    <string name="day_label_sat">토</string>
+    <string name="day_label_sun">일</string>
+    <string name="month_label_jan">1월</string>
+    <string name="month_label_feb">2월</string>
+    <string name="month_label_mar">3월</string>
+    <string name="month_label_apr">4월</string>
+    <string name="month_label_may">5월</string>
+    <string name="month_label_jun">6월</string>
+    <string name="month_label_jul">7월</string>
+    <string name="month_label_aug">8월</string>
+    <string name="month_label_sep">9월</string>
+    <string name="month_label_oct">10월</string>
+    <string name="month_label_nov">11월</string>
+    <string name="month_label_dec">12월</string>
+    <string name="stats_best_day_format">%1$s %2$d일 (%3$d)</string>
+    <!-- Widget -->
+    <string name="widget_label_focus">집중</string>
+    <string name="widget_label_break">휴식</string>
+    <string name="widget_description">Pomodoro Timer 위젯</string>
+    <!-- Notifications -->
+    <string name="notif_channel_name">Pomodoro Timer</string>
+    <string name="notif_channel_description">활성 타이머 컨트롤</string>
+    <string name="notif_action_pause">일시정지</string>
+    <string name="notif_action_resume">재개</string>
+    <string name="notif_action_skip">건너뛰기</string>
+    <!-- AdMob consent -->
+    <string name="ads_loading">로드 중...</string>
+    <!-- Remote Config UI -->
+    <string name="force_update_title">업데이트 필요</string>
+    <string name="force_update_message">계속하려면 Pomodoro Timer의 최신 버전이 필요합니다.</string>
+    <string name="force_update_button">업데이트</string>
+    <string name="motd_dismiss_cd">메시지 닫기</string>
+
 </resources>

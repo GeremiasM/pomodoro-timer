@@ -43,7 +43,9 @@
         <!-- Configuración de AdMob -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-4712794855635991~2888866299" />
+            android:value="ca-app-pub-4712794855635991~1384425939" />
+
+
 
         <meta-data
             android:name="com.google.android.gms.ads.flag.OPTIMIZE_INITIALIZATION"
@@ -52,6 +54,11 @@
         <meta-data
             android:name="com.google.android.gms.ads.flag.OPTIMIZE_AD_LOADING"
             android:value="true" />
+
+        <property
+            android:name="android.adservices.AD_SERVICES_CONFIG"
+            android:resource="@xml/gma_ad_services_config"
+            tools:replace="android:resource" />
 
         <!-- ── Activity Principal ───────────────────────────────────────── -->
         <activity

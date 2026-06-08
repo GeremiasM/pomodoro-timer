@@ -85,8 +85,8 @@ class PomodoroWidgetProvider : AppWidgetProvider() {
         ): RemoteViews {
             return RemoteViews(context.packageName, R.layout.widget_pomodoro_large).apply {
                 applyCommonValues(context, timerState, selectedTheme)
-                setTextViewText(R.id.widget_phase_name, phaseTitle(context, timerState.phase))
-                setTextViewText(R.id.widget_today_count, context.getString(R.string.widget_today_count_format, timerState.completedPomodoros))
+                setTextViewText(R.id.widget_phase_name, phaseLabel(context, timerState.phase))
+                setTextViewText(R.id.widget_today_count, context.getString(R.string.pomodoro_today_count, timerState.completedPomodoros))
                 setProgressBar(
                     R.id.widget_progress,
                     1000,
@@ -104,7 +104,7 @@ class PomodoroWidgetProvider : AppWidgetProvider() {
         ) {
             val primary = primaryColor(selectedTheme, timerState.phase)
             setImageViewBitmap(R.id.widget_background, roundedBackground(primary))
-            setTextViewText(R.id.widget_phase_icon, phaseIcon(context, timerState.phase))
+            setTextViewText(R.id.widget_phase_icon, phaseLabel(context, timerState.phase))
             setTextViewText(R.id.widget_time, formatTime(context, timerState.remainingSeconds))
             setImageViewResource(
                 R.id.widget_play_pause,
@@ -129,23 +129,17 @@ class PomodoroWidgetProvider : AppWidgetProvider() {
             )
         }
 
-        private fun phaseIcon(context: Context, phase: PomodoroPhase): String = when (phase) {
-            PomodoroPhase.Work -> context.getString(R.string.widget_phase_icon_work)
+        private fun phaseLabel(context: Context, phase: PomodoroPhase): String = when (phase) {
+            PomodoroPhase.Work -> context.getString(R.string.widget_label_focus)
             PomodoroPhase.ShortBreak,
-            PomodoroPhase.LongBreak -> context.getString(R.string.widget_phase_icon_break)
-        }
-
-        private fun phaseTitle(context: Context, phase: PomodoroPhase): String = when (phase) {
-            PomodoroPhase.Work -> context.getString(R.string.phase_focus_title)
-            PomodoroPhase.ShortBreak -> context.getString(R.string.phase_short_break_title)
-            PomodoroPhase.LongBreak -> context.getString(R.string.phase_long_break_title)
+            PomodoroPhase.LongBreak -> context.getString(R.string.widget_label_break)
         }
 
         private fun formatTime(context: Context, totalSeconds: Int): String {
             val safeSeconds = totalSeconds.coerceAtLeast(0)
             val minutes = safeSeconds / 60
             val seconds = safeSeconds % 60
-            return context.getString(R.string.time_minutes_seconds_format, minutes, seconds)
+            return "%02d:%02d".format(minutes, seconds)
         }
 
         private fun roundedBackground(primaryColor: Int): Bitmap {
