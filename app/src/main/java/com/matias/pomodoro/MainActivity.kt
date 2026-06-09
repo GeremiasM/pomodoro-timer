@@ -94,10 +94,16 @@ class MainActivity : ComponentActivity() {
                     dailyGoalProgress = dailyGoalProgress,
                     dismissedMotdText = dismissedMotdText,
                     remoteUiState = remoteUiState,
+                    adBannerEnabled = remoteUiState.adBannerEnabled,
                     onStart = { startTimerWithPermissionCheck() },
                     onPause = viewModel::pauseTimer,
                     onSkip = viewModel::skipPhase,
                     onReset = viewModel::resetPhase,
+                    onShowInterstitial = { onFinished ->
+                        (application as PomodoroApplication)
+                            .adInterstitialManager
+                            .show(onFinished)
+                    },
                     onDismissMotd = viewModel::dismissMotd,
                     onUpdateSettings = viewModel::updateSettings
                 )
@@ -144,12 +150,12 @@ class MainActivity : ComponentActivity() {
             var remoteConfigFetched = false
 
             fun updateRemoteUiState() {
-                if (!remoteConfigFetched) return
-                val canShowAds = consentObtained && adsSdkInitialized
+                // Wait for BOTH to complete before configuring
+                if (!remoteConfigFetched || !adsSdkInitialized) return
+                val canShowAds = consentObtained
                 val interstitialEnabled = canShowAds && RemoteConfigManager.adInterstitialEnabled
                 app.adInterstitialManager.configure(
-                    interstitialEnabled = interstitialEnabled,
-                    interstitialFrequency = RemoteConfigManager.adInterstitialFrequency
+                    interstitialEnabled = interstitialEnabled
                 )
                 remoteUiState = RemoteUiState(
                     featureStatsEnabled = RemoteConfigManager.featureStatsEnabled,
@@ -161,12 +167,13 @@ class MainActivity : ComponentActivity() {
                 )
             }
 
-            if (consentObtained) {
-                app.initializeMobileAds {
-                    adsSdkInitialized = true
-                    updateRemoteUiState()
-                }
+            // Always initialize the SDK — required even outside EU
+            // UMP canRequestAds() already reflects consent state
+            app.initializeMobileAds {
+                adsSdkInitialized = true
+                updateRemoteUiState()
             }
+
             RemoteConfigManager.fetchAndActivate {
                 remoteConfigFetched = true
                 updateRemoteUiState()
@@ -224,10 +231,12 @@ private fun PomodoroNavHost(
     dailyGoalProgress: Float,
     dismissedMotdText: String,
     remoteUiState: RemoteUiState,
+    adBannerEnabled: Boolean,
     onStart: () -> Unit,
     onPause: () -> Unit,
     onSkip: () -> Unit,
     onReset: () -> Unit,
+    onShowInterstitial: (onFinished: () -> Unit) -> Unit,
     onDismissMotd: (String) -> Unit,
     onUpdateSettings: (String, String, suspend PomodoroPreferences.() -> Unit) -> Unit
 ) {
@@ -267,6 +276,7 @@ private fun PomodoroNavHost(
                 dailyGoalProgress = dailyGoalProgress,
                 featureStatsEnabled = remoteUiState.featureStatsEnabled,
                 featureDailyGoalEnabled = remoteUiState.featureDailyGoalEnabled,
+                adBannerEnabled = adBannerEnabled,
                 motdText = remoteUiState.motdText,
                 motdEnabled = remoteUiState.motdEnabled,
                 dismissedMotdText = dismissedMotdText,
@@ -276,7 +286,9 @@ private fun PomodoroNavHost(
                 onReset = onReset,
                 onOpenStats = {
                     if (remoteUiState.featureStatsEnabled) {
-                        navController.navigate(ROUTE_STATS) { launchSingleTop = true }
+                        onShowInterstitial {
+                            navController.navigate(ROUTE_STATS) { launchSingleTop = true }
+                        }
                     }
                 },
                 onDismissMotd = onDismissMotd,
@@ -292,7 +304,7 @@ private fun PomodoroNavHost(
                 monthStats = monthStats,
                 dailyGoalProgress = dailyGoalProgress,
                 featureDailyGoalEnabled = remoteUiState.featureDailyGoalEnabled,
-                adBannerEnabled = remoteUiState.adBannerEnabled,
+                adBannerEnabled = adBannerEnabled,
                 onBack = { navController.navigateUp() },
                 modifier = Modifier.fillMaxSize()
             )

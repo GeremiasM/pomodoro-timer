@@ -13,10 +13,9 @@ import java.lang.ref.WeakReference
 class AdInterstitialManager(private val context: Context) {
     private var interstitialAd: InterstitialAd? = null
     private var activityRef: WeakReference<Activity>? = null
-    private var completionCount = 0
     private var isLoading = false
-    private var enabled = true
-    private var showEveryN = 2
+    private var isShowing = false
+    private var enabled = false
 
     fun attachActivity(activity: Activity) {
         activityRef = WeakReference(activity)
@@ -28,9 +27,8 @@ class AdInterstitialManager(private val context: Context) {
         }
     }
 
-    fun configure(interstitialEnabled: Boolean, interstitialFrequency: Int) {
+    fun configure(interstitialEnabled: Boolean) {
         enabled = interstitialEnabled
-        showEveryN = interstitialFrequency.coerceAtLeast(1)
         if (enabled) {
             preload()
         } else {
@@ -60,35 +58,39 @@ class AdInterstitialManager(private val context: Context) {
         )
     }
 
-    fun onPhaseCompleted() {
-        if (!enabled) return
-        completionCount++
-        if (completionCount % showEveryN != 0) {
-            preload()
+    fun show(onFinished: () -> Unit = {}) {
+        if (!enabled || isShowing) {
+            onFinished()
             return
         }
 
-        val ad = interstitialAd ?: run {
+        val ad = interstitialAd
+        if (ad == null) {
             preload()
+            onFinished()
             return
         }
-        val activity = activityRef?.get() ?: run {
+
+        val activity = activityRef?.get()
+        if (activity == null || activity.isFinishing || activity.isDestroyed) {
             preload()
-            return
-        }
-        if (activity.isFinishing || activity.isDestroyed) {
-            preload()
+            onFinished()
             return
         }
 
         interstitialAd = null
+        isShowing = true
         ad.fullScreenContentCallback = object : FullScreenContentCallback() {
             override fun onAdDismissedFullScreenContent() {
+                isShowing = false
                 preload()
+                onFinished()
             }
 
             override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                isShowing = false
                 preload()
+                onFinished()
             }
 
             override fun onAdShowedFullScreenContent() {

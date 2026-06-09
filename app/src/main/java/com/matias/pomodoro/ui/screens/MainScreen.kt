@@ -159,6 +159,7 @@ import com.matias.pomodoro.R
 import com.matias.pomodoro.data.PomodoroSession
 import com.matias.pomodoro.data.preferences.PomodoroPreferences
 import com.matias.pomodoro.data.preferences.PomodoroSettings
+import com.matias.pomodoro.service.PomodoroTimerService
 import com.matias.pomodoro.timer.PomodoroPhase
 import com.matias.pomodoro.timer.PomodoroTimerState
 import com.matias.pomodoro.timer.TimerStatus
@@ -199,6 +200,7 @@ fun PomodoroScreen(
     dailyGoalProgress: Float,
     featureStatsEnabled: Boolean,
     featureDailyGoalEnabled: Boolean,
+    adBannerEnabled: Boolean,
     motdText: String,
     motdEnabled: Boolean,
     dismissedMotdText: String,
@@ -215,26 +217,28 @@ fun PomodoroScreen(
     var previousStatus by remember { mutableStateOf(timerState.status) }
     var showCompletionOverlay by remember { mutableStateOf(false) }
     var completionOverlayPhase by remember {
-        mutableStateOf(timerState.completedPhase ?: timerState.phase)
+        mutableStateOf<PomodoroPhase>(PomodoroPhase.Work)
     }
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val colors = LocalPomodoroColors.current
 
-    LaunchedEffect(timerState.status, timerState.completedPhase) {
-        val statusChanged = previousStatus != timerState.status
-        previousStatus = timerState.status
-        if (
-            timerState.status == TimerStatus.COMPLETED &&
-            timerState.completedPhase != null &&
-            (statusChanged || !showCompletionOverlay)
-        ) {
-            delay(200)
-            completionOverlayPhase = timerState.completedPhase
+    LaunchedEffect(timerState.status) {
+        if (timerState.status == TimerStatus.COMPLETED) {
+            // Wait for completedPhase to be non-null — poll with retries
+            var retries = 0
+            while (timerState.completedPhase == null && retries < 5) {
+                delay(80)
+                retries++
+            }
+            val phase = PomodoroTimerService.state.value.completedPhase
+                ?: timerState.phase  // final fallback: use current phase
+            completionOverlayPhase = phase
             showSettings = false
             showCompletionOverlay = true
-        } else if (timerState.status != TimerStatus.COMPLETED) {
+        } else {
             showCompletionOverlay = false
         }
+        previousStatus = timerState.status
     }
 
     Surface(
@@ -324,6 +328,7 @@ fun PomodoroScreen(
                     nextPhase = timerState.phase,
                     sessionsBeforeLongBreak = settings.sessionsBeforeLongBreak,
                     currentSessionNumber = timerState.currentSessionNumber,
+                    adBannerEnabled = adBannerEnabled,
                     onStart = {
                         showCompletionOverlay = false
                         onStart()
@@ -520,6 +525,7 @@ private fun PhaseCompletionOverlay(
     nextPhase: PomodoroPhase,
     sessionsBeforeLongBreak: Int,
     currentSessionNumber: Int,
+    adBannerEnabled: Boolean,
     onStart: () -> Unit,
     onSkip: () -> Unit,
     onDismiss: () -> Unit
@@ -677,6 +683,15 @@ private fun PhaseCompletionOverlay(
                         text = "→",
                         color = colors.muted,
                         fontSize = 16.sp
+                    )
+                }
+
+                if (adBannerEnabled) {
+                    Spacer(Modifier.height(16.dp))
+                    BannerAd(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(12.dp))
                     )
                 }
             }

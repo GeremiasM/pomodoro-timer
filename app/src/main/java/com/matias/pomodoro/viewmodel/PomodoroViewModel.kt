@@ -12,8 +12,8 @@ import com.matias.pomodoro.data.preferences.PomodoroPreferences
 import com.matias.pomodoro.data.preferences.PomodoroSettings
 import com.matias.pomodoro.di.PomodoroContainer
 import com.matias.pomodoro.service.PomodoroTimerService
+import com.matias.pomodoro.timer.PomodoroPhase
 import com.matias.pomodoro.timer.PomodoroTimerState
-import com.matias.pomodoro.timer.TimerStatus
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -24,7 +24,7 @@ class PomodoroViewModel(application: Application) : AndroidViewModel(application
     private val preferences = PomodoroContainer.preferences
     private val repository = PomodoroContainer.repository
     private var dailyGoalLoggedKey: String? = null
-    private var previousTimerStatus = PomodoroTimerService.state.value.status
+    private var previousCompletedPhase = PomodoroTimerService.state.value.completedPhase
 
     val timerState: StateFlow<PomodoroTimerState> = PomodoroTimerService.state
 
@@ -74,7 +74,7 @@ class PomodoroViewModel(application: Application) : AndroidViewModel(application
     )
 
     init {
-        observeTimerCompletionsForAds()
+        observeLongBreakCompletionsForAds()
         observeDailyGoalReached()
     }
 
@@ -123,15 +123,18 @@ class PomodoroViewModel(application: Application) : AndroidViewModel(application
         application.startForegroundService(intent)
     }
 
-    private fun observeTimerCompletionsForAds() {
+    private fun observeLongBreakCompletionsForAds() {
         viewModelScope.launch {
             timerState.collect { state ->
-                if (previousTimerStatus != TimerStatus.COMPLETED && state.status == TimerStatus.COMPLETED) {
+                if (
+                    previousCompletedPhase != PomodoroPhase.LongBreak &&
+                    state.completedPhase == PomodoroPhase.LongBreak
+                ) {
                     (getApplication<Application>() as? PomodoroApplication)
                         ?.adInterstitialManager
-                        ?.onPhaseCompleted()
+                        ?.show()
                 }
-                previousTimerStatus = state.status
+                previousCompletedPhase = state.completedPhase
             }
         }
     }

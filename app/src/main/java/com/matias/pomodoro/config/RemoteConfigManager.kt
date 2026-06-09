@@ -28,9 +28,6 @@ object RemoteConfigManager {
     val adInterstitialEnabled: Boolean
         get() = remoteConfig.getBoolean(KEY_AD_INTERSTITIAL_ENABLED)
 
-    val adInterstitialFrequency: Int
-        get() = remoteConfig.getLong(KEY_AD_INTERSTITIAL_FREQUENCY).toInt().coerceAtLeast(1)
-
     val adBannerEnabled: Boolean
         get() = remoteConfig.getBoolean(KEY_AD_BANNER_ENABLED)
 
@@ -49,7 +46,6 @@ object RemoteConfigManager {
     val motdEnabled: Boolean
         get() = remoteConfig.getBoolean(KEY_MOTD_ENABLED)
 
-    private const val KEY_AD_INTERSTITIAL_FREQUENCY = "ad_interstitial_frequency"
     private const val KEY_AD_INTERSTITIAL_ENABLED = "ad_interstitial_enabled"
     private const val KEY_AD_BANNER_ENABLED = "ad_banner_enabled"
     private const val KEY_FEATURE_DAILY_GOAL_ENABLED = "feature_daily_goal_enabled"
