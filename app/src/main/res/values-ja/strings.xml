@@ -104,4 +104,28 @@
     <string name="force_update_button">更新</string>
     <string name="motd_dismiss_cd">メッセージを閉じる</string>
 
+    <!-- Phase completion overlay -->
+    <string name="completion_work_title">お疲れさまでした！ 🍅</string>
+    <string name="completion_cycle_title">サイクル完了！ 🎉</string>
+    <string name="completion_short_break_title">休憩終了！ ☕</string>
+    <string name="completion_long_break_title">すっかりリフレッシュ！ 🌙</string>
+    <string name="completion_work_subtitle">短い休憩の時間です。</string>
+    <string name="completion_cycle_subtitle">長い休憩を取りましょう。</string>
+    <string name="completion_short_break_subtitle">もう一度集中する準備はできましたか？</string>
+    <string name="completion_long_break_subtitle">作業に戻りましょう。</string>
+    <string name="completion_btn_start_short_break">短い休憩を開始</string>
+    <string name="completion_btn_start_long_break">長い休憩を開始</string>
+    <string name="completion_btn_start_focus">集中を開始</string>
+    <string name="completion_btn_skip">スキップ</string>
+
+    <!-- Alert notifications -->
+    <string name="notif_alert_channel_name">セッション通知</string>
+    <string name="notif_alert_channel_description">セッション完了時の通知</string>
+    <string name="notif_alert_work_done_title">🍅 集中セッション完了！</string>
+    <string name="notif_alert_work_done_text">休憩の時間です。タップして開きます。</string>
+    <string name="notif_alert_break_done_title">☕ 休憩終了！</string>
+    <string name="notif_alert_break_done_text">もう一度集中する準備はできましたか？</string>
+    <string name="notif_alert_long_done_title">🌙 長い休憩が完了しました！</string>
+    <string name="notif_alert_long_done_text">すっかりリフレッシュ。始めましょう！</string>
+
 </resources>

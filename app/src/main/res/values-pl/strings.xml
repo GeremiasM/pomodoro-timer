@@ -104,4 +104,28 @@
     <string name="force_update_button">Aktualizuj</string>
     <string name="motd_dismiss_cd">Zamknij wiadomość</string>
 
+    <!-- Phase completion overlay -->
+    <string name="completion_work_title">Świetna robota! 🍅</string>
+    <string name="completion_cycle_title">Cykl ukończony! 🎉</string>
+    <string name="completion_short_break_title">Przerwa skończona! ☕</string>
+    <string name="completion_long_break_title">Pełna regeneracja! 🌙</string>
+    <string name="completion_work_subtitle">Czas na krótką przerwę.</string>
+    <string name="completion_cycle_subtitle">Czas na zasłużoną długą przerwę.</string>
+    <string name="completion_short_break_subtitle">Czas znów się skupić?</string>
+    <string name="completion_long_break_subtitle">Wróćmy do pracy.</string>
+    <string name="completion_btn_start_short_break">Rozpocznij krótką przerwę</string>
+    <string name="completion_btn_start_long_break">Rozpocznij długą przerwę</string>
+    <string name="completion_btn_start_focus">Rozpocznij skupienie</string>
+    <string name="completion_btn_skip">Pomiń</string>
+
+    <!-- Alert notifications -->
+    <string name="notif_alert_channel_name">Alerty sesji</string>
+    <string name="notif_alert_channel_description">Alerty po ukończeniu sesji</string>
+    <string name="notif_alert_work_done_title">🍅 Sesja skupienia ukończona!</string>
+    <string name="notif_alert_work_done_text">Czas na przerwę. Dotknij, aby otworzyć.</string>
+    <string name="notif_alert_break_done_title">☕ Przerwa skończona!</string>
+    <string name="notif_alert_break_done_text">Czas znów się skupić?</string>
+    <string name="notif_alert_long_done_title">🌙 Długa przerwa ukończona!</string>
+    <string name="notif_alert_long_done_text">Pełna regeneracja. Zaczynamy!</string>
+
 </resources>

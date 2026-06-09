@@ -29,6 +29,7 @@ import com.matias.pomodoro.timer.PomodoroPhase
 import com.matias.pomodoro.timer.PomodoroTimerState
 import com.matias.pomodoro.timer.TimerStatus
 import com.matias.pomodoro.widget.PomodoroWidgetProvider
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -145,6 +146,7 @@ class PomodoroTimerService : Service() {
         state.update {
             it.copy(
                 status = TimerStatus.RUNNING,
+                completedPhase = null,
                 totalDurationSeconds = duration,
                 remainingSeconds = remaining,
                 progressFraction = progressFor(duration, remaining)
@@ -168,6 +170,7 @@ class PomodoroTimerService : Service() {
         state.update {
             it.copy(
                 status = TimerStatus.IDLE,
+                completedPhase = null,
                 totalDurationSeconds = duration,
                 remainingSeconds = duration,
                 progressFraction = 1f
@@ -194,6 +197,7 @@ class PomodoroTimerService : Service() {
                 updateNotificationIfForeground()
 
                 if (remaining <= 0) {
+                    timerJob = null
                     completeCurrentPhase(countAsCompleted = true, alert = true)
                     break
                 }
@@ -256,10 +260,15 @@ class PomodoroTimerService : Service() {
             }
             phaseStartedAutomatically = shouldAutoStart
 
+            if (countAsCompleted && alert && !shouldAutoStart) {
+                showPhaseCompletionAlert(completedState.phase)
+            }
+
             state.update {
                 it.copy(
                     phase = nextPhase,
                     status = if (shouldAutoStart) TimerStatus.RUNNING else TimerStatus.COMPLETED,
+                    completedPhase = completedState.phase.takeIf { countAsCompleted },
                     currentSessionNumber = nextSessionNumber,
                     totalDurationSeconds = nextDuration,
                     remainingSeconds = nextDuration,
@@ -271,6 +280,8 @@ class PomodoroTimerService : Service() {
             if (shouldAutoStart) {
                 startCountdownLoop()
             }
+        } catch (exception: CancellationException) {
+            throw exception
         } catch (exception: Exception) {
             recordTimerException(exception)
         }
@@ -347,7 +358,17 @@ class PomodoroTimerService : Service() {
             description = getString(R.string.notif_channel_description)
             setShowBadge(false)
         }
-        notificationManager.createNotificationChannel(channel)
+        val alertChannel = NotificationChannel(
+            ALERT_CHANNEL_ID,
+            getString(R.string.notif_alert_channel_name),
+            NotificationManager.IMPORTANCE_HIGH
+        ).apply {
+            description = getString(R.string.notif_alert_channel_description)
+            enableLights(true)
+            enableVibration(false)
+            setSound(null, null)
+        }
+        notificationManager.createNotificationChannels(listOf(channel, alertChannel))
     }
 
     private fun ensureForeground() {
@@ -412,16 +433,60 @@ class PomodoroTimerService : Service() {
         return getString(R.string.pomodoro_cd_timer_circle, formatTime(timerState.remainingSeconds))
     }
 
+    private fun showPhaseCompletionAlert(completedPhase: PomodoroPhase) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            val hasPermission = ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+            if (!hasPermission) return
+        }
+
+        val titleRes: Int
+        val textRes: Int
+        when (completedPhase) {
+            PomodoroPhase.Work -> {
+                titleRes = R.string.notif_alert_work_done_title
+                textRes = R.string.notif_alert_work_done_text
+            }
+            PomodoroPhase.ShortBreak -> {
+                titleRes = R.string.notif_alert_break_done_title
+                textRes = R.string.notif_alert_break_done_text
+            }
+            PomodoroPhase.LongBreak -> {
+                titleRes = R.string.notif_alert_long_done_title
+                textRes = R.string.notif_alert_long_done_text
+            }
+        }
+
+        val contentIntent = mainActivityPendingIntent(ALERT_NOTIFICATION_ID)
+        val notification = NotificationCompat.Builder(this, ALERT_CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_eye_notification)
+            .setContentTitle(getString(titleRes))
+            .setContentText(getString(textRes))
+            .setContentIntent(contentIntent)
+            .setFullScreenIntent(contentIntent, true)
+            .setCategory(NotificationCompat.CATEGORY_REMINDER)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setAutoCancel(true)
+            .setTimeoutAfter(ALERT_TIMEOUT_MILLIS)
+            .build()
+
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.notify(ALERT_NOTIFICATION_ID, notification)
+    }
+
     private fun formatTime(totalSeconds: Int): String {
         val minutes = totalSeconds.coerceAtLeast(0) / 60
         val seconds = totalSeconds.coerceAtLeast(0) % 60
         return "%02d:%02d".format(minutes, seconds)
     }
 
-    private fun mainActivityPendingIntent(): PendingIntent {
+    private fun mainActivityPendingIntent(requestCode: Int = 0): PendingIntent {
         return PendingIntent.getActivity(
             this,
-            0,
+            requestCode,
             Intent(this, MainActivity::class.java),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
@@ -526,6 +591,9 @@ class PomodoroTimerService : Service() {
     companion object {
         const val CHANNEL_ID = "pomodoro_timer"
         const val NOTIFICATION_ID = 1001
+        const val ALERT_CHANNEL_ID = "pomodoro_alert"
+        const val ALERT_NOTIFICATION_ID = 1002
+        private const val ALERT_TIMEOUT_MILLIS = 8_000L
 
         const val ACTION_START = "com.matias.pomodoro.timer.START"
         const val ACTION_PAUSE = "com.matias.pomodoro.timer.PAUSE"

@@ -104,4 +104,28 @@
     <string name="force_update_button">Оновити</string>
     <string name="motd_dismiss_cd">Закрити повідомлення</string>
 
+    <!-- Phase completion overlay -->
+    <string name="completion_work_title">Чудова робота! 🍅</string>
+    <string name="completion_cycle_title">Цикл завершено! 🎉</string>
+    <string name="completion_short_break_title">Перерву завершено! ☕</string>
+    <string name="completion_long_break_title">Сили повністю відновлено! 🌙</string>
+    <string name="completion_work_subtitle">Час на коротку перерву.</string>
+    <string name="completion_cycle_subtitle">Ви заслужили довгу перерву.</string>
+    <string name="completion_short_break_subtitle">Готові знову зосередитися?</string>
+    <string name="completion_long_break_subtitle">Повернімося до роботи.</string>
+    <string name="completion_btn_start_short_break">Почати коротку перерву</string>
+    <string name="completion_btn_start_long_break">Почати довгу перерву</string>
+    <string name="completion_btn_start_focus">Почати фокусування</string>
+    <string name="completion_btn_skip">Пропустити</string>
+
+    <!-- Alert notifications -->
+    <string name="notif_alert_channel_name">Сповіщення про сеанси</string>
+    <string name="notif_alert_channel_description">Сповіщення про завершення сеансу</string>
+    <string name="notif_alert_work_done_title">🍅 Сеанс фокусування завершено!</string>
+    <string name="notif_alert_work_done_text">Час відпочити. Торкніться, щоб відкрити.</string>
+    <string name="notif_alert_break_done_title">☕ Перерву завершено!</string>
+    <string name="notif_alert_break_done_text">Готові знову зосередитися?</string>
+    <string name="notif_alert_long_done_title">🌙 Довгу перерву завершено!</string>
+    <string name="notif_alert_long_done_text">Сили повністю відновлено. Почнімо!</string>
+
 </resources>

@@ -104,4 +104,28 @@
     <string name="force_update_button">업데이트</string>
     <string name="motd_dismiss_cd">메시지 닫기</string>
 
+    <!-- Phase completion overlay -->
+    <string name="completion_work_title">수고했어요! 🍅</string>
+    <string name="completion_cycle_title">사이클 완료! 🎉</string>
+    <string name="completion_short_break_title">휴식 끝! ☕</string>
+    <string name="completion_long_break_title">완전히 재충전됐어요! 🌙</string>
+    <string name="completion_work_subtitle">짧은 휴식을 취할 시간이에요.</string>
+    <string name="completion_cycle_subtitle">긴 휴식을 누릴 자격이 있어요.</string>
+    <string name="completion_short_break_subtitle">다시 집중할 준비가 됐나요?</string>
+    <string name="completion_long_break_subtitle">다시 시작해 볼까요?</string>
+    <string name="completion_btn_start_short_break">짧은 휴식 시작</string>
+    <string name="completion_btn_start_long_break">긴 휴식 시작</string>
+    <string name="completion_btn_start_focus">집중 시작</string>
+    <string name="completion_btn_skip">건너뛰기</string>
+
+    <!-- Alert notifications -->
+    <string name="notif_alert_channel_name">세션 알림</string>
+    <string name="notif_alert_channel_description">세션 완료 시 알림</string>
+    <string name="notif_alert_work_done_title">🍅 집중 세션 완료!</string>
+    <string name="notif_alert_work_done_text">휴식할 시간이에요. 탭하여 여세요.</string>
+    <string name="notif_alert_break_done_title">☕ 휴식 끝!</string>
+    <string name="notif_alert_break_done_text">다시 집중할 준비가 됐나요?</string>
+    <string name="notif_alert_long_done_title">🌙 긴 휴식 완료!</string>
+    <string name="notif_alert_long_done_text">완전히 재충전됐어요. 시작해요!</string>
+
 </resources>

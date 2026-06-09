@@ -104,4 +104,28 @@
     <string name="force_update_button">อัปเดต</string>
     <string name="motd_dismiss_cd">ปิดข้อความ</string>
 
+    <!-- Phase completion overlay -->
+    <string name="completion_work_title">ทำได้ดีมาก! 🍅</string>
+    <string name="completion_cycle_title">รอบเสร็จสมบูรณ์! 🎉</string>
+    <string name="completion_short_break_title">หมดเวลาพักแล้ว! ☕</string>
+    <string name="completion_long_break_title">สดชื่นเต็มที่แล้ว! 🌙</string>
+    <string name="completion_work_subtitle">ได้เวลาพักสั้น ๆ</string>
+    <string name="completion_cycle_subtitle">คุณสมควรได้รับการพักยาว</string>
+    <string name="completion_short_break_subtitle">พร้อมกลับมาโฟกัสอีกครั้งไหม?</string>
+    <string name="completion_long_break_subtitle">กลับมาลุยกันต่อ</string>
+    <string name="completion_btn_start_short_break">เริ่มพักสั้น</string>
+    <string name="completion_btn_start_long_break">เริ่มพักยาว</string>
+    <string name="completion_btn_start_focus">เริ่มโฟกัส</string>
+    <string name="completion_btn_skip">ข้าม</string>
+
+    <!-- Alert notifications -->
+    <string name="notif_alert_channel_name">การแจ้งเตือนเซสชัน</string>
+    <string name="notif_alert_channel_description">แจ้งเตือนเมื่อเซสชันเสร็จสิ้น</string>
+    <string name="notif_alert_work_done_title">🍅 เซสชันโฟกัสเสร็จแล้ว!</string>
+    <string name="notif_alert_work_done_text">ได้เวลาพัก แตะเพื่อเปิด</string>
+    <string name="notif_alert_break_done_title">☕ หมดเวลาพักแล้ว!</string>
+    <string name="notif_alert_break_done_text">พร้อมกลับมาโฟกัสอีกครั้งไหม?</string>
+    <string name="notif_alert_long_done_title">🌙 พักยาวเสร็จแล้ว!</string>
+    <string name="notif_alert_long_done_text">สดชื่นเต็มที่ ไปกันเลย!</string>
+
 </resources>

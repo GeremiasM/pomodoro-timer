@@ -104,4 +104,28 @@
     <string name="force_update_button">Perbarui</string>
     <string name="motd_dismiss_cd">Tutup pesan</string>
 
+    <!-- Phase completion overlay -->
+    <string name="completion_work_title">Kerja bagus! 🍅</string>
+    <string name="completion_cycle_title">Siklus selesai! 🎉</string>
+    <string name="completion_short_break_title">Istirahat selesai! ☕</string>
+    <string name="completion_long_break_title">Segar kembali! 🌙</string>
+    <string name="completion_work_subtitle">Waktunya istirahat singkat.</string>
+    <string name="completion_cycle_subtitle">Anda pantas mendapatkan istirahat panjang.</string>
+    <string name="completion_short_break_subtitle">Siap fokus lagi?</string>
+    <string name="completion_long_break_subtitle">Mari kembali bekerja.</string>
+    <string name="completion_btn_start_short_break">Mulai Istirahat Singkat</string>
+    <string name="completion_btn_start_long_break">Mulai Istirahat Panjang</string>
+    <string name="completion_btn_start_focus">Mulai Fokus</string>
+    <string name="completion_btn_skip">Lewati</string>
+
+    <!-- Alert notifications -->
+    <string name="notif_alert_channel_name">Peringatan Sesi</string>
+    <string name="notif_alert_channel_description">Peringatan saat sesi selesai</string>
+    <string name="notif_alert_work_done_title">🍅 Sesi fokus selesai!</string>
+    <string name="notif_alert_work_done_text">Waktunya istirahat. Ketuk untuk membuka.</string>
+    <string name="notif_alert_break_done_title">☕ Istirahat selesai!</string>
+    <string name="notif_alert_break_done_text">Siap fokus lagi?</string>
+    <string name="notif_alert_long_done_title">🌙 Istirahat panjang selesai!</string>
+    <string name="notif_alert_long_done_text">Segar kembali. Ayo mulai!</string>
+
 </resources>

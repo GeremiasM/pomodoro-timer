@@ -16,6 +16,7 @@ enum class TimerStatus {
 data class PomodoroTimerState(
     val phase: PomodoroPhase = PomodoroPhase.Work,
     val status: TimerStatus = TimerStatus.IDLE,
+    val completedPhase: PomodoroPhase? = null,
     val currentSessionNumber: Int = 1,
     val completedPomodoros: Int = 0,
     val completedCycles: Int = 0,

@@ -104,4 +104,28 @@
     <string name="force_update_button">Updaten</string>
     <string name="motd_dismiss_cd">Bericht sluiten</string>
 
+    <!-- Phase completion overlay -->
+    <string name="completion_work_title">Goed gedaan! 🍅</string>
+    <string name="completion_cycle_title">Cyclus voltooid! 🎉</string>
+    <string name="completion_short_break_title">Pauze voorbij! ☕</string>
+    <string name="completion_long_break_title">Helemaal opgeladen! 🌙</string>
+    <string name="completion_work_subtitle">Tijd voor een korte pauze.</string>
+    <string name="completion_cycle_subtitle">Je hebt een lange pauze verdiend.</string>
+    <string name="completion_short_break_subtitle">Klaar om weer te focussen?</string>
+    <string name="completion_long_break_subtitle">Laten we weer aan de slag gaan.</string>
+    <string name="completion_btn_start_short_break">Korte pauze starten</string>
+    <string name="completion_btn_start_long_break">Lange pauze starten</string>
+    <string name="completion_btn_start_focus">Focus starten</string>
+    <string name="completion_btn_skip">Overslaan</string>
+
+    <!-- Alert notifications -->
+    <string name="notif_alert_channel_name">Sessiemeldingen</string>
+    <string name="notif_alert_channel_description">Meldingen wanneer een sessie is voltooid</string>
+    <string name="notif_alert_work_done_title">🍅 Focussessie voltooid!</string>
+    <string name="notif_alert_work_done_text">Tijd voor een pauze. Tik om te openen.</string>
+    <string name="notif_alert_break_done_title">☕ Pauze voorbij!</string>
+    <string name="notif_alert_break_done_text">Klaar om weer te focussen?</string>
+    <string name="notif_alert_long_done_title">🌙 Lange pauze voltooid!</string>
+    <string name="notif_alert_long_done_text">Helemaal opgeladen. Aan de slag!</string>
+
 </resources>

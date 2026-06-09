@@ -104,4 +104,28 @@
     <string name="force_update_button">تحديث</string>
     <string name="motd_dismiss_cd">إغلاق الرسالة</string>
 
+    <!-- Phase completion overlay -->
+    <string name="completion_work_title">عمل رائع! 🍅</string>
+    <string name="completion_cycle_title">اكتملت الدورة! 🎉</string>
+    <string name="completion_short_break_title">انتهت الاستراحة! ☕</string>
+    <string name="completion_long_break_title">استعدت نشاطك بالكامل! 🌙</string>
+    <string name="completion_work_subtitle">حان وقت استراحة قصيرة.</string>
+    <string name="completion_cycle_subtitle">لقد استحققت استراحة طويلة.</string>
+    <string name="completion_short_break_subtitle">هل أنت مستعد للتركيز من جديد؟</string>
+    <string name="completion_long_break_subtitle">لنعد إلى العمل.</string>
+    <string name="completion_btn_start_short_break">بدء استراحة قصيرة</string>
+    <string name="completion_btn_start_long_break">بدء استراحة طويلة</string>
+    <string name="completion_btn_start_focus">بدء التركيز</string>
+    <string name="completion_btn_skip">تخطي</string>
+
+    <!-- Alert notifications -->
+    <string name="notif_alert_channel_name">تنبيهات الجلسات</string>
+    <string name="notif_alert_channel_description">تنبيهات عند اكتمال جلسة</string>
+    <string name="notif_alert_work_done_title">🍅 اكتملت جلسة التركيز!</string>
+    <string name="notif_alert_work_done_text">حان وقت الاستراحة. اضغط للفتح.</string>
+    <string name="notif_alert_break_done_title">☕ انتهت الاستراحة!</string>
+    <string name="notif_alert_break_done_text">هل أنت مستعد للتركيز من جديد؟</string>
+    <string name="notif_alert_long_done_title">🌙 اكتملت الاستراحة الطويلة!</string>
+    <string name="notif_alert_long_done_text">استعدت نشاطك بالكامل. هيا بنا!</string>
+
 </resources>

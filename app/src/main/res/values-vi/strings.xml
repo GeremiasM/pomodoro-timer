@@ -104,4 +104,28 @@
     <string name="force_update_button">Cập nhật</string>
     <string name="motd_dismiss_cd">Đóng thông báo</string>
 
+    <!-- Phase completion overlay -->
+    <string name="completion_work_title">Làm tốt lắm! 🍅</string>
+    <string name="completion_cycle_title">Hoàn thành chu kỳ! 🎉</string>
+    <string name="completion_short_break_title">Hết giờ nghỉ! ☕</string>
+    <string name="completion_long_break_title">Đã hoàn toàn tỉnh táo! 🌙</string>
+    <string name="completion_work_subtitle">Đến lúc nghỉ ngắn.</string>
+    <string name="completion_cycle_subtitle">Bạn đã xứng đáng có một kỳ nghỉ dài.</string>
+    <string name="completion_short_break_subtitle">Sẵn sàng tập trung lại?</string>
+    <string name="completion_long_break_subtitle">Quay lại làm việc thôi.</string>
+    <string name="completion_btn_start_short_break">Bắt đầu nghỉ ngắn</string>
+    <string name="completion_btn_start_long_break">Bắt đầu nghỉ dài</string>
+    <string name="completion_btn_start_focus">Bắt đầu tập trung</string>
+    <string name="completion_btn_skip">Bỏ qua</string>
+
+    <!-- Alert notifications -->
+    <string name="notif_alert_channel_name">Cảnh báo phiên</string>
+    <string name="notif_alert_channel_description">Cảnh báo khi một phiên hoàn tất</string>
+    <string name="notif_alert_work_done_title">🍅 Phiên tập trung đã hoàn thành!</string>
+    <string name="notif_alert_work_done_text">Đến lúc nghỉ. Chạm để mở.</string>
+    <string name="notif_alert_break_done_title">☕ Hết giờ nghỉ!</string>
+    <string name="notif_alert_break_done_text">Sẵn sàng tập trung lại?</string>
+    <string name="notif_alert_long_done_title">🌙 Kỳ nghỉ dài đã hoàn thành!</string>
+    <string name="notif_alert_long_done_text">Đã hoàn toàn tỉnh táo. Bắt đầu thôi!</string>
+
 </resources>

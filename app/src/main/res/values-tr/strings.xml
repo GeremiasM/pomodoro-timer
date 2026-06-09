@@ -104,4 +104,28 @@
     <string name="force_update_button">Güncelle</string>
     <string name="motd_dismiss_cd">Mesajı kapat</string>
 
+    <!-- Phase completion overlay -->
+    <string name="completion_work_title">Harika iş! 🍅</string>
+    <string name="completion_cycle_title">Döngü tamamlandı! 🎉</string>
+    <string name="completion_short_break_title">Mola bitti! ☕</string>
+    <string name="completion_long_break_title">Tamamen yenilendin! 🌙</string>
+    <string name="completion_work_subtitle">Kısa mola zamanı.</string>
+    <string name="completion_cycle_subtitle">Uzun bir molayı hak ettin.</string>
+    <string name="completion_short_break_subtitle">Tekrar odaklanmaya hazır mısın?</string>
+    <string name="completion_long_break_subtitle">Hadi işe dönelim.</string>
+    <string name="completion_btn_start_short_break">Kısa Molayı Başlat</string>
+    <string name="completion_btn_start_long_break">Uzun Molayı Başlat</string>
+    <string name="completion_btn_start_focus">Odaklanmayı Başlat</string>
+    <string name="completion_btn_skip">Atla</string>
+
+    <!-- Alert notifications -->
+    <string name="notif_alert_channel_name">Oturum Uyarıları</string>
+    <string name="notif_alert_channel_description">Bir oturum tamamlandığında uyarılar</string>
+    <string name="notif_alert_work_done_title">🍅 Odaklanma oturumu tamamlandı!</string>
+    <string name="notif_alert_work_done_text">Mola zamanı. Açmak için dokunun.</string>
+    <string name="notif_alert_break_done_title">☕ Mola bitti!</string>
+    <string name="notif_alert_break_done_text">Tekrar odaklanmaya hazır mısın?</string>
+    <string name="notif_alert_long_done_title">🌙 Uzun mola tamamlandı!</string>
+    <string name="notif_alert_long_done_text">Tamamen yenilendin. Hadi başlayalım!</string>
+
 </resources>

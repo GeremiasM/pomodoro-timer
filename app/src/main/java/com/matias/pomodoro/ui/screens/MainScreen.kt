@@ -3,6 +3,7 @@ package com.matias.pomodoro.ui.screens
 import android.content.Context
 import android.media.AudioAttributes
 import android.media.SoundPool
+import android.os.Build
 import android.view.accessibility.AccessibilityManager
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
@@ -32,6 +33,7 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -76,6 +78,7 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.SkipNext
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -112,6 +115,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -124,6 +128,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -207,9 +212,30 @@ fun PomodoroScreen(
     modifier: Modifier = Modifier
 ) {
     var showSettings by remember { mutableStateOf(false) }
+    var previousStatus by remember { mutableStateOf(timerState.status) }
+    var showCompletionOverlay by remember { mutableStateOf(false) }
+    var completionOverlayPhase by remember {
+        mutableStateOf(timerState.completedPhase ?: timerState.phase)
+    }
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val colors = LocalPomodoroColors.current
-    val isRunning = timerState.status == TimerStatus.RUNNING
+
+    LaunchedEffect(timerState.status, timerState.completedPhase) {
+        val statusChanged = previousStatus != timerState.status
+        previousStatus = timerState.status
+        if (
+            timerState.status == TimerStatus.COMPLETED &&
+            timerState.completedPhase != null &&
+            (statusChanged || !showCompletionOverlay)
+        ) {
+            delay(200)
+            completionOverlayPhase = timerState.completedPhase
+            showSettings = false
+            showCompletionOverlay = true
+        } else if (timerState.status != TimerStatus.COMPLETED) {
+            showCompletionOverlay = false
+        }
+    }
 
     Surface(
         modifier = modifier.fillMaxSize(),
@@ -284,6 +310,29 @@ fun PomodoroScreen(
                     phase = timerState.phase,
                     currentSessionNumber = timerState.currentSessionNumber,
                     sessionsBeforeLongBreak = settings.sessionsBeforeLongBreak
+                )
+            }
+
+            AnimatedVisibility(
+                visible = showCompletionOverlay,
+                enter = fadeIn(tween(350)) + scaleIn(tween(400), initialScale = 0.92f),
+                exit = fadeOut(tween(250)),
+                modifier = Modifier.fillMaxSize()
+            ) {
+                PhaseCompletionOverlay(
+                    completedPhase = completionOverlayPhase,
+                    nextPhase = timerState.phase,
+                    sessionsBeforeLongBreak = settings.sessionsBeforeLongBreak,
+                    currentSessionNumber = timerState.currentSessionNumber,
+                    onStart = {
+                        showCompletionOverlay = false
+                        onStart()
+                    },
+                    onSkip = {
+                        showCompletionOverlay = false
+                        onSkip()
+                    },
+                    onDismiss = { showCompletionOverlay = false }
                 )
             }
         }
@@ -408,13 +457,34 @@ private fun PhaseIndicator(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        Text(
-            text = phaseLabel(timerState.phase),
-            color = colors.primary,
-            fontSize = 13.sp,
-            fontWeight = FontWeight.SemiBold,
-            letterSpacing = 3.sp
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Crossfade(
+                targetState = timerState.phase,
+                label = "phase_indicator_illustration"
+            ) { phase ->
+                Image(
+                    painter = painterResource(
+                        if (phase == PomodoroPhase.Work) {
+                            R.drawable.ic_tomato_working
+                        } else {
+                            R.drawable.ic_tomato_resting
+                        }
+                    ),
+                    contentDescription = null,
+                    modifier = Modifier.size(32.dp)
+                )
+            }
+            Text(
+                text = phaseLabel(timerState.phase),
+                color = colors.primary,
+                fontSize = 13.sp,
+                fontWeight = FontWeight.SemiBold,
+                letterSpacing = 3.sp
+            )
+        }
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             repeat(sessionsBeforeLongBreak) { index ->
                 val filled = index < filledDots
@@ -439,6 +509,176 @@ private fun PhaseIndicator(
                             contentDescription = dotDescription
                         }
                 )
+            }
+        }
+    }
+}
+
+@Composable
+private fun PhaseCompletionOverlay(
+    completedPhase: PomodoroPhase,
+    nextPhase: PomodoroPhase,
+    sessionsBeforeLongBreak: Int,
+    currentSessionNumber: Int,
+    onStart: () -> Unit,
+    onSkip: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    val colors = LocalPomodoroColors.current
+    val normalizedSessionNumber = currentSessionNumber.coerceIn(1, sessionsBeforeLongBreak)
+    val titleRes: Int
+    val subtitleRes: Int
+    val buttonRes: Int
+
+    when (nextPhase) {
+        PomodoroPhase.ShortBreak -> {
+            titleRes = R.string.completion_work_title
+            subtitleRes = R.string.completion_work_subtitle
+            buttonRes = R.string.completion_btn_start_short_break
+        }
+        PomodoroPhase.LongBreak -> {
+            titleRes = R.string.completion_cycle_title
+            subtitleRes = R.string.completion_cycle_subtitle
+            buttonRes = R.string.completion_btn_start_long_break
+        }
+        PomodoroPhase.Work -> {
+            if (normalizedSessionNumber == 1) {
+                titleRes = R.string.completion_long_break_title
+                subtitleRes = R.string.completion_long_break_subtitle
+            } else {
+                titleRes = R.string.completion_short_break_title
+                subtitleRes = R.string.completion_short_break_subtitle
+            }
+            buttonRes = R.string.completion_btn_start_focus
+        }
+    }
+
+    val floatTransition = rememberInfiniteTransition(label = "completion_tomato_float")
+    val floatAnim by floatTransition.animateFloat(
+        initialValue = -6f,
+        targetValue = 6f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(2200, easing = EaseInOutSine),
+            repeatMode = RepeatMode.Reverse
+        ),
+        label = "completion_tomato_translation"
+    )
+    val cardInteractionSource = remember { MutableInteractionSource() }
+    val backgroundModifier = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        Modifier
+            .fillMaxSize()
+            .background(colors.primary.copy(alpha = 0.18f))
+            .blur(24.dp)
+    } else {
+        Modifier
+            .fillMaxSize()
+            .background(colors.primary.copy(alpha = 0.85f))
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .clickable(onClick = onDismiss),
+        contentAlignment = Alignment.Center
+    ) {
+        Box(backgroundModifier)
+
+        Card(
+            modifier = Modifier
+                .padding(horizontal = 24.dp)
+                .widthIn(max = 380.dp)
+                .fillMaxWidth()
+                .clickable(
+                    interactionSource = cardInteractionSource,
+                    indication = null,
+                    onClick = {}
+                ),
+            colors = CardDefaults.cardColors(
+                containerColor = colors.surface.copy(alpha = 0.98f)
+            ),
+            shape = RoundedCornerShape(32.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 28.dp, vertical = 32.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(
+                    painter = painterResource(
+                        if (completedPhase == PomodoroPhase.Work) {
+                            R.drawable.ic_tomato_working
+                        } else {
+                            R.drawable.ic_tomato_resting
+                        }
+                    ),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(160.dp)
+                        .graphicsLayer(translationY = floatAnim)
+                )
+
+                Spacer(Modifier.height(18.dp))
+
+                Text(
+                    text = stringResource(titleRes),
+                    color = colors.onBackground,
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+
+                Spacer(Modifier.height(8.dp))
+
+                Text(
+                    text = stringResource(subtitleRes),
+                    color = colors.muted,
+                    fontSize = 16.sp,
+                    textAlign = TextAlign.Center
+                )
+
+                Spacer(Modifier.height(28.dp))
+
+                Button(
+                    onClick = onStart,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(58.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = colors.primary,
+                        contentColor = colors.onPrimary
+                    ),
+                    shape = RoundedCornerShape(18.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.PlayArrow,
+                        contentDescription = null,
+                        modifier = Modifier.size(24.dp)
+                    )
+                    Spacer(Modifier.width(8.dp))
+                    Text(
+                        text = stringResource(buttonRes),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
+
+                TextButton(
+                    onClick = onSkip,
+                    modifier = Modifier.padding(top = 8.dp)
+                ) {
+                    Text(
+                        text = stringResource(R.string.completion_btn_skip),
+                        color = colors.muted,
+                        fontSize = 14.sp
+                    )
+                    Spacer(Modifier.width(4.dp))
+                    Text(
+                        text = "→",
+                        color = colors.muted,
+                        fontSize = 16.sp
+                    )
+                }
             }
         }
     }

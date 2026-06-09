@@ -104,4 +104,28 @@
     <string name="force_update_button">Update</string>
     <string name="motd_dismiss_cd">Dismiss message</string>
 
+    <!-- Phase completion overlay -->
+    <string name="completion_work_title">Great work! 🍅</string>
+    <string name="completion_cycle_title">Cycle complete! 🎉</string>
+    <string name="completion_short_break_title">Break\'s over! ☕</string>
+    <string name="completion_long_break_title">Fully refreshed! 🌙</string>
+    <string name="completion_work_subtitle">Time for a short break.</string>
+    <string name="completion_cycle_subtitle">You earned a long break.</string>
+    <string name="completion_short_break_subtitle">Ready to focus again?</string>
+    <string name="completion_long_break_subtitle">Let\'s get back to it.</string>
+    <string name="completion_btn_start_short_break">Start Short Break</string>
+    <string name="completion_btn_start_long_break">Start Long Break</string>
+    <string name="completion_btn_start_focus">Start Focus</string>
+    <string name="completion_btn_skip">Skip</string>
+
+    <!-- Alert notifications -->
+    <string name="notif_alert_channel_name">Session Alerts</string>
+    <string name="notif_alert_channel_description">Alerts when a session completes</string>
+    <string name="notif_alert_work_done_title">🍅 Focus session complete!</string>
+    <string name="notif_alert_work_done_text">Time for a break. Tap to open.</string>
+    <string name="notif_alert_break_done_title">☕ Break\'s over!</string>
+    <string name="notif_alert_break_done_text">Ready to focus again?</string>
+    <string name="notif_alert_long_done_title">🌙 Long break complete!</string>
+    <string name="notif_alert_long_done_text">Fully refreshed. Let\'s go!</string>
+
 </resources>

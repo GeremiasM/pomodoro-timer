@@ -104,4 +104,28 @@
     <string name="force_update_button">Uppdatera</string>
     <string name="motd_dismiss_cd">Stäng meddelande</string>
 
+    <!-- Phase completion overlay -->
+    <string name="completion_work_title">Bra jobbat! 🍅</string>
+    <string name="completion_cycle_title">Cykeln är klar! 🎉</string>
+    <string name="completion_short_break_title">Pausen är slut! ☕</string>
+    <string name="completion_long_break_title">Helt utvilad! 🌙</string>
+    <string name="completion_work_subtitle">Dags för en kort paus.</string>
+    <string name="completion_cycle_subtitle">Du har förtjänat en lång paus.</string>
+    <string name="completion_short_break_subtitle">Redo att fokusera igen?</string>
+    <string name="completion_long_break_subtitle">Dags att sätta igång igen.</string>
+    <string name="completion_btn_start_short_break">Starta kort paus</string>
+    <string name="completion_btn_start_long_break">Starta lång paus</string>
+    <string name="completion_btn_start_focus">Starta fokus</string>
+    <string name="completion_btn_skip">Hoppa över</string>
+
+    <!-- Alert notifications -->
+    <string name="notif_alert_channel_name">Sessionsaviseringar</string>
+    <string name="notif_alert_channel_description">Aviseringar när en session är klar</string>
+    <string name="notif_alert_work_done_title">🍅 Fokussession klar!</string>
+    <string name="notif_alert_work_done_text">Dags för paus. Tryck för att öppna.</string>
+    <string name="notif_alert_break_done_title">☕ Pausen är slut!</string>
+    <string name="notif_alert_break_done_text">Redo att fokusera igen?</string>
+    <string name="notif_alert_long_done_title">🌙 Lång paus klar!</string>
+    <string name="notif_alert_long_done_text">Helt utvilad. Nu kör vi!</string>
+
 </resources>

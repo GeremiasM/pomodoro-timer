@@ -104,4 +104,28 @@
     <string name="force_update_button">更新</string>
     <string name="motd_dismiss_cd">關閉訊息</string>
 
+    <!-- Phase completion overlay -->
+    <string name="completion_work_title">做得好！ 🍅</string>
+    <string name="completion_cycle_title">週期完成！ 🎉</string>
+    <string name="completion_short_break_title">休息結束！ ☕</string>
+    <string name="completion_long_break_title">精神完全恢復！ 🌙</string>
+    <string name="completion_work_subtitle">該短暫休息一下了。</string>
+    <string name="completion_cycle_subtitle">你值得一次長休息。</string>
+    <string name="completion_short_break_subtitle">準備好再次專注了嗎？</string>
+    <string name="completion_long_break_subtitle">讓我們回到工作中。</string>
+    <string name="completion_btn_start_short_break">開始短休息</string>
+    <string name="completion_btn_start_long_break">開始長休息</string>
+    <string name="completion_btn_start_focus">開始專注</string>
+    <string name="completion_btn_skip">略過</string>
+
+    <!-- Alert notifications -->
+    <string name="notif_alert_channel_name">工作階段提醒</string>
+    <string name="notif_alert_channel_description">工作階段完成時發出提醒</string>
+    <string name="notif_alert_work_done_title">🍅 專注時段完成！</string>
+    <string name="notif_alert_work_done_text">該休息了。點按即可開啟。</string>
+    <string name="notif_alert_break_done_title">☕ 休息結束！</string>
+    <string name="notif_alert_break_done_text">準備好再次專注了嗎？</string>
+    <string name="notif_alert_long_done_title">🌙 長休息完成！</string>
+    <string name="notif_alert_long_done_text">精神完全恢復。開始吧！</string>
+
 </resources>

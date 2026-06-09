@@ -104,4 +104,28 @@
     <string name="force_update_button">Aggiorna</string>
     <string name="motd_dismiss_cd">Chiudi messaggio</string>
 
+    <!-- Phase completion overlay -->
+    <string name="completion_work_title">Ottimo lavoro! 🍅</string>
+    <string name="completion_cycle_title">Ciclo completato! 🎉</string>
+    <string name="completion_short_break_title">Pausa finita! ☕</string>
+    <string name="completion_long_break_title">Completamente rigenerato! 🌙</string>
+    <string name="completion_work_subtitle">È ora di una pausa breve.</string>
+    <string name="completion_cycle_subtitle">Ti sei meritato una pausa lunga.</string>
+    <string name="completion_short_break_subtitle">Pronto a concentrarti di nuovo?</string>
+    <string name="completion_long_break_subtitle">Torniamo al lavoro.</string>
+    <string name="completion_btn_start_short_break">Inizia pausa breve</string>
+    <string name="completion_btn_start_long_break">Inizia pausa lunga</string>
+    <string name="completion_btn_start_focus">Inizia concentrazione</string>
+    <string name="completion_btn_skip">Salta</string>
+
+    <!-- Alert notifications -->
+    <string name="notif_alert_channel_name">Avvisi sessione</string>
+    <string name="notif_alert_channel_description">Avvisi al termine di una sessione</string>
+    <string name="notif_alert_work_done_title">🍅 Sessione di concentrazione completata!</string>
+    <string name="notif_alert_work_done_text">È ora di una pausa. Tocca per aprire.</string>
+    <string name="notif_alert_break_done_title">☕ Pausa finita!</string>
+    <string name="notif_alert_break_done_text">Pronto a concentrarti di nuovo?</string>
+    <string name="notif_alert_long_done_title">🌙 Pausa lunga completata!</string>
+    <string name="notif_alert_long_done_text">Completamente rigenerato. Andiamo!</string>
+
 </resources>
