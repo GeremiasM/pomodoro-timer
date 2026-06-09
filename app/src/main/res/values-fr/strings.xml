@@ -128,4 +128,25 @@
     <string name="notif_alert_long_done_title">🌙 Pause longue terminée !</string>
     <string name="notif_alert_long_done_text">Complètement reposé. C’est parti !</string>
 
+    <!-- Added in sync pass -->
+    <string name="settings_section_help">Aide</string>
+    <string name="settings_tutorial_description">Consultez à nouveau le guide rapide sur les cycles de concentration, les commandes du minuteur, les réglages et les statistiques.</string>
+    <string name="settings_view_tutorial">Voir le tutoriel</string>
+    <string name="tutorial_skip">Ignorer</string>
+    <string name="tutorial_next">Suivant</string>
+    <string name="tutorial_start">Commencer</string>
+    <string name="tutorial_page_indicator">Page %1$d sur %2$d</string>
+    <string name="tutorial_welcome_title">Bienvenue dans Pomodoro Timer</string>
+    <string name="tutorial_welcome_description">La technique Pomodoro alterne travail concentré et pauses au bon moment. Votre petite tomate vous guidera à chaque étape.</string>
+    <string name="tutorial_focus_title">1. Concentrez-vous</string>
+    <string name="tutorial_focus_description">Appuyez sur Démarrer pour lancer une session de concentration. Utilisez le bouton central pour faire une pause ou reprendre, et le bouton de réinitialisation pour recommencer.</string>
+    <string name="tutorial_short_break_title">2. Faites une pause courte</string>
+    <string name="tutorial_short_break_description">À la fin du temps de concentration, reposez-vous quelques minutes. Respirez, étirez-vous ou prenez un verre avant de revenir en pleine forme.</string>
+    <string name="tutorial_cycle_title">3. Répétez le cycle</string>
+    <string name="tutorial_cycle_description">Alternez concentration et pauses courtes. Après plusieurs sessions, l’application vous guidera vers une pause plus longue et bien méritée.</string>
+    <string name="tutorial_settings_title">Personnalisez votre expérience</string>
+    <string name="tutorial_settings_description">Ouvrez Réglages depuis l’icône d’engrenage pour personnaliser les durées de concentration et de pause, les sons, les démarrages automatiques et le thème visuel.</string>
+    <string name="tutorial_stats_title">Suivez vos progrès</string>
+    <string name="tutorial_stats_description">Ouvrez Statistiques depuis l’icône de graphique pour consulter les Pomodoros terminés, le temps de concentration, les objectifs quotidiens et vos meilleurs jours.</string>
+
 </resources>

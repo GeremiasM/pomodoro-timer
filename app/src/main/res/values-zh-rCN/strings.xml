@@ -128,4 +128,25 @@
     <string name="notif_alert_long_done_title">🌙 长休息完成！</string>
     <string name="notif_alert_long_done_text">精力完全恢复。开始吧！</string>
 
+    <!-- Added in sync pass -->
+    <string name="settings_section_help">帮助</string>
+    <string name="settings_tutorial_description">重新查看关于专注周期、计时器控制、设置和统计的快速指南。</string>
+    <string name="settings_view_tutorial">查看教程</string>
+    <string name="tutorial_skip">跳过</string>
+    <string name="tutorial_next">下一步</string>
+    <string name="tutorial_start">开始使用</string>
+    <string name="tutorial_page_indicator">第 %1$d 页，共 %2$d 页</string>
+    <string name="tutorial_welcome_title">欢迎使用 Pomodoro Timer</string>
+    <string name="tutorial_welcome_description">Pomodoro 技巧将专注工作与适时休息相结合。小番茄会一步步引导你。</string>
+    <string name="tutorial_focus_title">1. 专注</string>
+    <string name="tutorial_focus_description">点按“开始”进入专注时段。使用中间按钮暂停或继续，需要重新开始时可使用重置按钮。</string>
+    <string name="tutorial_short_break_title">2. 短暂休息</string>
+    <string name="tutorial_short_break_description">专注时间结束后，休息几分钟。深呼吸、伸展身体或喝点东西，恢复精神后再继续。</string>
+    <string name="tutorial_cycle_title">3. 重复周期</string>
+    <string name="tutorial_cycle_description">交替进行专注和短休息。完成多个时段后，应用会引导你进入更长且应得的休息。</string>
+    <string name="tutorial_settings_title">个性化你的体验</string>
+    <string name="tutorial_settings_description">通过齿轮图标打开设置，自定义专注和休息时长、声音、自动开始和界面主题。</string>
+    <string name="tutorial_stats_title">查看你的进度</string>
+    <string name="tutorial_stats_description">通过图表图标打开统计，查看已完成的 Pomodoro、专注时间、每日目标和表现最佳的日期。</string>
+
 </resources>

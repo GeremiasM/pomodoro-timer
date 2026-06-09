@@ -128,4 +128,25 @@
     <string name="notif_alert_long_done_title">🌙 اكتملت الاستراحة الطويلة!</string>
     <string name="notif_alert_long_done_text">استعدت نشاطك بالكامل. هيا بنا!</string>
 
+    <!-- Added in sync pass -->
+    <string name="settings_section_help">المساعدة</string>
+    <string name="settings_tutorial_description">راجع الدليل السريع لدورات التركيز وعناصر التحكم بالمؤقت والإعدادات والإحصاءات.</string>
+    <string name="settings_view_tutorial">عرض البرنامج التعليمي</string>
+    <string name="tutorial_skip">تخطي</string>
+    <string name="tutorial_next">التالي</string>
+    <string name="tutorial_start">ابدأ</string>
+    <string name="tutorial_page_indicator">الصفحة %1$d من %2$d</string>
+    <string name="tutorial_welcome_title">مرحبًا بك في Pomodoro Timer</string>
+    <string name="tutorial_welcome_description">تجمع تقنية Pomodoro بين العمل بتركيز والاستراحات في الوقت المناسب. سترشدك حبة الطماطم الصغيرة في كل خطوة.</string>
+    <string name="tutorial_focus_title">1. ركّز</string>
+    <string name="tutorial_focus_description">اضغط على «بدء» لبدء جلسة تركيز. استخدم الزر الأوسط للإيقاف المؤقت أو الاستئناف، وزر إعادة الضبط عندما تريد البدء من جديد.</string>
+    <string name="tutorial_short_break_title">2. خذ استراحة قصيرة</string>
+    <string name="tutorial_short_break_description">عند انتهاء وقت التركيز، استرح لبضع دقائق. تنفّس أو تمدّد أو استمتع بمشروب قبل العودة بنشاط.</string>
+    <string name="tutorial_cycle_title">3. كرر الدورة</string>
+    <string name="tutorial_cycle_description">تناوب بين التركيز والاستراحات القصيرة. بعد عدة جلسات، سيرشدك التطبيق إلى استراحة أطول تستحقها.</string>
+    <string name="tutorial_settings_title">اضبط تجربتك</string>
+    <string name="tutorial_settings_description">افتح الإعدادات من رمز الترس لتخصيص مدد التركيز والاستراحة والأصوات والبدء التلقائي والمظهر.</string>
+    <string name="tutorial_stats_title">راجع تقدمك</string>
+    <string name="tutorial_stats_description">افتح الإحصاءات من رمز المخطط للاطلاع على جلسات Pomodoro المكتملة ووقت التركيز والأهداف اليومية وأفضل أيامك.</string>
+
 </resources>

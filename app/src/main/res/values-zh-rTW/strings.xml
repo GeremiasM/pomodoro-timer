@@ -128,4 +128,25 @@
     <string name="notif_alert_long_done_title">🌙 長休息完成！</string>
     <string name="notif_alert_long_done_text">精神完全恢復。開始吧！</string>
 
+    <!-- Added in sync pass -->
+    <string name="settings_section_help">說明</string>
+    <string name="settings_tutorial_description">重新查看關於專注週期、計時器控制、設定與統計的快速指南。</string>
+    <string name="settings_view_tutorial">查看教學</string>
+    <string name="tutorial_skip">略過</string>
+    <string name="tutorial_next">下一步</string>
+    <string name="tutorial_start">開始使用</string>
+    <string name="tutorial_page_indicator">第 %1$d 頁，共 %2$d 頁</string>
+    <string name="tutorial_welcome_title">歡迎使用 Pomodoro Timer</string>
+    <string name="tutorial_welcome_description">Pomodoro 技巧將專注工作與適時休息相結合。小番茄會一步步引導你。</string>
+    <string name="tutorial_focus_title">1. 專注</string>
+    <string name="tutorial_focus_description">點按「開始」進入專注時段。使用中間按鈕暫停或繼續，需要重新開始時可使用重設按鈕。</string>
+    <string name="tutorial_short_break_title">2. 短暫休息</string>
+    <string name="tutorial_short_break_description">專注時間結束後，休息幾分鐘。深呼吸、伸展身體或喝點東西，恢復精神後再繼續。</string>
+    <string name="tutorial_cycle_title">3. 重複週期</string>
+    <string name="tutorial_cycle_description">交替進行專注和短休息。完成多個時段後，應用程式會引導你進入更長且應得的休息。</string>
+    <string name="tutorial_settings_title">自訂使用體驗</string>
+    <string name="tutorial_settings_description">透過齒輪圖示開啟設定，自訂專注和休息時長、聲音、自動開始和介面主題。</string>
+    <string name="tutorial_stats_title">查看進度</string>
+    <string name="tutorial_stats_description">透過圖表圖示開啟統計，查看已完成的 Pomodoro、專注時間、每日目標和表現最佳的日期。</string>
+
 </resources>

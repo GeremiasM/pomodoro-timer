@@ -128,4 +128,25 @@
     <string name="notif_alert_long_done_title">🌙 Pausa lunga completata!</string>
     <string name="notif_alert_long_done_text">Completamente rigenerato. Andiamo!</string>
 
+    <!-- Added in sync pass -->
+    <string name="settings_section_help">Aiuto</string>
+    <string name="settings_tutorial_description">Rivedi la guida rapida su cicli di concentrazione, comandi del timer, impostazioni e statistiche.</string>
+    <string name="settings_view_tutorial">Visualizza tutorial</string>
+    <string name="tutorial_skip">Salta</string>
+    <string name="tutorial_next">Avanti</string>
+    <string name="tutorial_start">Inizia</string>
+    <string name="tutorial_page_indicator">Pagina %1$d di %2$d</string>
+    <string name="tutorial_welcome_title">Benvenuto in Pomodoro Timer</string>
+    <string name="tutorial_welcome_description">La tecnica Pomodoro alterna sessioni di lavoro concentrato e pause al momento giusto. Il tuo pomodorino ti guiderà in ogni passaggio.</string>
+    <string name="tutorial_focus_title">1. Concentrati</string>
+    <string name="tutorial_focus_description">Tocca Avvia per iniziare una sessione di concentrazione. Usa il pulsante centrale per mettere in pausa o riprendere e il pulsante di reimpostazione quando vuoi ricominciare.</string>
+    <string name="tutorial_short_break_title">2. Fai una pausa breve</string>
+    <string name="tutorial_short_break_description">Quando termina il tempo di concentrazione, riposati per qualche minuto. Respira, fai stretching o bevi qualcosa prima di tornare con nuove energie.</string>
+    <string name="tutorial_cycle_title">3. Ripeti il ciclo</string>
+    <string name="tutorial_cycle_description">Alterna concentrazione e pause brevi. Dopo diverse sessioni, l’app ti guiderà verso una pausa più lunga e meritata.</string>
+    <string name="tutorial_settings_title">Personalizza la tua esperienza</string>
+    <string name="tutorial_settings_description">Apri Impostazioni dall’icona a forma di ingranaggio per personalizzare le durate di concentrazione e pausa, i suoni, gli avvii automatici e il tema visivo.</string>
+    <string name="tutorial_stats_title">Controlla i tuoi progressi</string>
+    <string name="tutorial_stats_description">Apri Statistiche dall’icona del grafico per vedere i Pomodoro completati, il tempo di concentrazione, gli obiettivi giornalieri e i tuoi giorni migliori.</string>
+
 </resources>

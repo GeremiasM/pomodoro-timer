@@ -128,4 +128,25 @@
     <string name="notif_alert_long_done_title">🌙 Kỳ nghỉ dài đã hoàn thành!</string>
     <string name="notif_alert_long_done_text">Đã hoàn toàn tỉnh táo. Bắt đầu thôi!</string>
 
+    <!-- Added in sync pass -->
+    <string name="settings_section_help">Trợ giúp</string>
+    <string name="settings_tutorial_description">Xem lại hướng dẫn nhanh về chu kỳ tập trung, cách điều khiển hẹn giờ, cài đặt và thống kê.</string>
+    <string name="settings_view_tutorial">Xem hướng dẫn</string>
+    <string name="tutorial_skip">Bỏ qua</string>
+    <string name="tutorial_next">Tiếp theo</string>
+    <string name="tutorial_start">Bắt đầu</string>
+    <string name="tutorial_page_indicator">Trang %1$d/%2$d</string>
+    <string name="tutorial_welcome_title">Chào mừng bạn đến với Pomodoro Timer</string>
+    <string name="tutorial_welcome_description">Kỹ thuật Pomodoro kết hợp những khoảng thời gian làm việc tập trung với các kỳ nghỉ đúng lúc. Quả cà chua nhỏ sẽ đồng hành cùng bạn qua từng bước.</string>
+    <string name="tutorial_focus_title">1. Tập trung</string>
+    <string name="tutorial_focus_description">Nhấn Bắt đầu để bắt đầu một phiên tập trung. Dùng nút ở giữa để tạm dừng hoặc tiếp tục và dùng nút đặt lại khi bạn muốn bắt đầu lại.</string>
+    <string name="tutorial_short_break_title">2. Nghỉ ngắn</string>
+    <string name="tutorial_short_break_description">Khi hết thời gian tập trung, hãy nghỉ vài phút. Hít thở, vươn vai hoặc thưởng thức đồ uống trước khi quay lại với tinh thần sảng khoái.</string>
+    <string name="tutorial_cycle_title">3. Lặp lại chu kỳ</string>
+    <string name="tutorial_cycle_description">Luân phiên tập trung và nghỉ ngắn. Sau vài phiên, ứng dụng sẽ hướng dẫn bạn bước vào một kỳ nghỉ dài hơn mà bạn xứng đáng có được.</string>
+    <string name="tutorial_settings_title">Điều chỉnh trải nghiệm</string>
+    <string name="tutorial_settings_description">Mở Cài đặt từ biểu tượng bánh răng để tùy chỉnh thời lượng tập trung và nghỉ, âm thanh, tự động bắt đầu và giao diện.</string>
+    <string name="tutorial_stats_title">Xem tiến độ của bạn</string>
+    <string name="tutorial_stats_description">Mở Thống kê từ biểu tượng biểu đồ để xem số Pomodoro đã hoàn thành, thời gian tập trung, mục tiêu hằng ngày và những ngày hiệu quả nhất.</string>
+
 </resources>

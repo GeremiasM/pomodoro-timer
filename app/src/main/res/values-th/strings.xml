@@ -128,4 +128,25 @@
     <string name="notif_alert_long_done_title">🌙 พักยาวเสร็จแล้ว!</string>
     <string name="notif_alert_long_done_text">สดชื่นเต็มที่ ไปกันเลย!</string>
 
+    <!-- Added in sync pass -->
+    <string name="settings_section_help">ความช่วยเหลือ</string>
+    <string name="settings_tutorial_description">ดูคู่มือฉบับย่อเกี่ยวกับรอบการโฟกัส การควบคุมตัวจับเวลา การตั้งค่า และสถิติอีกครั้ง</string>
+    <string name="settings_view_tutorial">ดูบทแนะนำ</string>
+    <string name="tutorial_skip">ข้าม</string>
+    <string name="tutorial_next">ถัดไป</string>
+    <string name="tutorial_start">เริ่มต้น</string>
+    <string name="tutorial_page_indicator">หน้า %1$d จาก %2$d</string>
+    <string name="tutorial_welcome_title">ยินดีต้อนรับสู่ Pomodoro Timer</string>
+    <string name="tutorial_welcome_description">เทคนิค Pomodoro ผสานช่วงเวลาทำงานอย่างมีสมาธิเข้ากับการพักในจังหวะที่เหมาะสม มะเขือเทศลูกน้อยจะคอยแนะนำคุณในทุกขั้นตอน</string>
+    <string name="tutorial_focus_title">1. โฟกัส</string>
+    <string name="tutorial_focus_description">แตะ เริ่ม เพื่อเริ่มเซสชันโฟกัส ใช้ปุ่มตรงกลางเพื่อหยุดชั่วคราวหรือทำต่อ และใช้ปุ่มรีเซ็ตเมื่อต้องการเริ่มใหม่</string>
+    <string name="tutorial_short_break_title">2. พักสั้น</string>
+    <string name="tutorial_short_break_description">เมื่อหมดเวลาโฟกัส ให้พักสักครู่ หายใจลึก ๆ ยืดเส้นยืดสาย หรือดื่มอะไรสักหน่อยก่อนกลับมาอย่างสดชื่น</string>
+    <string name="tutorial_cycle_title">3. ทำรอบซ้ำ</string>
+    <string name="tutorial_cycle_description">สลับระหว่างการโฟกัสและพักสั้น หลังจากทำหลายเซสชัน แอปจะพาคุณไปพักยาวที่สมควรได้รับ</string>
+    <string name="tutorial_settings_title">ปรับแต่งให้เหมาะกับคุณ</string>
+    <string name="tutorial_settings_description">เปิดการตั้งค่าจากไอคอนรูปเฟืองเพื่อปรับระยะเวลาโฟกัสและพัก เสียง การเริ่มอัตโนมัติ และธีมหน้าจอ</string>
+    <string name="tutorial_stats_title">ดูความคืบหน้า</string>
+    <string name="tutorial_stats_description">เปิดสถิติจากไอคอนกราฟเพื่อดู Pomodoro ที่ทำเสร็จ เวลาโฟกัส เป้าหมายรายวัน และวันที่ทำได้ดีที่สุด</string>
+
 </resources>

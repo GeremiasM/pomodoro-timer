@@ -128,4 +128,25 @@
     <string name="notif_alert_long_done_title">🌙 長い休憩が完了しました！</string>
     <string name="notif_alert_long_done_text">すっかりリフレッシュ。始めましょう！</string>
 
+    <!-- Added in sync pass -->
+    <string name="settings_section_help">ヘルプ</string>
+    <string name="settings_tutorial_description">集中サイクル、タイマー操作、設定、統計についてのクイックガイドをもう一度確認できます。</string>
+    <string name="settings_view_tutorial">チュートリアルを見る</string>
+    <string name="tutorial_skip">スキップ</string>
+    <string name="tutorial_next">次へ</string>
+    <string name="tutorial_start">始める</string>
+    <string name="tutorial_page_indicator">%2$dページ中%1$dページ</string>
+    <string name="tutorial_welcome_title">Pomodoro Timerへようこそ</string>
+    <string name="tutorial_welcome_description">Pomodoroテクニックは、集中して取り組む時間と適切な休憩を組み合わせます。小さなトマトが一つひとつ案内します。</string>
+    <string name="tutorial_focus_title">1. 集中する</string>
+    <string name="tutorial_focus_description">「開始」をタップして集中セッションを始めます。中央のボタンで一時停止や再開を行い、最初からやり直したいときはリセットボタンを使います。</string>
+    <string name="tutorial_short_break_title">2. 短い休憩を取る</string>
+    <string name="tutorial_short_break_description">集中時間が終わったら、数分休みましょう。深呼吸したり、ストレッチしたり、飲み物を楽しんだりして、リフレッシュしてから戻りましょう。</string>
+    <string name="tutorial_cycle_title">3. サイクルを繰り返す</string>
+    <string name="tutorial_cycle_description">集中と短い休憩を交互に行います。数回のセッション後、アプリがご褒美の長い休憩へ案内します。</string>
+    <string name="tutorial_settings_title">自分好みに調整</string>
+    <string name="tutorial_settings_description">歯車アイコンから設定を開き、集中時間と休憩時間、サウンド、自動開始、表示テーマをカスタマイズできます。</string>
+    <string name="tutorial_stats_title">進捗を確認</string>
+    <string name="tutorial_stats_description">グラフアイコンから統計を開き、完了したPomodoro、集中時間、1日の目標、最も成果を上げた日を確認できます。</string>
+
 </resources>

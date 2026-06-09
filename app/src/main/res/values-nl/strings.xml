@@ -128,4 +128,25 @@
     <string name="notif_alert_long_done_title">🌙 Lange pauze voltooid!</string>
     <string name="notif_alert_long_done_text">Helemaal opgeladen. Aan de slag!</string>
 
+    <!-- Added in sync pass -->
+    <string name="settings_section_help">Help</string>
+    <string name="settings_tutorial_description">Bekijk de korte handleiding over focuscycli, timerbediening, instellingen en statistieken opnieuw.</string>
+    <string name="settings_view_tutorial">Tutorial bekijken</string>
+    <string name="tutorial_skip">Overslaan</string>
+    <string name="tutorial_next">Volgende</string>
+    <string name="tutorial_start">Aan de slag</string>
+    <string name="tutorial_page_indicator">Pagina %1$d van %2$d</string>
+    <string name="tutorial_welcome_title">Welkom bij Pomodoro Timer</string>
+    <string name="tutorial_welcome_description">De Pomodoro-techniek combineert geconcentreerd werken met pauzes op het juiste moment. Je kleine tomaat begeleidt je bij elke stap.</string>
+    <string name="tutorial_focus_title">1. Focus</string>
+    <string name="tutorial_focus_description">Tik op Start om een focussessie te beginnen. Gebruik de middelste knop om te pauzeren of te hervatten en de resetknop wanneer je opnieuw wilt beginnen.</string>
+    <string name="tutorial_short_break_title">2. Neem een korte pauze</string>
+    <string name="tutorial_short_break_description">Rust een paar minuten wanneer de focustijd voorbij is. Adem rustig, rek je uit of drink iets voordat je weer fris verdergaat.</string>
+    <string name="tutorial_cycle_title">3. Herhaal de cyclus</string>
+    <string name="tutorial_cycle_description">Wissel focus en korte pauzes af. Na een aantal sessies leidt de app je naar een langere, welverdiende pauze.</string>
+    <string name="tutorial_settings_title">Pas je ervaring aan</string>
+    <string name="tutorial_settings_description">Open Instellingen via het tandwielpictogram om focus- en pauzeduur, geluiden, automatisch starten en het visuele thema aan te passen.</string>
+    <string name="tutorial_stats_title">Bekijk je voortgang</string>
+    <string name="tutorial_stats_description">Open Statistieken via het grafiekpictogram om voltooide Pomodoros, focustijd, dagelijkse doelen en je beste dagen te bekijken.</string>
+
 </resources>

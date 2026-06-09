@@ -128,4 +128,25 @@
     <string name="notif_alert_long_done_title">🌙 लंबा ब्रेक पूरा हुआ!</string>
     <string name="notif_alert_long_done_text">पूरी तरह तरोताज़ा। चलिए शुरू करें!</string>
 
+    <!-- Added in sync pass -->
+    <string name="settings_section_help">सहायता</string>
+    <string name="settings_tutorial_description">फ़ोकस चक्र, टाइमर नियंत्रण, सेटिंग और आँकड़ों की त्वरित गाइड फिर से देखें।</string>
+    <string name="settings_view_tutorial">ट्यूटोरियल देखें</string>
+    <string name="tutorial_skip">छोड़ें</string>
+    <string name="tutorial_next">अगला</string>
+    <string name="tutorial_start">शुरू करें</string>
+    <string name="tutorial_page_indicator">पेज %1$d, कुल %2$d</string>
+    <string name="tutorial_welcome_title">Pomodoro Timer में आपका स्वागत है</string>
+    <string name="tutorial_welcome_description">Pomodoro तकनीक फ़ोकस के साथ काम करने और सही समय पर ब्रेक लेने का मेल है। आपका छोटा टमाटर हर कदम पर आपका साथ देगा।</string>
+    <string name="tutorial_focus_title">1. फ़ोकस करें</string>
+    <string name="tutorial_focus_description">फ़ोकस सत्र शुरू करने के लिए शुरू करें पर टैप करें। रोकने या फिर शुरू करने के लिए बीच वाले बटन का और नए सिरे से शुरू करने के लिए रीसेट बटन का इस्तेमाल करें।</string>
+    <string name="tutorial_short_break_title">2. छोटा ब्रेक लें</string>
+    <string name="tutorial_short_break_description">फ़ोकस समय खत्म होने पर कुछ मिनट आराम करें। गहरी साँस लें, स्ट्रेच करें या कुछ पीकर तरोताज़ा होकर लौटें।</string>
+    <string name="tutorial_cycle_title">3. चक्र दोहराएँ</string>
+    <string name="tutorial_cycle_description">फ़ोकस और छोटे ब्रेक बारी-बारी से लें। कई सत्रों के बाद ऐप आपको एक लंबे और पूरे हक़ वाले ब्रेक की ओर ले जाएगा।</string>
+    <string name="tutorial_settings_title">अपने अनुभव को मनमुताबिक बनाएँ</string>
+    <string name="tutorial_settings_description">गियर आइकन से सेटिंग खोलें और फ़ोकस व ब्रेक की अवधि, ध्वनि, अपने आप शुरू होने के विकल्प और विज़ुअल थीम को मनमुताबिक बनाएँ।</string>
+    <string name="tutorial_stats_title">अपनी प्रगति देखें</string>
+    <string name="tutorial_stats_description">चार्ट आइकन से आँकड़े खोलें और पूरे किए गए Pomodoro, फ़ोकस समय, रोज़ के लक्ष्य और अपने सबसे अच्छे दिन देखें।</string>
+
 </resources>

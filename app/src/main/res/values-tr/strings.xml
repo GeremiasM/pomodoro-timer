@@ -128,4 +128,25 @@
     <string name="notif_alert_long_done_title">🌙 Uzun mola tamamlandı!</string>
     <string name="notif_alert_long_done_text">Tamamen yenilendin. Hadi başlayalım!</string>
 
+    <!-- Added in sync pass -->
+    <string name="settings_section_help">Yardım</string>
+    <string name="settings_tutorial_description">Odaklanma döngüleri, zamanlayıcı kontrolleri, ayarlar ve istatistiklerle ilgili hızlı kılavuzu yeniden gözden geçir.</string>
+    <string name="settings_view_tutorial">Eğitimi görüntüle</string>
+    <string name="tutorial_skip">Atla</string>
+    <string name="tutorial_next">Sonraki</string>
+    <string name="tutorial_start">Başla</string>
+    <string name="tutorial_page_indicator">Sayfa %1$d / %2$d</string>
+    <string name="tutorial_welcome_title">Pomodoro Timer uygulamasına hoş geldin</string>
+    <string name="tutorial_welcome_description">Pomodoro tekniği, odaklanarak çalışmayı doğru zamanda verilen molalarla birleştirir. Küçük domatesin her adımda sana rehberlik eder.</string>
+    <string name="tutorial_focus_title">1. Odaklan</string>
+    <string name="tutorial_focus_description">Odaklanma oturumu başlatmak için Başlat düğmesine dokun. Duraklatmak veya sürdürmek için ortadaki düğmeyi, yeniden başlamak için sıfırlama düğmesini kullan.</string>
+    <string name="tutorial_short_break_title">2. Kısa bir mola ver</string>
+    <string name="tutorial_short_break_description">Odaklanma süresi bitince birkaç dakika dinlen. Yenilenmiş olarak dönmeden önce nefes al, esne veya bir içeceğin tadını çıkar.</string>
+    <string name="tutorial_cycle_title">3. Döngüyü tekrarla</string>
+    <string name="tutorial_cycle_description">Odaklanma ile kısa molaları dönüşümlü uygula. Birkaç oturumdan sonra uygulama seni hak ettiğin daha uzun bir molaya yönlendirecek.</string>
+    <string name="tutorial_settings_title">Deneyimini özelleştir</string>
+    <string name="tutorial_settings_description">Odaklanma ve mola sürelerini, sesleri, otomatik başlatmayı ve görsel temayı özelleştirmek için dişli simgesinden Ayarlar’ı aç.</string>
+    <string name="tutorial_stats_title">İlerlemeni gözden geçir</string>
+    <string name="tutorial_stats_description">Tamamlanan Pomodoroları, odaklanma süresini, günlük hedefleri ve en iyi günlerini görmek için grafik simgesinden İstatistikler’i aç.</string>
+
 </resources>

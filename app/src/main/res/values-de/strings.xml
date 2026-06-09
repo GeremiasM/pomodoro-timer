@@ -128,4 +128,25 @@
     <string name="notif_alert_long_done_title">🌙 Lange Pause abgeschlossen!</string>
     <string name="notif_alert_long_done_text">Voll erholt. Los geht’s!</string>
 
+    <!-- Added in sync pass -->
+    <string name="settings_section_help">Hilfe</string>
+    <string name="settings_tutorial_description">Sieh dir den Kurzleitfaden zu Fokuszyklen, Timer-Steuerung, Einstellungen und Statistiken noch einmal an.</string>
+    <string name="settings_view_tutorial">Tutorial ansehen</string>
+    <string name="tutorial_skip">Überspringen</string>
+    <string name="tutorial_next">Weiter</string>
+    <string name="tutorial_start">Loslegen</string>
+    <string name="tutorial_page_indicator">Seite %1$d von %2$d</string>
+    <string name="tutorial_welcome_title">Willkommen bei Pomodoro Timer</string>
+    <string name="tutorial_welcome_description">Die Pomodoro-Technik verbindet konzentriertes Arbeiten mit Pausen zum richtigen Zeitpunkt. Deine kleine Tomate begleitet dich durch jeden Schritt.</string>
+    <string name="tutorial_focus_title">1. Fokus</string>
+    <string name="tutorial_focus_description">Tippe auf Start, um eine Fokussitzung zu beginnen. Mit der mittleren Taste kannst du pausieren oder fortsetzen. Mit der Zurücksetzen-Taste beginnst du von vorn.</string>
+    <string name="tutorial_short_break_title">2. Kurze Pause machen</string>
+    <string name="tutorial_short_break_description">Wenn die Fokuszeit endet, ruh dich ein paar Minuten aus. Atme durch, streck dich oder genieße ein Getränk, bevor du erholt weitermachst.</string>
+    <string name="tutorial_cycle_title">3. Zyklus wiederholen</string>
+    <string name="tutorial_cycle_description">Wechsle zwischen Fokus und kurzen Pausen. Nach mehreren Sitzungen führt dich die App in eine längere, wohlverdiente Pause.</string>
+    <string name="tutorial_settings_title">Passe dein Erlebnis an</string>
+    <string name="tutorial_settings_description">Öffne die Einstellungen über das Zahnradsymbol, um Fokus- und Pausendauer, Töne, automatische Starts und das Design anzupassen.</string>
+    <string name="tutorial_stats_title">Verfolge deinen Fortschritt</string>
+    <string name="tutorial_stats_description">Öffne die Statistiken über das Diagrammsymbol, um abgeschlossene Pomodoros, Fokuszeit, Tagesziele und deine besten Tage zu sehen.</string>
+
 </resources>

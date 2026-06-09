@@ -128,4 +128,25 @@
     <string name="notif_alert_long_done_title">🌙 Pausa longa concluída!</string>
     <string name="notif_alert_long_done_text">Totalmente renovado. Vamos lá!</string>
 
+    <!-- Added in sync pass -->
+    <string name="settings_section_help">Ajuda</string>
+    <string name="settings_tutorial_description">Revise o guia rápido sobre ciclos de foco, controles do timer, configurações e estatísticas.</string>
+    <string name="settings_view_tutorial">Ver tutorial</string>
+    <string name="tutorial_skip">Pular</string>
+    <string name="tutorial_next">Próximo</string>
+    <string name="tutorial_start">Começar</string>
+    <string name="tutorial_page_indicator">Página %1$d de %2$d</string>
+    <string name="tutorial_welcome_title">Boas-vindas ao Pomodoro Timer</string>
+    <string name="tutorial_welcome_description">A técnica Pomodoro combina períodos de trabalho focado com pausas no momento certo. Seu tomatinho guiará você em cada etapa.</string>
+    <string name="tutorial_focus_title">1. Foque</string>
+    <string name="tutorial_focus_description">Toque em Iniciar para começar uma sessão de foco. Use o botão central para pausar ou retomar e o botão de redefinição sempre que quiser recomeçar.</string>
+    <string name="tutorial_short_break_title">2. Faça uma pausa curta</string>
+    <string name="tutorial_short_break_description">Quando o tempo de foco terminar, descanse por alguns minutos. Respire, alongue-se ou tome algo antes de voltar com as energias renovadas.</string>
+    <string name="tutorial_cycle_title">3. Repita o ciclo</string>
+    <string name="tutorial_cycle_description">Alterne entre foco e pausas curtas. Após várias sessões, o app guiará você para uma pausa mais longa e merecida.</string>
+    <string name="tutorial_settings_title">Personalize sua experiência</string>
+    <string name="tutorial_settings_description">Abra Configurações pelo ícone de engrenagem para personalizar as durações de foco e pausa, os sons, os inícios automáticos e o tema visual.</string>
+    <string name="tutorial_stats_title">Acompanhe seu progresso</string>
+    <string name="tutorial_stats_description">Abra Estatísticas pelo ícone de gráfico para ver Pomodoros concluídos, tempo de foco, metas diárias e seus melhores dias.</string>
+
 </resources>

@@ -128,4 +128,25 @@
     <string name="notif_alert_long_done_title">🌙 Długa przerwa ukończona!</string>
     <string name="notif_alert_long_done_text">Pełna regeneracja. Zaczynamy!</string>
 
+    <!-- Added in sync pass -->
+    <string name="settings_section_help">Pomoc</string>
+    <string name="settings_tutorial_description">Przejrzyj ponownie krótki przewodnik po cyklach skupienia, sterowaniu minutnikiem, ustawieniach i statystykach.</string>
+    <string name="settings_view_tutorial">Wyświetl samouczek</string>
+    <string name="tutorial_skip">Pomiń</string>
+    <string name="tutorial_next">Dalej</string>
+    <string name="tutorial_start">Rozpocznij</string>
+    <string name="tutorial_page_indicator">Strona %1$d z %2$d</string>
+    <string name="tutorial_welcome_title">Witaj w Pomodoro Timer</string>
+    <string name="tutorial_welcome_description">Technika Pomodoro łączy pracę w skupieniu z przerwami w odpowiednim momencie. Twój mały pomidor poprowadzi cię przez każdy krok.</string>
+    <string name="tutorial_focus_title">1. Skup się</string>
+    <string name="tutorial_focus_description">Dotknij Start, aby rozpocząć sesję skupienia. Użyj środkowego przycisku, aby wstrzymać lub wznowić, a przycisku resetowania, gdy chcesz zacząć od nowa.</string>
+    <string name="tutorial_short_break_title">2. Zrób krótką przerwę</string>
+    <string name="tutorial_short_break_description">Gdy czas skupienia dobiegnie końca, odpocznij przez kilka minut. Odetchnij, przeciągnij się lub napij czegoś, aby wrócić z nową energią.</string>
+    <string name="tutorial_cycle_title">3. Powtórz cykl</string>
+    <string name="tutorial_cycle_description">Przeplataj skupienie krótkimi przerwami. Po kilku sesjach aplikacja poprowadzi cię do dłuższej, zasłużonej przerwy.</string>
+    <string name="tutorial_settings_title">Dostosuj aplikację do siebie</string>
+    <string name="tutorial_settings_description">Otwórz Ustawienia za pomocą ikony koła zębatego, aby dostosować czas skupienia i przerw, dźwięki, automatyczne uruchamianie oraz motyw.</string>
+    <string name="tutorial_stats_title">Sprawdź swoje postępy</string>
+    <string name="tutorial_stats_description">Otwórz Statystyki za pomocą ikony wykresu, aby zobaczyć ukończone Pomodoro, czas skupienia, cele dzienne i swoje najlepsze dni.</string>
+
 </resources>

@@ -128,4 +128,25 @@
     <string name="notif_alert_long_done_title">🌙 Istirahat panjang selesai!</string>
     <string name="notif_alert_long_done_text">Segar kembali. Ayo mulai!</string>
 
+    <!-- Added in sync pass -->
+    <string name="settings_section_help">Bantuan</string>
+    <string name="settings_tutorial_description">Lihat kembali panduan singkat tentang siklus fokus, kontrol timer, pengaturan, dan statistik.</string>
+    <string name="settings_view_tutorial">Lihat tutorial</string>
+    <string name="tutorial_skip">Lewati</string>
+    <string name="tutorial_next">Berikutnya</string>
+    <string name="tutorial_start">Mulai</string>
+    <string name="tutorial_page_indicator">Halaman %1$d dari %2$d</string>
+    <string name="tutorial_welcome_title">Selamat datang di Pomodoro Timer</string>
+    <string name="tutorial_welcome_description">Teknik Pomodoro memadukan kerja fokus dengan waktu istirahat yang tepat. Tomat kecilmu akan memandu setiap langkah.</string>
+    <string name="tutorial_focus_title">1. Fokus</string>
+    <string name="tutorial_focus_description">Ketuk Mulai untuk memulai sesi fokus. Gunakan tombol tengah untuk menjeda atau melanjutkan, dan tombol atur ulang saat kamu ingin memulai lagi.</string>
+    <string name="tutorial_short_break_title">2. Istirahat singkat</string>
+    <string name="tutorial_short_break_description">Saat waktu fokus berakhir, beristirahatlah selama beberapa menit. Tarik napas, lakukan peregangan, atau nikmati minuman sebelum kembali dengan segar.</string>
+    <string name="tutorial_cycle_title">3. Ulangi siklus</string>
+    <string name="tutorial_cycle_description">Lakukan fokus dan istirahat singkat secara bergantian. Setelah beberapa sesi, aplikasi akan memandumu menuju istirahat lebih panjang yang layak kamu dapatkan.</string>
+    <string name="tutorial_settings_title">Sesuaikan pengalamanmu</string>
+    <string name="tutorial_settings_description">Buka Pengaturan dari ikon roda gigi untuk menyesuaikan durasi fokus dan istirahat, suara, mulai otomatis, dan tema tampilan.</string>
+    <string name="tutorial_stats_title">Lihat progresmu</string>
+    <string name="tutorial_stats_description">Buka Statistik dari ikon grafik untuk melihat Pomodoro yang selesai, waktu fokus, target harian, dan hari terbaikmu.</string>
+
 </resources>

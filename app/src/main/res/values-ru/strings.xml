@@ -128,4 +128,25 @@
     <string name="notif_alert_long_done_title">🌙 Долгий перерыв завершён!</string>
     <string name="notif_alert_long_done_text">Силы полностью восстановлены. Вперёд!</string>
 
+    <!-- Added in sync pass -->
+    <string name="settings_section_help">Помощь</string>
+    <string name="settings_tutorial_description">Ещё раз просмотрите краткое руководство по циклам фокуса, управлению таймером, настройкам и статистике.</string>
+    <string name="settings_view_tutorial">Посмотреть обучение</string>
+    <string name="tutorial_skip">Пропустить</string>
+    <string name="tutorial_next">Далее</string>
+    <string name="tutorial_start">Начать</string>
+    <string name="tutorial_page_indicator">Страница %1$d из %2$d</string>
+    <string name="tutorial_welcome_title">Добро пожаловать в Pomodoro Timer</string>
+    <string name="tutorial_welcome_description">Метод Pomodoro сочетает сосредоточенную работу со своевременными перерывами. Ваш маленький помидорчик поможет пройти каждый этап.</string>
+    <string name="tutorial_focus_title">1. Сосредоточьтесь</string>
+    <string name="tutorial_focus_description">Нажмите «Старт», чтобы начать сессию фокуса. Используйте центральную кнопку для паузы или продолжения, а кнопку сброса — когда нужно начать заново.</string>
+    <string name="tutorial_short_break_title">2. Сделайте короткий перерыв</string>
+    <string name="tutorial_short_break_description">Когда время фокуса закончится, отдохните несколько минут. Подышите, потянитесь или выпейте что-нибудь, чтобы вернуться с новыми силами.</string>
+    <string name="tutorial_cycle_title">3. Повторите цикл</string>
+    <string name="tutorial_cycle_description">Чередуйте фокус и короткие перерывы. После нескольких сессий приложение предложит вам более долгий и заслуженный отдых.</string>
+    <string name="tutorial_settings_title">Настройте приложение под себя</string>
+    <string name="tutorial_settings_description">Откройте «Настройки» с помощью значка шестерёнки, чтобы изменить длительность фокуса и перерывов, звуки, автоматический запуск и оформление.</string>
+    <string name="tutorial_stats_title">Следите за прогрессом</string>
+    <string name="tutorial_stats_description">Откройте «Статистику» с помощью значка графика, чтобы увидеть завершённые Pomodoro, время фокуса, цели на день и свои лучшие дни.</string>
+
 </resources>

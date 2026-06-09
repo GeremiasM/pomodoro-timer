@@ -128,4 +128,25 @@
     <string name="notif_alert_long_done_title">🌙 Lång paus klar!</string>
     <string name="notif_alert_long_done_text">Helt utvilad. Nu kör vi!</string>
 
+    <!-- Added in sync pass -->
+    <string name="settings_section_help">Hjälp</string>
+    <string name="settings_tutorial_description">Läs snabbguiden om fokuscykler, timerkontroller, inställningar och statistik igen.</string>
+    <string name="settings_view_tutorial">Visa guide</string>
+    <string name="tutorial_skip">Hoppa över</string>
+    <string name="tutorial_next">Nästa</string>
+    <string name="tutorial_start">Kom igång</string>
+    <string name="tutorial_page_indicator">Sida %1$d av %2$d</string>
+    <string name="tutorial_welcome_title">Välkommen till Pomodoro Timer</string>
+    <string name="tutorial_welcome_description">Pomodoro-tekniken kombinerar fokuserat arbete med pauser vid rätt tillfälle. Din lilla tomat guidar dig genom varje steg.</string>
+    <string name="tutorial_focus_title">1. Fokusera</string>
+    <string name="tutorial_focus_description">Tryck på Starta för att börja en fokussession. Använd mittknappen för att pausa eller fortsätta och återställningsknappen när du vill börja om.</string>
+    <string name="tutorial_short_break_title">2. Ta en kort paus</string>
+    <string name="tutorial_short_break_description">Vila i några minuter när fokustiden är slut. Andas, sträck på dig eller drick något innan du återvänder med ny energi.</string>
+    <string name="tutorial_cycle_title">3. Upprepa cykeln</string>
+    <string name="tutorial_cycle_description">Varva fokus med korta pauser. Efter flera sessioner leder appen dig till en längre, välförtjänt paus.</string>
+    <string name="tutorial_settings_title">Anpassa din upplevelse</string>
+    <string name="tutorial_settings_description">Öppna Inställningar via kugghjulsikonen för att anpassa fokus- och paustider, ljud, automatisk start och visuellt tema.</string>
+    <string name="tutorial_stats_title">Följ dina framsteg</string>
+    <string name="tutorial_stats_description">Öppna Statistik via diagramikonen för att se slutförda Pomodoros, fokustid, dagliga mål och dina bästa dagar.</string>
+
 </resources>
