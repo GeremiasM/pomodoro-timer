@@ -45,6 +45,10 @@ class PomodoroPreferences(context: Context) {
         prefs[Keys.DISMISSED_MOTD_TEXT].orEmpty()
     }
 
+    val tutorialSeen: Flow<Boolean> = dataStore.data.map { prefs ->
+        prefs[Keys.TUTORIAL_SEEN] ?: false
+    }
+
     suspend fun updateWorkDurationMinutes(value: Int) = updateInt(
         Keys.WORK_DURATION_MINUTES,
         value.coerceIn(WORK_DURATION_MINUTES_MIN, WORK_DURATION_MINUTES_MAX)
@@ -90,6 +94,8 @@ class PomodoroPreferences(context: Context) {
 
     suspend fun dismissMotd(text: String) = updateString(Keys.DISMISSED_MOTD_TEXT, text)
 
+    suspend fun markTutorialSeen() = updateBoolean(Keys.TUTORIAL_SEEN, true)
+
     private suspend fun updateInt(key: Preferences.Key<Int>, value: Int) = withContext(Dispatchers.IO) {
         dataStore.edit { it[key] = value }
     }
@@ -115,6 +121,7 @@ class PomodoroPreferences(context: Context) {
         val SELECTED_THEME = stringPreferencesKey("selected_theme")
         val DAILY_GOAL_POMODOROS = intPreferencesKey("daily_goal_pomodoros")
         val DISMISSED_MOTD_TEXT = stringPreferencesKey("dismissed_motd_text")
+        val TUTORIAL_SEEN = booleanPreferencesKey("tutorial_seen")
     }
 
     companion object {

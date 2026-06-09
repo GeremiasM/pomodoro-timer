@@ -50,6 +50,27 @@
     <string name="settings_section_goal">Meta diaria</string>
     <string name="settings_daily_goal">Meta diaria de Pomodoro</string>
     <string name="settings_minutes_suffix">%1$d min</string>
+    <string name="settings_section_help">Ayuda</string>
+    <string name="settings_tutorial_description">Consulta de nuevo la guía rápida sobre ciclos, controles, ajustes y estadísticas.</string>
+    <string name="settings_view_tutorial">Ver tutorial</string>
+
+    <!-- Tutorial -->
+    <string name="tutorial_skip">Omitir</string>
+    <string name="tutorial_next">Siguiente</string>
+    <string name="tutorial_start">Comenzar</string>
+    <string name="tutorial_page_indicator">Página %1$d de %2$d</string>
+    <string name="tutorial_welcome_title">Bienvenido a Pomodoro Timer</string>
+    <string name="tutorial_welcome_description">La técnica Pomodoro combina bloques de trabajo enfocado con descansos en el momento justo. Tu tomatito te acompañará paso a paso.</string>
+    <string name="tutorial_focus_title">1. Enfócate</string>
+    <string name="tutorial_focus_description">Toca Iniciar para comenzar. Usa el botón central para pausar o reanudar y el botón de reinicio cuando necesites empezar de nuevo.</string>
+    <string name="tutorial_short_break_title">2. Toma un descanso corto</string>
+    <string name="tutorial_short_break_description">Cuando termine el enfoque, descansa unos minutos. Respira, estírate o toma algo para recuperar energía.</string>
+    <string name="tutorial_cycle_title">3. Repite el ciclo</string>
+    <string name="tutorial_cycle_description">Alterna enfoque y descansos cortos. Después de varias sesiones, la app te guiará hacia un merecido descanso largo.</string>
+    <string name="tutorial_settings_title">Ajusta tu experiencia</string>
+    <string name="tutorial_settings_description">Abre Ajustes desde el engrane para personalizar tiempos, sonidos, inicios automáticos y el tema visual.</string>
+    <string name="tutorial_stats_title">Revisa tus avances</string>
+    <string name="tutorial_stats_description">Abre Estadísticas desde el icono de gráfica para consultar Pomodoros completados, tiempo de enfoque, metas y tus mejores días.</string>
     <!-- Stats screen -->
     <string name="stats_title">Estadísticas</string>
     <string name="stats_tab_day">Día</string>

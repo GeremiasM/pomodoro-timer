@@ -17,6 +17,7 @@ import com.matias.pomodoro.timer.PomodoroTimerState
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -73,6 +74,14 @@ class PomodoroViewModel(application: Application) : AndroidViewModel(application
         initialValue = ""
     )
 
+    val tutorialSeen: StateFlow<Boolean?> = preferences.tutorialSeen
+        .map<Boolean, Boolean?> { seen -> seen }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000L),
+            initialValue = null
+        )
+
     init {
         observeLongBreakCompletionsForAds()
         observeDailyGoalReached()
@@ -112,6 +121,12 @@ class PomodoroViewModel(application: Application) : AndroidViewModel(application
     fun dismissMotd(text: String) {
         viewModelScope.launch {
             preferences.dismissMotd(text)
+        }
+    }
+
+    fun markTutorialSeen() {
+        viewModelScope.launch {
+            preferences.markTutorialSeen()
         }
     }
 

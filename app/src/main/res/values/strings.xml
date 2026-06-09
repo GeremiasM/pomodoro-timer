@@ -50,6 +50,27 @@
     <string name="settings_section_goal">Daily Goal</string>
     <string name="settings_daily_goal">Daily pomodoro goal</string>
     <string name="settings_minutes_suffix">%1$d min</string>
+    <string name="settings_section_help">Help</string>
+    <string name="settings_tutorial_description">Review the quick guide to focus cycles, timer controls, settings, and statistics.</string>
+    <string name="settings_view_tutorial">View tutorial</string>
+
+    <!-- Tutorial -->
+    <string name="tutorial_skip">Skip</string>
+    <string name="tutorial_next">Next</string>
+    <string name="tutorial_start">Get started</string>
+    <string name="tutorial_page_indicator">Page %1$d of %2$d</string>
+    <string name="tutorial_welcome_title">Welcome to Pomodoro Timer</string>
+    <string name="tutorial_welcome_description">The Pomodoro technique combines focused work with well-timed breaks. Your little tomato will guide you through every step.</string>
+    <string name="tutorial_focus_title">1. Focus</string>
+    <string name="tutorial_focus_description">Tap Start to begin a focus session. Use the center button to pause or resume, and the reset button whenever you need a fresh start.</string>
+    <string name="tutorial_short_break_title">2. Take a short break</string>
+    <string name="tutorial_short_break_description">When focus time ends, rest for a few minutes. Breathe, stretch, or enjoy a drink before returning refreshed.</string>
+    <string name="tutorial_cycle_title">3. Repeat the cycle</string>
+    <string name="tutorial_cycle_description">Alternate focus and short breaks. After several sessions, the app will guide you into a longer, well-earned break.</string>
+    <string name="tutorial_settings_title">Adjust your experience</string>
+    <string name="tutorial_settings_description">Open Settings from the gear icon to customize focus and break durations, sounds, automatic starts, and the visual theme.</string>
+    <string name="tutorial_stats_title">Review your progress</string>
+    <string name="tutorial_stats_description">Open Statistics from the chart icon to see completed Pomodoros, focused time, daily goals, and your best days.</string>
     <!-- Stats screen -->
     <string name="stats_title">Statistics</string>
     <string name="stats_tab_day">Day</string>

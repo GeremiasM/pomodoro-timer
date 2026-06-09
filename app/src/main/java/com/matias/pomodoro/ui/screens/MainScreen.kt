@@ -208,6 +208,7 @@ fun PomodoroScreen(
     onPause: () -> Unit,
     onSkip: () -> Unit,
     onReset: () -> Unit,
+    onOpenTutorial: () -> Unit,
     onOpenStats: () -> Unit,
     onDismissMotd: (String) -> Unit,
     onUpdateSettings: (String, String, suspend PomodoroPreferences.() -> Unit) -> Unit,
@@ -354,6 +355,10 @@ fun PomodoroScreen(
                 settings = settings,
                 featureDailyGoalEnabled = featureDailyGoalEnabled,
                 onBack = { showSettings = false },
+                onOpenTutorial = {
+                    showSettings = false
+                    onOpenTutorial()
+                },
                 onUpdateSettings = onUpdateSettings,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -1082,6 +1087,7 @@ private fun SettingsScreen(
     settings: PomodoroSettings,
     featureDailyGoalEnabled: Boolean,
     onBack: () -> Unit,
+    onOpenTutorial: () -> Unit,
     onUpdateSettings: (String, String, suspend PomodoroPreferences.() -> Unit) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -1274,6 +1280,28 @@ private fun SettingsScreen(
                         Icon(Icons.Default.Add, contentDescription = stringResource(R.string.settings_daily_goal), tint = colors.primary)
                     }
                 }
+            }
+        }
+
+        SettingsSection(title = stringResource(R.string.settings_section_help)) {
+            Text(
+                text = stringResource(R.string.settings_tutorial_description),
+                color = colors.muted,
+                fontSize = 14.sp
+            )
+            Button(
+                onClick = onOpenTutorial,
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colors.primary,
+                    contentColor = colors.onPrimary
+                ),
+                shape = RoundedCornerShape(18.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.settings_view_tutorial),
+                    fontWeight = FontWeight.SemiBold
+                )
             }
         }
     }

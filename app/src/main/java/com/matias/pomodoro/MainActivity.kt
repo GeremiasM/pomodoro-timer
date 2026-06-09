@@ -17,9 +17,11 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.AlertDialog
@@ -43,6 +45,7 @@ import com.matias.pomodoro.consent.ConsentManager
 import com.matias.pomodoro.timer.PomodoroTimerState
 import com.matias.pomodoro.ui.screens.PomodoroScreen
 import com.matias.pomodoro.ui.screens.PomodoroStatsScreen
+import com.matias.pomodoro.ui.screens.TutorialOverlay
 import com.matias.pomodoro.ui.theme.LocalPomodoroColors
 import com.matias.pomodoro.ui.theme.PomodoroTheme
 import com.matias.pomodoro.viewmodel.PomodoroViewModel
@@ -69,7 +72,16 @@ class MainActivity : ComponentActivity() {
             val monthStats by viewModel.monthStats.collectAsStateWithLifecycle()
             val dailyGoalProgress by viewModel.dailyGoalProgress.collectAsStateWithLifecycle()
             val dismissedMotdText by viewModel.dismissedMotdText.collectAsStateWithLifecycle()
+            val tutorialSeen by viewModel.tutorialSeen.collectAsStateWithLifecycle()
             val navController = rememberNavController()
+            var showTutorial by rememberSaveable { mutableStateOf(false) }
+            var tutorialHandledThisSession by rememberSaveable { mutableStateOf(false) }
+
+            LaunchedEffect(tutorialSeen) {
+                if (tutorialSeen == false && !tutorialHandledThisSession) {
+                    showTutorial = true
+                }
+            }
 
             PomodoroTheme(
                 phase = timerState.phase,
@@ -104,12 +116,23 @@ class MainActivity : ComponentActivity() {
                             .adInterstitialManager
                             .show(onFinished)
                     },
+                    onOpenTutorial = { showTutorial = true },
                     onDismissMotd = viewModel::dismissMotd,
                     onUpdateSettings = viewModel::updateSettings
                 )
 
                 if (remoteUiState.forceUpdateRequired) {
                     ForceUpdateDialog(onUpdate = ::openPlayStoreListing)
+                }
+
+                if (showTutorial && !remoteUiState.forceUpdateRequired) {
+                    TutorialOverlay(
+                        onFinish = {
+                            showTutorial = false
+                            tutorialHandledThisSession = true
+                            viewModel.markTutorialSeen()
+                        }
+                    )
                 }
             }
         }
@@ -237,6 +260,7 @@ private fun PomodoroNavHost(
     onSkip: () -> Unit,
     onReset: () -> Unit,
     onShowInterstitial: (onFinished: () -> Unit) -> Unit,
+    onOpenTutorial: () -> Unit,
     onDismissMotd: (String) -> Unit,
     onUpdateSettings: (String, String, suspend PomodoroPreferences.() -> Unit) -> Unit
 ) {
@@ -284,6 +308,7 @@ private fun PomodoroNavHost(
                 onPause = onPause,
                 onSkip = onSkip,
                 onReset = onReset,
+                onOpenTutorial = onOpenTutorial,
                 onOpenStats = {
                     if (remoteUiState.featureStatsEnabled) {
                         onShowInterstitial {
