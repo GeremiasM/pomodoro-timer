@@ -1,66 +1,175 @@
-<?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="240dp"
     android:height="240dp"
     android:viewportWidth="240"
     android:viewportHeight="240">
 
+    <!-- Sombra -->
     <path
-        android:fillColor="#26000000"
-        android:pathData="M45,207C45,197 78,190 119,190C160,190 193,197 193,207C193,217 160,223 119,223C78,223 45,217 45,207Z" />
+        android:fillColor="#40000000"
+        android:pathData="M58.59,205.31
+            A63.28,13.13 0 1,0 185.16,205.31
+            A63.28,13.13 0 1,0 58.59,205.31 Z" />
+
+    <!-- Cuerpo tomate -->
     <path
-        android:fillColor="#EF5350"
-        android:pathData="M120,52C76,52 45,82 45,126C45,172 76,200 120,200C164,200 195,172 195,126C195,82 164,52 120,52Z" />
+        android:fillColor="#E53935"
+        android:pathData="M120,58.59
+            C77.34,58.59 43.13,92.34 43.13,137.81
+            C43.13,182.34 77.34,209.06 120,209.06
+            C162.66,209.06 196.88,182.34 196.88,137.81
+            C196.88,92.34 162.66,58.59 120,58.59 Z" />
+
+    <!-- Brillo principal -->
     <path
-        android:fillColor="#FF706C"
-        android:pathData="M76,70C60,84 53,104 53,127C53,160 72,184 101,193C78,172 70,145 73,113C75,94 81,80 93,66C87,66 81,68 76,70Z" />
+        android:fillColor="#A6FFF3C4"
+        android:pathData="M58.13,91.88
+            A13.13,8.44 0 1,0 84.38,91.88
+            A13.13,8.44 0 1,0 58.13,91.88 Z" />
+
+    <!-- Brillo secundario -->
+    <path
+        android:fillColor="#66FFD8A8"
+        android:pathData="M82.5,103.59
+            A6.56,4.69 0 1,0 95.63,103.59
+            A6.56,4.69 0 1,0 82.5,103.59 Z" />
+
+    <!-- Hoja grande -->
     <path
         android:fillColor="#43A047"
-        android:pathData="M119,59C105,45 83,43 72,50C86,53 96,62 100,74C108,69 115,65 119,59Z" />
+        android:strokeColor="#0B4F1D"
+        android:strokeWidth="2.8"
+        android:pathData="M119.53,57.19
+            C110.16,36.56 118.59,25.31 132.66,43.13
+            C143.44,22.5 160.78,29.53 148.59,49.69
+            C171.56,39.84 182.34,55.78 157.5,61.88
+            C174.84,74.06 160.78,86.72 142.97,70.78
+            C140.63,93.75 120.47,91.41 124.22,70.31
+            C107.81,89.06 91.41,77.81 108.28,63.75
+            C84.84,64.22 85.78,46.41 108.75,51.09 Z" />
+
+    <!-- Hoja central -->
     <path
-        android:fillColor="#4CAF50"
-        android:pathData="M121,59C135,43 158,42 169,49C154,53 145,62 140,75C132,69 125,65 121,59Z" />
+        android:fillColor="#43A047"
+        android:strokeColor="#0B4F1D"
+        android:strokeWidth="2.4"
+        android:pathData="M124.69,43.13
+            C121.88,30 130.78,22.03 139.69,35.16
+            C143.44,41.72 140.16,55.31 133.13,60.94
+            C128.91,54.38 126.56,48.28 124.69,43.13 Z" />
+
+    <!-- Ojo izquierdo -->
     <path
-        android:fillColor="#2E7D32"
-        android:pathData="M120,60C114,39 119,24 131,17C132,34 129,49 120,60Z" />
+        android:fillColor="#1A0907"
+        android:pathData="M80.16,133.13
+            A15.94,19.69 0 1,0 112.03,133.13
+            A15.94,19.69 0 1,0 80.16,133.13 Z" />
+
+    <!-- Ojo derecho -->
     <path
-        android:fillColor="#FFCDD2"
-        android:pathData="M64,135A15,9 0,1 0,94 135A15,9 0,1 0,64 135" />
-    <path
-        android:fillColor="#FFCDD2"
-        android:pathData="M146,135A15,9 0,1 0,176 135A15,9 0,1 0,146 135" />
-    <path
-        android:fillColor="#263238"
-        android:pathData="M82,112A6,8 0,1 0,94 112A6,8 0,1 0,82 112" />
-    <path
-        android:fillColor="#263238"
-        android:pathData="M146,112A6,8 0,1 0,158 112A6,8 0,1 0,146 112" />
+        android:fillColor="#1A0907"
+        android:pathData="M127.97,133.13
+            A15.94,19.69 0 1,0 159.84,133.13
+            A15.94,19.69 0 1,0 127.97,133.13 Z" />
+
+    <!-- Brillo ojo izquierdo -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M86,108A2,3 0,1 0,90 108A2,3 0,1 0,86 108" />
+        android:pathData="M84.84,125.16
+            A5.63,5.63 0 1,0 96.09,125.16
+            A5.63,5.63 0 1,0 84.84,125.16 Z" />
+
+    <!-- Brillo ojo derecho -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M150,108A2,3 0,1 0,154 108A2,3 0,1 0,150 108" />
+        android:pathData="M132.66,125.16
+            A5.63,5.63 0 1,0 143.91,125.16
+            A5.63,5.63 0 1,0 132.66,125.16 Z" />
+
+    <!-- Brillitos inferiores ojos -->
     <path
-        android:fillColor="@android:color/transparent"
-        android:pathData="M98,142C109,154 131,154 142,142"
-        android:strokeColor="#263238"
+        android:fillColor="#66A94A2A"
+        android:pathData="M98.91,145.31
+            A3.28,3.28 0 1,0 105.47,145.31
+            A3.28,3.28 0 1,0 98.91,145.31 Z" />
+
+    <path
+        android:fillColor="#66A94A2A"
+        android:pathData="M146.72,145.31
+            A3.28,3.28 0 1,0 153.28,145.31
+            A3.28,3.28 0 1,0 146.72,145.31 Z" />
+
+    <!-- Cejas -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#3B0E0A"
+        android:strokeWidth="4.7"
         android:strokeLineCap="round"
-        android:strokeWidth="5" />
+        android:pathData="M83.44,107.81 C89.06,101.25 98.44,101.25 104.06,107.81" />
+
     <path
-        android:fillColor="@android:color/transparent"
-        android:pathData="M49,129C30,118 24,101 31,89"
-        android:strokeColor="#EF5350"
+        android:fillColor="#00000000"
+        android:strokeColor="#3B0E0A"
+        android:strokeWidth="4.7"
         android:strokeLineCap="round"
-        android:strokeWidth="12" />
+        android:pathData="M135.94,107.81 C141.56,101.25 150.94,101.25 156.56,107.81" />
+
+    <!-- Cachetes -->
     <path
-        android:fillColor="#EF5350"
-        android:pathData="M29,80C34,76 41,78 43,84C45,89 41,96 35,97C29,98 24,94 24,88C24,85 26,82 29,80Z" />
+        android:fillColor="#CCFF7D73"
+        android:pathData="M61.88,150
+            A11.72,7.03 0 1,0 85.31,150
+            A11.72,7.03 0 1,0 61.88,150 Z" />
+
     <path
-        android:fillColor="#FFD54F"
-        android:pathData="M196,53L201,65L213,70L201,75L196,87L191,75L179,70L191,65Z" />
+        android:fillColor="#CCFF7D73"
+        android:pathData="M154.69,150
+            A11.72,7.03 0 1,0 178.12,150
+            A11.72,7.03 0 1,0 154.69,150 Z" />
+
+    <!-- Boca -->
     <path
-        android:fillColor="#FFF59D"
-        android:pathData="M201,101L204,108L211,111L204,114L201,121L198,114L191,111L198,108Z" />
+        android:fillColor="#5A0808"
+        android:strokeColor="#370404"
+        android:strokeWidth="2.8"
+        android:pathData="M105,152.81
+            C105.94,173.91 134.06,173.91 135,152.81
+            C126.56,161.25 113.44,161.25 105,152.81 Z" />
+
+    <!-- Lengua -->
+    <path
+        android:fillColor="#FF4B4B"
+        android:pathData="M112.5,165.94
+            C119.53,160.31 128.91,161.25 133.13,167.81
+            C127.03,174.38 117.19,173.44 112.5,165.94 Z" />
+
+    <!-- Marcas de timer -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFF8E1"
+        android:strokeWidth="3.75"
+        android:strokeLineCap="round"
+        android:pathData="M154.69,83.44 C175.31,93.28 187.5,114.84 186.09,137.81" />
+
+    <!-- Brazo al frente -->
+    <path
+        android:fillColor="#E53935"
+        android:strokeColor="#8B1A14"
+        android:strokeWidth="3.75"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M62.34,152.34
+            C47.34,143.91 36.09,126.56 35.63,110.16
+            C35.16,98.91 42.19,91.88 51.56,95.16
+            C62.34,98.91 67.97,115.78 76.41,127.5" />
+
+
+    <!-- Brillo en la palma -->
+    <path
+        android:fillColor="#73FFB199"
+        android:pathData="
+            M 66,92
+            A 5,6 0 1,0 76,92
+            A 5,6 0 1,0 66,92 Z" />
 
 </vector>

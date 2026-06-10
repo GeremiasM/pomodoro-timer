@@ -14,8 +14,8 @@ android {
         applicationId = "com.matias.pomodoro"
         minSdk        = 26
         targetSdk     = 35
-        versionCode   = 8
-        versionName   = "1.4"
+        versionCode   = 1
+        versionName   = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

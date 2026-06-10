@@ -5,63 +5,128 @@
     android:viewportWidth="240"
     android:viewportHeight="240">
 
+    <!-- Sombra -->
     <path
         android:fillColor="#26000000"
         android:pathData="M51,207C51,198 81,192 120,192C159,192 189,198 189,207C189,216 159,222 120,222C81,222 51,216 51,207Z" />
+
+    <!-- Flecha superior del ciclo -->
     <path
         android:fillColor="@android:color/transparent"
         android:pathData="M55,89C72,49 119,29 160,45C176,51 190,62 200,76"
         android:strokeColor="#66BB6A"
         android:strokeLineCap="round"
+        android:strokeLineJoin="round"
         android:strokeWidth="9" />
+
     <path
         android:fillColor="#66BB6A"
-        android:pathData="M190,54L207,79L178,82Z" />
+        android:pathData="M189,54L207,79L178,82Z" />
+
+    <!-- Flecha inferior del ciclo -->
     <path
         android:fillColor="@android:color/transparent"
         android:pathData="M195,151C177,191 130,210 89,194C72,188 58,177 48,162"
         android:strokeColor="#80CBC4"
         android:strokeLineCap="round"
+        android:strokeLineJoin="round"
         android:strokeWidth="9" />
+
     <path
         android:fillColor="#80CBC4"
         android:pathData="M59,184L41,159L70,156Z" />
+
+    <!-- Cuerpo del tomate -->
     <path
-        android:fillColor="#EF5350"
+        android:fillColor="#E53935"
         android:pathData="M120,64C86,64 62,87 62,121C62,156 86,178 120,178C154,178 178,156 178,121C178,87 154,64 120,64Z" />
+
+    <!-- Brillo lateral -->
     <path
-        android:fillColor="#FF706C"
-        android:pathData="M87,79C76,90 70,105 70,122C70,147 84,165 105,171C89,155 83,136 85,113C86,99 91,88 99,77C95,77 91,78 87,79Z" />
+        android:fillColor="#FF6F61"
+        android:fillAlpha="0.55"
+        android:pathData="M88,79C76,90 70,105 70,122C70,147 84,165 105,171C90,157 84,138 85,116C86,101 91,89 100,77C95,77 91,78 88,79Z" />
+
+    <!-- Brillo pequeño -->
+    <path
+        android:fillColor="#FFF3E0"
+        android:fillAlpha="0.45"
+        android:pathData="M86,90C86,85 91,81 97,81C101,81 104,83 106,86C104,93 100,97 95,100C90,99 86,95 86,90Z" />
+
+    <!-- Hojas -->
     <path
         android:fillColor="#43A047"
-        android:pathData="M119,70C109,60 93,58 85,63C95,66 102,72 105,81C111,78 116,75 119,70Z" />
+        android:pathData="M119,70C109,59 93,57 84,63C95,66 102,72 105,81C111,78 116,75 119,70Z" />
+
     <path
         android:fillColor="#4CAF50"
         android:pathData="M121,70C131,58 147,57 156,62C145,65 139,72 135,82C129,77 124,74 121,70Z" />
+
     <path
         android:fillColor="#2E7D32"
         android:pathData="M120,71C116,56 119,45 128,40C129,52 127,63 120,71Z" />
+
+    <!-- Cachetes -->
     <path
         android:fillColor="#FFCDD2"
         android:pathData="M76,132A11,7 0,1 0,98 132A11,7 0,1 0,76 132" />
+
     <path
         android:fillColor="#FFCDD2"
         android:pathData="M142,132A11,7 0,1 0,164 132A11,7 0,1 0,142 132" />
+
+    <!-- Ojos tiernos -->
     <path
         android:fillColor="#263238"
-        android:pathData="M91,111A5,7 0,1 0,101 111A5,7 0,1 0,91 111" />
+        android:pathData="M90,110A6,8 0,1 0,102 110A6,8 0,1 0,90 110" />
+
     <path
         android:fillColor="#263238"
-        android:pathData="M139,111A5,7 0,1 0,149 111A5,7 0,1 0,139 111" />
+        android:pathData="M138,110A6,8 0,1 0,150 110A6,8 0,1 0,138 110" />
+
+    <!-- Brillos de ojos -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M94,106A2,2.5 0,1 0,98 106A2,2.5 0,1 0,94 106" />
+
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M142,106A2,2.5 0,1 0,146 106A2,2.5 0,1 0,142 106" />
+
+    <!-- Cejitas felices -->
     <path
         android:fillColor="@android:color/transparent"
-        android:pathData="M104,140C112,149 128,149 136,140"
-        android:strokeColor="#263238"
+        android:pathData="M88,98C92,95 98,95 102,98"
+        android:strokeColor="#5D4037"
+        android:strokeLineCap="round"
+        android:strokeWidth="3" />
+
+    <path
+        android:fillColor="@android:color/transparent"
+        android:pathData="M136,98C140,95 146,95 150,98"
+        android:strokeColor="#5D4037"
+        android:strokeLineCap="round"
+        android:strokeWidth="3" />
+
+    <!-- Boca feliz y tierna -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:pathData="M104,139C112,148 128,148 136,139"
+        android:strokeColor="#4E342E"
         android:strokeLineCap="round"
         android:strokeWidth="4" />
+
+    <!-- Lengüita sutil -->
+    <path
+        android:fillColor="#F48FB1"
+        android:pathData="M115,143C118,146 122,146 125,143C123,148 117,148 115,143Z" />
+
+    <!-- Indicador izquierdo -->
     <path
         android:fillColor="#FFD54F"
         android:pathData="M28,114A8,8 0,1 0,44 114A8,8 0,1 0,28 114" />
+
+    <!-- Indicador derecho -->
     <path
         android:fillColor="#90CAF9"
         android:pathData="M198,116A8,8 0,1 0,214 116A8,8 0,1 0,198 116" />
